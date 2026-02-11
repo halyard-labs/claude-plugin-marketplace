@@ -27,8 +27,8 @@ Installs two things into Claude Code:
 ### From GitHub
 
 ```bash
-# Add the marketplace (replace with your repo)
-/plugin marketplace add owner/claude-plugin-marketplace
+# Add the marketplace
+/plugin marketplace add halyard-labs/claude-plugin-marketplace
 
 # Install the plugin
 /plugin install ask-expert@ask-expert-marketplace
@@ -64,7 +64,7 @@ To have this plugin auto-suggested when teammates open a project, add this to yo
     "ask-expert-marketplace": {
       "source": {
         "source": "github",
-        "repo": "your-org/claude-plugin-marketplace"
+        "repo": "halyard-labs/claude-plugin-marketplace"
       }
     }
   },
