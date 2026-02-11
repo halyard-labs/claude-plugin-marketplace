@@ -1,0 +1,15 @@
+{
+  "description": "Prompts Claude to log a work summary before ending a session",
+  "hooks": {
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "${CLAUDE_PLUGIN_ROOT}/scripts/session-stop.sh"
+          }
+        ]
+      }
+    ]
+  }
+}
