@@ -1,0 +1,22 @@
+{
+  "name": "ask-expert-marketplace",
+  "owner": {
+    "name": "Ask Expert",
+    "email": "hello@ask-expert.ai"
+  },
+  "metadata": {
+    "description": "Plugins for connecting Claude Code to human experts via Slack. Ask questions, build knowledge, and keep your team in the loop.",
+    "version": "1.0.0"
+  },
+  "plugins": [
+    {
+      "name": "ask-expert",
+      "source": "./plugins/ask-expert",
+      "description": "Connect Claude Code to human experts via Slack. Adds the ask-for-help skill and the ask-expert MCP server so you can query teammates, get decisions, and build a searchable knowledge base — all without leaving your editor.",
+      "version": "1.0.0",
+      "category": "collaboration",
+      "tags": ["slack", "experts", "knowledge-base", "human-in-the-loop", "collaboration"],
+      "keywords": ["slack", "experts", "knowledge", "ask", "help", "collaboration"]
+    }
+  ]
+}
