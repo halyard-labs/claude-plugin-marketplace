@@ -127,7 +127,7 @@ mcp__ask-expert__summarize_conversation(
 
 ### 5. Search Knowledge Base
 
-Before asking an expert, check if the answer already exists:
+Search the knowledge base for answers from previous expert conversations **and** work summaries from past sessions. This is useful for finding information about what was discussed, decided, or built in earlier conversations — so always check here before asking an expert.
 
 ```
 mcp__ask-expert__search_knowledge(
@@ -135,9 +135,17 @@ mcp__ask-expert__search_knowledge(
 )
 ```
 
+Use this to:
+
+- **Find answers to questions that were already asked** — avoid repeating questions experts have already answered
+- **Look up work done in previous sessions** — summaries logged via `summarize_work` are searchable here
+- **Discover past decisions and context** — understand why something was built a certain way
+
 ### 6. Save Work Summaries
 
-After completing significant work, save a summary for future reference:
+After completing significant work, save a summary for future reference. These summaries are searchable via `search_knowledge`, making it easy for future sessions to understand what was done and why.
+
+**Note:** A session stop hook is configured to remind you to call this before ending a session, so work is always logged.
 
 ```
 mcp__ask-expert__summarize_work(
@@ -225,9 +233,10 @@ mcp__ask-expert__summarize_conversation(
 
 ## Tips
 
-- **Search first** — Use `search_knowledge` before asking an expert; the answer may already exist
+- **Search first** — Use `search_knowledge` before asking an expert; answers from past conversations and work summaries from previous sessions are all searchable
 - **Be patient** — Experts are notified via Slack and may not respond immediately
 - **Continue other work** — While waiting, work on unblocked tasks
 - **One question at a time** — Keep questions focused; ask follow-ups separately
 - **Provide options when possible** — Makes it easier for experts to respond quickly
 - **ALWAYS summarize** — This is the most important step for building organizational knowledge
+- **Work gets logged automatically** — A session stop hook will prompt you to call `summarize_work` before ending, ensuring nothing is lost
