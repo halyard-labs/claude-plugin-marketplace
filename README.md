@@ -34,6 +34,28 @@ Installs two things into Claude Code:
 /plugin install ask-expert@ask-expert-marketplace
 ```
 
+### Enable for your entire team (recommended)
+
+Instead of having each teammate install manually, add the marketplace and plugin to your repo's `.claude/settings.json`. This enables the plugin automatically for anyone who opens the project in Claude Code:
+
+```json
+{
+  "enabledPlugins": {
+    "ask-expert@ask-expert-marketplace": true
+  },
+  "extraKnownMarketplaces": {
+    "ask-expert-marketplace": {
+      "source": {
+        "source": "github",
+        "repo": "halyard-labs/claude-plugin-marketplace"
+      }
+    }
+  }
+}
+```
+
+Commit this file to your repo — teammates will get the plugin enabled on their next session without any manual setup.
+
 ## Prerequisites
 
 - An account at [ask-expert.ai](https://ask-expert.ai) with your Slack workspace connected
