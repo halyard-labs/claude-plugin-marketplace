@@ -6,7 +6,7 @@
         "hooks": [
           {
             "type": "prompt",
-            "prompt": "Decide if this session's work should be logged before stopping.\n\nRespond `{}` to allow stop. Respond `{\"decision\":\"block\",\"reason\":\"Call mcp__ask-expert__summarize_work to log this work.\"}` to block.\n\nAllow stop if: `stop_hook_active` is true, summarize_work was already called, the session was trivial, or it mainly used ask-expert query tools. Block only if meaningful work (code changes, decisions, debugging) was done and not yet summarized."
+            "prompt": "Decide if this session's work should be logged before stopping.\n\nRespond `{\"ok\":true}` to allow stop. Respond `{\"ok\":false,\"reason\":\"Call mcp__plugin_ask-expert_ask-expert__summarize_work to log this work.\"}` to block.\n\nAllow stop if: `stop_hook_active` is true, summarize_work was already called, the session was trivial, or it mainly used ask-expert query tools. Block only if meaningful work (code changes, decisions, debugging) was done and not yet summarized."
           }
         ]
       }
