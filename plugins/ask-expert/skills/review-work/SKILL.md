@@ -93,7 +93,19 @@ mcp__ask-expert__list_knowledge(type: "DECISION", limit: 5)
 mcp__ask-expert__list_knowledge(since: "yesterday")
 ```
 
-### 3. Log Work (When Needed)
+### 3. View User Profile
+
+See a user's expertise areas and recent activity:
+
+```
+mcp__ask-expert__get_user_profile()
+mcp__ask-expert__get_user_profile(since: "this week")
+mcp__ask-expert__get_user_profile(user_id: "user-id")
+```
+
+Without `since`, shows accumulated expertise and stats. With `since`, shows time-scoped activity including conversations, knowledge entries, and sessions.
+
+### 4. Log Work (When Needed)
 
 If during your review you realize work from the current session should be recorded, use `summarize_work`:
 
