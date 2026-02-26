@@ -51,6 +51,7 @@ mcp__ask-expert__list_experts()
 mcp__ask-expert__list_experts(role: "designer")
 mcp__ask-expert__list_experts(skill: "security")
 mcp__ask-expert__list_experts(available_only: true)
+mcp__ask-expert__list_experts(query: "who knows about deployment?")
 ```
 
 ### 2. Ask an Expert
@@ -66,12 +67,13 @@ mcp__ask-expert__ask_expert(
 
 **Parameters:**
 
-| Parameter | Description                                                     |
-| --------- | --------------------------------------------------------------- |
-| `prompt`  | The question or request (required)                              |
-| `role`    | Expert role: "designer", "architect", "pm", "engineer"          |
-| `skill`   | Expert skill: "ui-design", "security", "database", "typescript" |
-| `options` | Optional array of choices for the expert to pick from           |
+| Parameter     | Description                                                              |
+| ------------- | ------------------------------------------------------------------------ |
+| `prompt`      | The question or request (required)                                       |
+| `role`        | Expert role: "designer", "architect", "pm", "engineer"                   |
+| `skill`       | Expert skill: "ui-design", "security", "database", "typescript"          |
+| `options`     | Optional array of choices for the expert to pick from                    |
+| `force_human` | If true, skip knowledge base auto-resolution and always route to a human |
 
 **With options** (when you want a specific choice):
 
@@ -99,6 +101,27 @@ mcp__ask-expert__check_response(
 ```
 
 If no response yet, call again to continue waiting.
+
+### 3b. Get Full Conversation History
+
+Retrieve the complete message history for a conversation:
+
+```
+mcp__ask-expert__get_conversation(
+  conversation_id: "conversation-id"
+)
+```
+
+### 3c. Reply to Expert
+
+Send a follow-up message in an existing conversation to ask clarifying questions or provide additional context:
+
+```
+mcp__ask-expert__reply_to_expert(
+  conversation_id: "conversation-id",
+  message: "Thanks — one follow-up: should we also handle token revocation?"
+)
+```
 
 ### 4. Summarize What You Learned (CRITICAL)
 
@@ -141,19 +164,17 @@ Use this to:
 - **Look up work done in previous sessions** — summaries logged via `summarize_work` are searchable here
 - **Discover past decisions and context** — understand why something was built a certain way
 
-### 6. Save Work Summaries
+### 6. View User Profile
 
-After completing significant work, save a summary for future reference. These summaries are searchable via `search_knowledge`, making it easy for future sessions to understand what was done and why.
-
-**Note:** A session stop hook is configured to remind you to call this before ending a session, so work is always logged.
+View a user's expertise areas and activity, or your own:
 
 ```
-mcp__ask-expert__summarize_work(
-  title: "Implemented user authentication",
-  summary: "Added JWT-based auth with refresh tokens...",
-  tags: ["authentication", "security", "backend"]
-)
+mcp__ask-expert__get_user_profile()
+mcp__ask-expert__get_user_profile(user_id: "user-id")
+mcp__ask-expert__get_user_profile(since: "this week")
 ```
+
+Without `since`, shows accumulated expertise. With `since`, shows time-scoped activity.
 
 ### 7. Close Conversation (Without Summary)
 
@@ -239,4 +260,3 @@ mcp__ask-expert__summarize_conversation(
 - **One question at a time** — Keep questions focused; ask follow-ups separately
 - **Provide options when possible** — Makes it easier for experts to respond quickly
 - **ALWAYS summarize** — This is the most important step for building organizational knowledge
-- **Work gets logged automatically** — A session stop hook will prompt you to call `summarize_work` before ending, ensuring nothing is lost

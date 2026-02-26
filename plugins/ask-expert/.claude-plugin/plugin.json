@@ -1,7 +1,7 @@
 {
   "name": "ask-expert",
   "description": "Connect Claude Code to human experts via Slack. Ask questions, get answers, and build organizational knowledge — all without leaving your editor.",
-  "version": "1.2.2",
+  "version": "1.3.0",
   "author": {
     "name": "Ask Expert",
     "email": "hello@welcome.ask-expert.ai"
