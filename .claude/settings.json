@@ -3,5 +3,8 @@
     {
       "path": "./plugins/ask-expert"
     }
-  ]
+  ],
+  "enabledPlugins": {
+    "ask-expert@ask-expert-marketplace": true
+  }
 }
