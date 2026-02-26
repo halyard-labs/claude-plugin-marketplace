@@ -21,8 +21,9 @@ Claude Code caches plugins by version string. If you push changes but keep the s
 1. Identify which `plugins/*/` directories have staged changes (use `git diff --cached --name-only`)
 2. For each affected plugin, read its `.claude-plugin/plugin.json`
 3. Bump the patch version (e.g. `1.0.0` → `1.0.1`, `1.2.3` → `1.2.4`)
-4. Stage the updated `plugin.json` file(s)
-5. Proceed with the commit
+4. Update the matching plugin entry's `version` field in the root `.claude-plugin/marketplace.json` to the same new version
+5. Stage both the updated `plugin.json` and `.claude-plugin/marketplace.json`
+6. Proceed with the commit
 
 ## Rules
 

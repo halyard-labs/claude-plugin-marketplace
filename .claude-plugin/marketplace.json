@@ -13,7 +13,7 @@
       "name": "ask-expert",
       "source": "./plugins/ask-expert",
       "description": "Connect Claude Code to human experts via Slack. Adds the ask-for-help skill and the ask-expert MCP server so you can query teammates, get decisions, and build a searchable knowledge base — all without leaving your editor.",
-      "version": "1.0.0",
+      "version": "1.3.1",
       "category": "collaboration",
       "tags": ["slack", "experts", "knowledge-base", "human-in-the-loop", "collaboration"],
       "keywords": ["slack", "experts", "knowledge", "ask", "help", "collaboration"]
