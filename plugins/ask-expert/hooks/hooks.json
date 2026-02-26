@@ -1,12 +1,12 @@
 {
-  "description": "Prompts Claude to log a work summary before ending a session",
+  "description": "Agent-based hook that summarizes session work before stopping (never blocks)",
   "hooks": {
     "Stop": [
       {
         "hooks": [
           {
-            "type": "prompt",
-            "prompt": "Decide if this session's work should be logged before stopping.\n\nRespond `{\"ok\":true}` to allow stop. Respond `{\"ok\":false,\"reason\":\"Call mcp__plugin_ask-expert_ask-expert__summarize_work to log this work.\"}` to block.\n\nAllow stop if: `stop_hook_active` is true, summarize_work was already called, the session was trivial, or it mainly used ask-expert query tools. Block only if meaningful work (code changes, decisions, debugging) was done and not yet summarized."
+            "type": "agent",
+            "prompt": "Decide if this session's work should be logged before stopping.\n\nIf meaningful work was done (code changes, decisions, debugging) and summarize_work has not already been called, call mcp__plugin_ask-expert_ask-expert__summarize_work to log the work now.\n\nSkip summarization if: stop_hook_active is true, summarize_work was already called, the session was trivial, or it mainly used ask-expert query tools.\n\nIMPORTANT: Always respond with {\"ok\":true} — never block the stop. Do the summarization yourself if needed, then allow the stop."
           }
         ]
       }
