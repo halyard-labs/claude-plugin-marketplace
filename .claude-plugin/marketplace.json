@@ -1,12 +1,12 @@
 {
-  "name": "ask-expert-marketplace",
+  "name": "halyard",
   "owner": {
-    "name": "Ask Expert",
-    "email": "hello@ask-expert.ai"
+    "name": "Halyard",
+    "email": "support@halyard.studio"
   },
   "metadata": {
     "description": "Plugins for connecting Claude Code to human experts via Slack. Ask questions, build knowledge, and keep your team in the loop.",
-    "version": "1.0.0"
+    "version": "1.0.1"
   },
   "plugins": [
     {
