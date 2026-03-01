@@ -6,11 +6,17 @@ A plugin marketplace that connects Claude Code to human experts via Slack.
 
 ### `ask-expert` plugin
 
-Installs two things into Claude Code:
+Installs the following into Claude Code:
 
 1. **`ask-expert` MCP server** — Connects to the Ask Expert API at `mcp.ask-expert.ai`, giving Claude access to tools for messaging experts on Slack, polling for responses, and managing a knowledge base.
 
 2. **`ask-for-help` skill** — Teaches Claude *when* and *how* to ask for human input. Claude will automatically consult experts when it hits ambiguous requirements, design decisions, or anything that needs human judgment. It also learns to summarize answers so the same question doesn't get asked twice.
+
+3. **`log-work` skill** — Prompts Claude to log non-trivial work using the knowledge base so accomplishments are captured for future reference.
+
+4. **`review-work` skill** — Lets Claude query the knowledge base to review what you or your team have been working on — useful for standups, catch-ups, and finding past context.
+
+5. **Stop hook** — Automatically evaluates whether meaningful work was done at the end of a session and prompts Claude to log it if it hasn't been captured yet.
 
 ## Quick start
 
@@ -21,7 +27,7 @@ Installs two things into Claude Code:
 /plugin marketplace add ./path/to/claude-plugin-marketplace
 
 # Install the plugin
-/plugin install ask-expert@ask-expert-marketplace
+/plugin install ask-expert@halyard-labs
 ```
 
 ### From GitHub
@@ -31,7 +37,7 @@ Installs two things into Claude Code:
 /plugin marketplace add halyard-labs/claude-plugin-marketplace
 
 # Install the plugin
-/plugin install ask-expert@ask-expert-marketplace
+/plugin install ask-expert@halyard-labs
 ```
 
 ### Enable for your entire team (recommended)
@@ -41,10 +47,10 @@ Instead of having each teammate install manually, add the marketplace and plugin
 ```json
 {
   "enabledPlugins": {
-    "ask-expert@ask-expert-marketplace": true
+    "ask-expert@halyard-labs": true
   },
   "extraKnownMarketplaces": {
-    "ask-expert-marketplace": {
+    "halyard-labs": {
       "source": {
         "source": "github",
         "repo": "halyard-labs/claude-plugin-marketplace"
@@ -69,11 +75,14 @@ Once installed, Claude will automatically:
 - Follow the ask → wait → summarize workflow
 - Search the knowledge base before asking repeat questions
 - Save learnings so your team's knowledge compounds over time
+- Prompt to log meaningful work at the end of each session
 
-You can also invoke the skill manually:
+You can also invoke skills manually:
 
 ```
-/ask-expert:ask-for-help
+/ask-expert:ask-for-help     # Ask a human expert for help
+/ask-expert:log-work         # Log work to the knowledge base
+/ask-expert:review-work      # Review past work and decisions
 ```
 
 ## Team setup
@@ -83,7 +92,7 @@ To have this plugin auto-suggested when teammates open a project, add this to yo
 ```json
 {
   "extraKnownMarketplaces": {
-    "ask-expert-marketplace": {
+    "halyard-labs": {
       "source": {
         "source": "github",
         "repo": "halyard-labs/claude-plugin-marketplace"
@@ -91,7 +100,7 @@ To have this plugin auto-suggested when teammates open a project, add this to yo
     }
   },
   "enabledPlugins": {
-    "ask-expert@ask-expert-marketplace": true
+    "ask-expert@halyard-labs": true
   }
 }
 ```
@@ -106,9 +115,15 @@ claude-plugin-marketplace/
 │   └── ask-expert/
 │       ├── .claude-plugin/
 │       │   └── plugin.json       # Plugin manifest
+│       ├── hooks/
+│       │   └── hooks.json        # Session hooks (Stop hook)
 │       ├── skills/
-│       │   └── ask-for-help/
-│       │       └── SKILL.md      # Skill definition
+│       │   ├── ask-for-help/
+│       │   │   └── SKILL.md      # Ask experts for help
+│       │   ├── log-work/
+│       │   │   └── SKILL.md      # Log work to knowledge base
+│       │   └── review-work/
+│       │       └── SKILL.md      # Review past work and decisions
 │       └── .mcp.json             # MCP server config
 ├── LICENSE
 └── README.md

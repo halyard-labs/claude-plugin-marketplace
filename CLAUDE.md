@@ -18,6 +18,5 @@ plugins/
     ├── .claude-plugin/plugin.json   # Plugin manifest — authoritative version lives here
     ├── .mcp.json                    # MCP server config
     ├── hooks/hooks.json             # Session hooks
-    ├── scripts/                     # Hook scripts
     └── skills/                      # Plugin skills
 ```
