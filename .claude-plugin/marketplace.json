@@ -1,12 +1,12 @@
 {
-  "name": "halyard",
+  "name": "halyard-labs",
   "owner": {
-    "name": "Halyard",
+    "name": "Halyard Labs",
     "email": "support@halyard.studio"
   },
   "metadata": {
     "description": "Plugins for connecting Claude Code to human experts via Slack. Ask questions, build knowledge, and keep your team in the loop.",
-    "version": "1.0.1"
+    "version": "1.0.2"
   },
   "plugins": [
     {
