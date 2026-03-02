@@ -5,6 +5,6 @@
     }
   ],
   "enabledPlugins": {
-    "ask-expert@halyard-labs": true
+    "halyard@halyard-labs": true
   }
 }
