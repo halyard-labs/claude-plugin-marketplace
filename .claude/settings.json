@@ -1,10 +1,10 @@
 {
   "plugins": [
     {
-      "path": "./plugins/ask-expert"
+      "path": "./plugins/halyard"
     }
   ],
   "enabledPlugins": {
-    "ask-expert@halyard-labs": true
+    "halyard@halyard-labs": true
   }
 }

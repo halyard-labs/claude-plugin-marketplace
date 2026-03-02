@@ -1,6 +1,6 @@
 # Claude Plugin Marketplace
 
-Plugin marketplace for the ask-expert Claude Code plugin.
+Plugin marketplace for the halyard Claude Code plugin.
 
 ## Critical Rules
 
@@ -14,7 +14,7 @@ Plugin marketplace for the ask-expert Claude Code plugin.
 .claude-plugin/
 └── marketplace.json                 # Marketplace catalog — plugin versions here must match plugin.json
 plugins/
-└── ask-expert/
+└── halyard/
     ├── .claude-plugin/plugin.json   # Plugin manifest — authoritative version lives here
     ├── .mcp.json                    # MCP server config
     ├── hooks/hooks.json             # Session hooks
