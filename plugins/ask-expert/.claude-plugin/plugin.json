@@ -1,12 +1,12 @@
 {
   "name": "ask-expert",
   "description": "Connect Claude Code to human experts via Slack. Ask questions, get answers, and build organizational knowledge — all without leaving your editor.",
-  "version": "1.3.2",
+  "version": "1.3.3",
   "author": {
     "name": "Halyard Labs",
-    "email": "hello@welcome.ask-expert.ai"
+    "email": "support@halyard.studio"
   },
-  "homepage": "https://ask-expert.ai",
+  "homepage": "https://usehalyard.ai",
   "license": "MIT",
   "keywords": ["slack", "experts", "knowledge-base", "collaboration", "human-in-the-loop"]
 }

@@ -47,11 +47,11 @@ Do not ask for help when:
 Before asking, check who's available:
 
 ```
-mcp__plugin_ask-expert_ask-expert__list_experts()
-mcp__plugin_ask-expert_ask-expert__list_experts(role: "designer")
-mcp__plugin_ask-expert_ask-expert__list_experts(skill: "security")
-mcp__plugin_ask-expert_ask-expert__list_experts(available_only: true)
-mcp__plugin_ask-expert_ask-expert__list_experts(query: "who knows about deployment?")
+list_experts()
+list_experts(role: "designer")
+list_experts(skill: "security")
+list_experts(available_only: true)
+list_experts(query: "who knows about deployment?")
 ```
 
 ### 2. Ask an Expert
@@ -59,7 +59,7 @@ mcp__plugin_ask-expert_ask-expert__list_experts(query: "who knows about deployme
 Send a question to an expert by role or skill:
 
 ```
-mcp__plugin_ask-expert_ask-expert__ask_expert(
+ask_expert(
   prompt: "Your question here",
   role: "designer"  // or use skill: "ui-design"
 )
@@ -78,7 +78,7 @@ mcp__plugin_ask-expert_ask-expert__ask_expert(
 **With options** (when you want a specific choice):
 
 ```
-mcp__plugin_ask-expert_ask-expert__ask_expert(
+ask_expert(
   prompt: "Should we use server-side or client-side validation for this form?",
   role: "architect",
   options: [
@@ -94,7 +94,7 @@ mcp__plugin_ask-expert_ask-expert__ask_expert(
 `ask_expert` returns immediately after notifying the expert. You MUST call `check_response` to wait for their reply:
 
 ```
-mcp__plugin_ask-expert_ask-expert__check_response(
+check_response(
   conversation_id: "conversation-id-from-ask-expert",
   wait: true  // Wait up to 55 seconds for response
 )
@@ -107,7 +107,7 @@ If no response yet, call again to continue waiting.
 Retrieve the complete message history for a conversation:
 
 ```
-mcp__plugin_ask-expert_ask-expert__get_conversation(
+get_conversation(
   conversation_id: "conversation-id"
 )
 ```
@@ -117,7 +117,7 @@ mcp__plugin_ask-expert_ask-expert__get_conversation(
 Send a follow-up message in an existing conversation to ask clarifying questions or provide additional context:
 
 ```
-mcp__plugin_ask-expert_ask-expert__reply_to_expert(
+reply_to_expert(
   conversation_id: "conversation-id",
   message: "Thanks — one follow-up: should we also handle token revocation?"
 )
@@ -128,7 +128,7 @@ mcp__plugin_ask-expert_ask-expert__reply_to_expert(
 **Always call this after receiving a helpful response.** This builds organizational knowledge so experts don't get asked the same questions repeatedly.
 
 ```
-mcp__plugin_ask-expert_ask-expert__summarize_conversation(
+summarize_conversation(
   conversation_id: "conversation-id",
   question: "Should we use JWT or session auth for the mobile app? Our existing mobile SDK expects Bearer tokens.",
   answer: "Use JWT with refresh tokens because mobile clients need stateless auth and we already have JWT infrastructure in the API."
@@ -153,7 +153,7 @@ mcp__plugin_ask-expert_ask-expert__summarize_conversation(
 Search the knowledge base for answers from previous expert conversations **and** work summaries from past sessions. This is useful for finding information about what was discussed, decided, or built in earlier conversations — so always check here before asking an expert.
 
 ```
-mcp__plugin_ask-expert_ask-expert__search_knowledge(
+search_knowledge(
   query: "how do we handle authentication?"
 )
 ```
@@ -169,9 +169,9 @@ Use this to:
 View a user's expertise areas and activity, or your own:
 
 ```
-mcp__plugin_ask-expert_ask-expert__get_user_profile()
-mcp__plugin_ask-expert_ask-expert__get_user_profile(user_id: "user-id")
-mcp__plugin_ask-expert_ask-expert__get_user_profile(since: "this week")
+get_user_profile()
+get_user_profile(user_id: "user-id")
+get_user_profile(since: "this week")
 ```
 
 Without `since`, shows accumulated expertise. With `since`, shows time-scoped activity.
@@ -181,7 +181,7 @@ Without `since`, shows accumulated expertise. With `since`, shows time-scoped ac
 Close a conversation without capturing knowledge (not recommended):
 
 ```
-mcp__plugin_ask-expert_ask-expert__close_conversation(
+close_conversation(
   conversation_id: "conversation-id"
 )
 ```
@@ -226,10 +226,10 @@ both patterns. Which should I use for consistency?"
 
 ```
 // 1. Find an expert
-mcp__plugin_ask-expert_ask-expert__list_experts(skill: "ui-design")
+list_experts(skill: "ui-design")
 
 // 2. Ask your question (returns immediately)
-mcp__plugin_ask-expert_ask-expert__ask_expert(
+ask_expert(
   prompt: "The design shows cards with hover states. Should I use
            CSS transitions or Framer Motion? We use both in the codebase.",
   skill: "ui-design"
@@ -237,7 +237,7 @@ mcp__plugin_ask-expert_ask-expert__ask_expert(
 // Returns immediately: { status: "pending", conversation_id: "conv_abc123" }
 
 // 3. Wait for response (REQUIRED - ask_expert doesn't wait)
-mcp__plugin_ask-expert_ask-expert__check_response(
+check_response(
   conversation_id: "conv_abc123",
   wait: true
 )
@@ -245,7 +245,7 @@ mcp__plugin_ask-expert_ask-expert__check_response(
 //    Framer Motion is for complex animations like page transitions."
 
 // 4. ALWAYS summarize the knowledge gained
-mcp__plugin_ask-expert_ask-expert__summarize_conversation(
+summarize_conversation(
   conversation_id: "conv_abc123",
   question: "CSS transitions vs Framer Motion for card hover states?",
   answer: "Use CSS transitions for simple hover effects. Framer Motion should be reserved for complex animations like page transitions and multi-step sequences. Guideline: Simple state changes = CSS, complex/sequenced animations = Framer Motion."
