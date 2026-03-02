@@ -8,7 +8,7 @@ A plugin marketplace that connects Claude Code to human experts via Slack.
 
 Installs the following into Claude Code:
 
-1. **`ask-expert` MCP server** — Connects to the Ask Expert API at `mcp.ask-expert.ai`, giving Claude access to tools for messaging experts on Slack, polling for responses, and managing a knowledge base.
+1. **`ask-expert` MCP server** — Connects to the Halyard API at `mcp.ask-expert.ai`, giving Claude access to tools for messaging experts on Slack, polling for responses, and managing a knowledge base.
 
 2. **`ask-for-help` skill** — Teaches Claude *when* and *how* to ask for human input. Claude will automatically consult experts when it hits ambiguous requirements, design decisions, or anything that needs human judgment. It also learns to summarize answers so the same question doesn't get asked twice.
 
@@ -64,7 +64,7 @@ Commit this file to your repo — teammates will get the plugin enabled on their
 
 ## Prerequisites
 
-- An account at [ask-expert.ai](https://ask-expert.ai) with your Slack workspace connected
+- An account at [usehalyard.ai](https://usehalyard.ai) with your Slack workspace connected
 - Claude Code v1.0.33 or later
 
 ## After installation

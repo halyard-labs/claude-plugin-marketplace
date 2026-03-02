@@ -18,13 +18,13 @@ The most common workflow is a simple search or list:
 
 ```
 // What has been done recently?
-mcp__plugin_ask-expert_ask-expert__list_knowledge(since: "this week")
+list_knowledge(since: "this week")
 
 // What did I work on today?
-mcp__plugin_ask-expert_ask-expert__list_knowledge(author: "me", since: "today")
+list_knowledge(author: "me", since: "today")
 
 // Search for something specific
-mcp__plugin_ask-expert_ask-expert__search_knowledge(query: "authentication refactor")
+search_knowledge(query: "authentication refactor")
 ```
 
 ## Available Tools
@@ -34,7 +34,7 @@ mcp__plugin_ask-expert_ask-expert__search_knowledge(query: "authentication refac
 Semantic search across all knowledge entries — work summaries, expert Q&A, decisions, and process docs. Use this when you're looking for something specific or want to find relevant context.
 
 ```
-mcp__plugin_ask-expert_ask-expert__search_knowledge(query: "your search query")
+search_knowledge(query: "your search query")
 ```
 
 **Parameters:**
@@ -51,13 +51,13 @@ mcp__plugin_ask-expert_ask-expert__search_knowledge(query: "your search query")
 
 ```
 // What decisions were made about the database?
-mcp__plugin_ask-expert_ask-expert__search_knowledge(query: "database", type: "DECISION")
+search_knowledge(query: "database", type: "DECISION")
 
 // What did I work on this week?
-mcp__plugin_ask-expert_ask-expert__search_knowledge(query: "work completed", author: "me", since: "this week")
+search_knowledge(query: "work completed", author: "me", since: "this week")
 
 // Find past answers about deployment
-mcp__plugin_ask-expert_ask-expert__search_knowledge(query: "deployment process", type: "QA")
+search_knowledge(query: "deployment process", type: "QA")
 ```
 
 ### 2. List Knowledge
@@ -65,7 +65,7 @@ mcp__plugin_ask-expert_ask-expert__search_knowledge(query: "deployment process",
 Chronological listing of knowledge entries. Use this when you want to see recent activity without a specific search query — great for standups and catch-ups.
 
 ```
-mcp__plugin_ask-expert_ask-expert__list_knowledge()
+list_knowledge()
 ```
 
 **Parameters:**
@@ -81,16 +81,16 @@ mcp__plugin_ask-expert_ask-expert__list_knowledge()
 
 ```
 // Everything from today
-mcp__plugin_ask-expert_ask-expert__list_knowledge(since: "today")
+list_knowledge(since: "today")
 
 // My work output this week
-mcp__plugin_ask-expert_ask-expert__list_knowledge(author: "me", type: "WORK_OUTPUT", since: "this week")
+list_knowledge(author: "me", type: "WORK_OUTPUT", since: "this week")
 
 // Recent decisions
-mcp__plugin_ask-expert_ask-expert__list_knowledge(type: "DECISION", limit: 5)
+list_knowledge(type: "DECISION", limit: 5)
 
 // What happened yesterday?
-mcp__plugin_ask-expert_ask-expert__list_knowledge(since: "yesterday")
+list_knowledge(since: "yesterday")
 ```
 
 ### 3. View User Profile
@@ -98,9 +98,9 @@ mcp__plugin_ask-expert_ask-expert__list_knowledge(since: "yesterday")
 See a user's expertise areas and recent activity:
 
 ```
-mcp__plugin_ask-expert_ask-expert__get_user_profile()
-mcp__plugin_ask-expert_ask-expert__get_user_profile(since: "this week")
-mcp__plugin_ask-expert_ask-expert__get_user_profile(user_id: "user-id")
+get_user_profile()
+get_user_profile(since: "this week")
+get_user_profile(user_id: "user-id")
 ```
 
 Without `since`, shows accumulated expertise and stats. With `since`, shows time-scoped activity including conversations, knowledge entries, and sessions.
@@ -110,7 +110,7 @@ Without `since`, shows accumulated expertise and stats. With `since`, shows time
 If during your review you realize work from the current session should be recorded, use `summarize_work`:
 
 ```
-mcp__plugin_ask-expert_ask-expert__summarize_work(
+summarize_work(
   title: "Brief description of what was done",
   summary: "Detailed explanation of the work, context, and decisions made",
   tags: ["relevant", "tags"]
@@ -141,27 +141,27 @@ Entries in the knowledge base fall into these categories:
 
 ### Morning standup / catch-up
 ```
-mcp__plugin_ask-expert_ask-expert__list_knowledge(author: "me", since: "yesterday")
+list_knowledge(author: "me", since: "yesterday")
 ```
 
 ### Starting a new task — find relevant context
 ```
-mcp__plugin_ask-expert_ask-expert__search_knowledge(query: "describe the feature or area you're about to work on")
+search_knowledge(query: "describe the feature or area you're about to work on")
 ```
 
 ### Weekly review
 ```
-mcp__plugin_ask-expert_ask-expert__list_knowledge(since: "this week")
+list_knowledge(since: "this week")
 ```
 
 ### Find out what a teammate worked on
 ```
-mcp__plugin_ask-expert_ask-expert__search_knowledge(query: "what was done", since: "this week")
+search_knowledge(query: "what was done", since: "this week")
 ```
 
 ### Check if a question was already answered
 ```
-mcp__plugin_ask-expert_ask-expert__search_knowledge(query: "your question", type: "QA")
+search_knowledge(query: "your question", type: "QA")
 ```
 
 ## Tips
