@@ -8,21 +8,21 @@ description: >-
 
 # Ask for Help
 
-Use the ask-expert MCP tools to get human input when you're blocked, need clarification, or face decisions that require human judgment. **ALWAYS summarize helpful answers** to build a knowledge base.
+Use the halyard MCP tools to get human input when you're blocked, need clarification, or face decisions that require human judgment. **ALWAYS summarize helpful answers** to build a knowledge base.
 
 ## Complete Workflow
 
 Every interaction should follow this pattern:
 
 ```
-1. list_experts()          → Find the right expert
-2. ask_expert(...)         → Send your question (returns immediately)
-3. check_response(...)     → REQUIRED: Wait for the response
-4. summarize_conversation  → CRITICAL: Capture what you learned
-   OR close_conversation   → (with summary parameter)
+1. mcp__plugin_halyard_ask-expert__list_experts()          → Find the right expert
+2. mcp__plugin_halyard_ask-expert__ask_expert(...)         → Send your question (returns immediately)
+3. mcp__plugin_halyard_ask-expert__check_response(...)     → REQUIRED: Wait for the response
+4. mcp__plugin_halyard_ask-expert__summarize_conversation  → CRITICAL: Capture what you learned
+   OR mcp__plugin_halyard_ask-expert__close_conversation   → (with summary parameter)
 ```
 
-**Steps 3 and 4 are critical**—`ask_expert` returns immediately after notifying the expert, so you MUST call `check_response` to get their reply. Without summarization, the knowledge is lost and experts get asked the same questions repeatedly.
+**Steps 3 and 4 are critical**—`mcp__plugin_halyard_ask-expert__ask_expert` returns immediately after notifying the expert, so you MUST call `mcp__plugin_halyard_ask-expert__check_response` to get their reply. Without summarization, the knowledge is lost and experts get asked the same questions repeatedly.
 
 ## When to Ask for Help
 
@@ -47,11 +47,11 @@ Do not ask for help when:
 Before asking, check who's available:
 
 ```
-list_experts()
-list_experts(role: "designer")
-list_experts(skill: "security")
-list_experts(available_only: true)
-list_experts(query: "who knows about deployment?")
+mcp__plugin_halyard_ask-expert__list_experts()
+mcp__plugin_halyard_ask-expert__list_experts(role: "designer")
+mcp__plugin_halyard_ask-expert__list_experts(skill: "security")
+mcp__plugin_halyard_ask-expert__list_experts(available_only: true)
+mcp__plugin_halyard_ask-expert__list_experts(query: "who knows about deployment?")
 ```
 
 ### 2. Ask an Expert
@@ -59,7 +59,7 @@ list_experts(query: "who knows about deployment?")
 Send a question to an expert by role or skill:
 
 ```
-ask_expert(
+mcp__plugin_halyard_ask-expert__ask_expert(
   prompt: "Your question here",
   role: "designer"  // or use skill: "ui-design"
 )
@@ -78,7 +78,7 @@ ask_expert(
 **With options** (when you want a specific choice):
 
 ```
-ask_expert(
+mcp__plugin_halyard_ask-expert__ask_expert(
   prompt: "Should we use server-side or client-side validation for this form?",
   role: "architect",
   options: [
@@ -91,10 +91,10 @@ ask_expert(
 
 ### 3. Check for Response (Required)
 
-`ask_expert` returns immediately after notifying the expert. You MUST call `check_response` to wait for their reply:
+`mcp__plugin_halyard_ask-expert__ask_expert` returns immediately after notifying the expert. You MUST call `mcp__plugin_halyard_ask-expert__check_response` to wait for their reply:
 
 ```
-check_response(
+mcp__plugin_halyard_ask-expert__check_response(
   conversation_id: "conversation-id-from-ask-expert",
   wait: true  // Wait up to 55 seconds for response
 )
@@ -107,7 +107,7 @@ If no response yet, call again to continue waiting.
 Retrieve the complete message history for a conversation:
 
 ```
-get_conversation(
+mcp__plugin_halyard_ask-expert__get_conversation(
   conversation_id: "conversation-id"
 )
 ```
@@ -117,7 +117,7 @@ get_conversation(
 Send a follow-up message in an existing conversation to ask clarifying questions or provide additional context:
 
 ```
-reply_to_expert(
+mcp__plugin_halyard_ask-expert__reply_to_expert(
   conversation_id: "conversation-id",
   message: "Thanks — one follow-up: should we also handle token revocation?"
 )
@@ -128,7 +128,7 @@ reply_to_expert(
 **Always call this after receiving a helpful response.** This builds organizational knowledge so experts don't get asked the same questions repeatedly.
 
 ```
-summarize_conversation(
+mcp__plugin_halyard_ask-expert__summarize_conversation(
   conversation_id: "conversation-id",
   question: "Should we use JWT or session auth for the mobile app? Our existing mobile SDK expects Bearer tokens.",
   answer: "Use JWT with refresh tokens because mobile clients need stateless auth and we already have JWT infrastructure in the API."
@@ -153,7 +153,7 @@ summarize_conversation(
 Search the knowledge base for answers from previous expert conversations **and** work summaries from past sessions. This is useful for finding information about what was discussed, decided, or built in earlier conversations — so always check here before asking an expert.
 
 ```
-search_knowledge(
+mcp__plugin_halyard_ask-expert__search_knowledge(
   query: "how do we handle authentication?"
 )
 ```
@@ -161,7 +161,7 @@ search_knowledge(
 Use this to:
 
 - **Find answers to questions that were already asked** — avoid repeating questions experts have already answered
-- **Look up work done in previous sessions** — summaries logged via `summarize_work` are searchable here
+- **Look up work done in previous sessions** — summaries logged via `mcp__plugin_halyard_ask-expert__summarize_work` are searchable here
 - **Discover past decisions and context** — understand why something was built a certain way
 
 ### 6. View User Profile
@@ -169,9 +169,9 @@ Use this to:
 View a user's expertise areas and activity, or your own:
 
 ```
-get_user_profile()
-get_user_profile(user_id: "user-id")
-get_user_profile(since: "this week")
+mcp__plugin_halyard_ask-expert__get_user_profile()
+mcp__plugin_halyard_ask-expert__get_user_profile(user_id: "user-id")
+mcp__plugin_halyard_ask-expert__get_user_profile(since: "this week")
 ```
 
 Without `since`, shows accumulated expertise. With `since`, shows time-scoped activity.
@@ -181,12 +181,12 @@ Without `since`, shows accumulated expertise. With `since`, shows time-scoped ac
 Close a conversation without capturing knowledge (not recommended):
 
 ```
-close_conversation(
+mcp__plugin_halyard_ask-expert__close_conversation(
   conversation_id: "conversation-id"
 )
 ```
 
-**Note:** Prefer using `summarize_conversation` instead, which both captures knowledge and closes the conversation.
+**Note:** Prefer using `mcp__plugin_halyard_ask-expert__summarize_conversation` instead, which both captures knowledge and closes the conversation.
 
 ## Writing Good Questions
 
@@ -226,10 +226,10 @@ both patterns. Which should I use for consistency?"
 
 ```
 // 1. Find an expert
-list_experts(skill: "ui-design")
+mcp__plugin_halyard_ask-expert__list_experts(skill: "ui-design")
 
 // 2. Ask your question (returns immediately)
-ask_expert(
+mcp__plugin_halyard_ask-expert__ask_expert(
   prompt: "The design shows cards with hover states. Should I use
            CSS transitions or Framer Motion? We use both in the codebase.",
   skill: "ui-design"
@@ -237,7 +237,7 @@ ask_expert(
 // Returns immediately: { status: "pending", conversation_id: "conv_abc123" }
 
 // 3. Wait for response (REQUIRED - ask_expert doesn't wait)
-check_response(
+mcp__plugin_halyard_ask-expert__check_response(
   conversation_id: "conv_abc123",
   wait: true
 )
@@ -245,7 +245,7 @@ check_response(
 //    Framer Motion is for complex animations like page transitions."
 
 // 4. ALWAYS summarize the knowledge gained
-summarize_conversation(
+mcp__plugin_halyard_ask-expert__summarize_conversation(
   conversation_id: "conv_abc123",
   question: "CSS transitions vs Framer Motion for card hover states?",
   answer: "Use CSS transitions for simple hover effects. Framer Motion should be reserved for complex animations like page transitions and multi-step sequences. Guideline: Simple state changes = CSS, complex/sequenced animations = Framer Motion."
@@ -254,7 +254,7 @@ summarize_conversation(
 
 ## Tips
 
-- **Search first** — Use `search_knowledge` before asking an expert; answers from past conversations and work summaries from previous sessions are all searchable
+- **Search first** — Use `mcp__plugin_halyard_ask-expert__search_knowledge` before asking an expert; answers from past conversations and work summaries from previous sessions are all searchable
 - **Be patient** — Experts are notified via Slack and may not respond immediately
 - **Continue other work** — While waiting, work on unblocked tasks
 - **One question at a time** — Keep questions focused; ask follow-ups separately

@@ -10,7 +10,7 @@ description: >-
 
 # Review Work
 
-Use the ask-expert MCP tools to query what has been done — by you, your team, or across the organization. This is useful for standups, catching up after time away, understanding context before starting new work, or reviewing what happened in a previous session.
+Use the halyard MCP tools to query what has been done — by you, your team, or across the organization. This is useful for standups, catching up after time away, understanding context before starting new work, or reviewing what happened in a previous session.
 
 ## Quick Start
 
@@ -18,13 +18,13 @@ The most common workflow is a simple search or list:
 
 ```
 // What has been done recently?
-list_knowledge(since: "this week")
+mcp__plugin_halyard_ask-expert__list_knowledge(since: "this week")
 
 // What did I work on today?
-list_knowledge(author: "me", since: "today")
+mcp__plugin_halyard_ask-expert__list_knowledge(author: "me", since: "today")
 
 // Search for something specific
-search_knowledge(query: "authentication refactor")
+mcp__plugin_halyard_ask-expert__search_knowledge(query: "authentication refactor")
 ```
 
 ## Available Tools
@@ -34,7 +34,7 @@ search_knowledge(query: "authentication refactor")
 Semantic search across all knowledge entries — work summaries, expert Q&A, decisions, and process docs. Use this when you're looking for something specific or want to find relevant context.
 
 ```
-search_knowledge(query: "your search query")
+mcp__plugin_halyard_ask-expert__search_knowledge(query: "your search query")
 ```
 
 **Parameters:**
@@ -51,13 +51,13 @@ search_knowledge(query: "your search query")
 
 ```
 // What decisions were made about the database?
-search_knowledge(query: "database", type: "DECISION")
+mcp__plugin_halyard_ask-expert__search_knowledge(query: "database", type: "DECISION")
 
 // What did I work on this week?
-search_knowledge(query: "work completed", author: "me", since: "this week")
+mcp__plugin_halyard_ask-expert__search_knowledge(query: "work completed", author: "me", since: "this week")
 
 // Find past answers about deployment
-search_knowledge(query: "deployment process", type: "QA")
+mcp__plugin_halyard_ask-expert__search_knowledge(query: "deployment process", type: "QA")
 ```
 
 ### 2. List Knowledge
@@ -65,7 +65,7 @@ search_knowledge(query: "deployment process", type: "QA")
 Chronological listing of knowledge entries. Use this when you want to see recent activity without a specific search query — great for standups and catch-ups.
 
 ```
-list_knowledge()
+mcp__plugin_halyard_ask-expert__list_knowledge()
 ```
 
 **Parameters:**
@@ -81,16 +81,16 @@ list_knowledge()
 
 ```
 // Everything from today
-list_knowledge(since: "today")
+mcp__plugin_halyard_ask-expert__list_knowledge(since: "today")
 
 // My work output this week
-list_knowledge(author: "me", type: "WORK_OUTPUT", since: "this week")
+mcp__plugin_halyard_ask-expert__list_knowledge(author: "me", type: "WORK_OUTPUT", since: "this week")
 
 // Recent decisions
-list_knowledge(type: "DECISION", limit: 5)
+mcp__plugin_halyard_ask-expert__list_knowledge(type: "DECISION", limit: 5)
 
 // What happened yesterday?
-list_knowledge(since: "yesterday")
+mcp__plugin_halyard_ask-expert__list_knowledge(since: "yesterday")
 ```
 
 ### 3. View User Profile
@@ -98,19 +98,19 @@ list_knowledge(since: "yesterday")
 See a user's expertise areas and recent activity:
 
 ```
-get_user_profile()
-get_user_profile(since: "this week")
-get_user_profile(user_id: "user-id")
+mcp__plugin_halyard_ask-expert__get_user_profile()
+mcp__plugin_halyard_ask-expert__get_user_profile(since: "this week")
+mcp__plugin_halyard_ask-expert__get_user_profile(user_id: "user-id")
 ```
 
 Without `since`, shows accumulated expertise and stats. With `since`, shows time-scoped activity including conversations, knowledge entries, and sessions.
 
 ### 4. Log Work (When Needed)
 
-If during your review you realize work from the current session should be recorded, use `summarize_work`:
+If during your review you realize work from the current session should be recorded, use `mcp__plugin_halyard_ask-expert__summarize_work`:
 
 ```
-summarize_work(
+mcp__plugin_halyard_ask-expert__summarize_work(
   title: "Brief description of what was done",
   summary: "Detailed explanation of the work, context, and decisions made",
   tags: ["relevant", "tags"]
@@ -141,32 +141,32 @@ Entries in the knowledge base fall into these categories:
 
 ### Morning standup / catch-up
 ```
-list_knowledge(author: "me", since: "yesterday")
+mcp__plugin_halyard_ask-expert__list_knowledge(author: "me", since: "yesterday")
 ```
 
 ### Starting a new task — find relevant context
 ```
-search_knowledge(query: "describe the feature or area you're about to work on")
+mcp__plugin_halyard_ask-expert__search_knowledge(query: "describe the feature or area you're about to work on")
 ```
 
 ### Weekly review
 ```
-list_knowledge(since: "this week")
+mcp__plugin_halyard_ask-expert__list_knowledge(since: "this week")
 ```
 
 ### Find out what a teammate worked on
 ```
-search_knowledge(query: "what was done", since: "this week")
+mcp__plugin_halyard_ask-expert__search_knowledge(query: "what was done", since: "this week")
 ```
 
 ### Check if a question was already answered
 ```
-search_knowledge(query: "your question", type: "QA")
+mcp__plugin_halyard_ask-expert__search_knowledge(query: "your question", type: "QA")
 ```
 
 ## Tips
 
-- **Start broad, then narrow** — Try `list_knowledge` first to see what's there, then use `search_knowledge` for specifics
+- **Start broad, then narrow** — Try `mcp__plugin_halyard_ask-expert__list_knowledge` first to see what's there, then use `mcp__plugin_halyard_ask-expert__search_knowledge` for specifics
 - **Use time filters** — `since` is your best friend for scoping results to relevant timeframes
 - **Use `"me"` for your own work** — The `author: "me"` filter resolves to your user automatically
 - **Check QA entries before asking experts** — Someone may have already asked the same question

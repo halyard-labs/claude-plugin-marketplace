@@ -2,7 +2,7 @@
   "mcpServers": {
     "ask-expert": {
       "type": "http",
-      "url": "https://mcp.ask-expert.ai"
+      "url": "https://mcp.usehalyard.ai"
     }
   }
 }
