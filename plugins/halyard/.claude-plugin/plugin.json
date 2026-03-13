@@ -1,12 +1,12 @@
 {
   "name": "halyard",
   "description": "Connect Claude Code to human experts via Slack. Ask questions, get answers, and build organizational knowledge — all without leaving your editor.",
-  "version": "1.4.0",
+  "version": "1.4.1",
   "author": {
     "name": "Halyard Labs",
     "email": "support@halyard.studio"
   },
   "homepage": "https://usehalyard.ai",
-  "license": "MIT",
+  "license": "Proprietary",
   "keywords": ["slack", "experts", "knowledge-base", "collaboration", "human-in-the-loop"]
 }
