@@ -137,11 +137,13 @@ mcp__plugin_halyard_ask-expert__summarize_conversation(
 
 **Parameters:**
 
-| Parameter         | Description                                                  |
-| ----------------- | ------------------------------------------------------------ |
-| `conversation_id` | The conversation ID from ask_expert (required)               |
-| `question`        | The question or context that was asked (required)            |
-| `answer`          | The answer, decision, or guidance from the expert (required) |
+| Parameter         | Description                                                                         |
+| ----------------- | ----------------------------------------------------------------------------------- |
+| `conversation_id` | The conversation ID from ask_expert (required)                                      |
+| `question`        | The question or context that was asked (required)                                   |
+| `answer`          | The answer, decision, or guidance from the expert (required)                        |
+| `source_provider` | Source system: `"github"`, `"slack"`, `"linear"`, `"claude"`, `"codex"`, `"notion"` |
+| `source_url`      | Link to the source context (e.g., the PR that prompted this question)               |
 
 **Write effective summaries:**
 
@@ -157,6 +159,16 @@ mcp__plugin_halyard_ask-expert__search_knowledge(
   query: "how do we handle authentication?"
 )
 ```
+
+**Parameters:**
+
+| Parameter | Description                                                                            |
+| --------- | -------------------------------------------------------------------------------------- |
+| `query`   | Natural language search query (required)                                               |
+| `type`    | Filter by type: `"WORK_OUTPUT"`, `"DECISION"`, `"PROCESS"`, `"CONTEXT"`                |
+| `author`  | Filter by author — use `"me"` for your own entries                                     |
+| `since`   | Time filter: `"today"`, `"yesterday"`, `"this week"`, `"7d"`, `"30d"`, or an ISO date |
+| `limit`   | Max results to return                                                                  |
 
 Use this to:
 
