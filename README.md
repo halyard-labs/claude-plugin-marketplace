@@ -62,10 +62,14 @@ Instead of having each teammate install manually, add the marketplace and plugin
 
 Commit this file to your repo — teammates will get the plugin enabled on their next session without any manual setup.
 
+## Codex CLI support
+
+The halyard skills follow the [Agent Skills standard](https://agentskills.io) and work with Codex CLI. See [`plugins/halyard/codex/README.md`](plugins/halyard/codex/README.md) for setup instructions.
+
 ## Prerequisites
 
 - An account at [usehalyard.ai](https://usehalyard.ai) with your Slack workspace connected
-- Claude Code v1.0.33 or later
+- Claude Code v1.0.33 or later (for Claude Code), or [Codex CLI](https://github.com/openai/codex) (for Codex)
 
 ## After installation
 
