@@ -213,6 +213,28 @@ mcp__plugin_halyard_ask-expert__search_knowledge(query: "what was done", since: 
 mcp__plugin_halyard_ask-expert__search_knowledge(query: "your question")
 ```
 
+## Reviewing Reflections
+
+When reviewing past work, look for reflection bullets in work summaries. These capture what worked, what didn't, learnings, and suggestions from previous sessions.
+
+Use reflections to:
+
+- **Spot patterns** — If multiple sessions mention the same dead end or workaround, that's a signal worth surfacing
+- **Inform current work** — Before starting a task, check if past reflections flagged relevant gotchas or effective approaches
+- **Surface suggestions** — Past sessions may have recommended improvements that haven't been acted on yet
+
+```
+// Find sessions with reflections about a specific area
+mcp__plugin_halyard_ask-expert__search_knowledge(query: "reflections on deployment", type: "WORK_OUTPUT")
+
+// Review recent reflections across the team
+mcp__plugin_halyard_ask-expert__list_knowledge(type: "WORK_OUTPUT", since: "this week", include_content: true)
+```
+
+When presenting a review to the user, call out any notable reflections — especially recurring themes or unactioned suggestions. Share one that feels relevant and ask if the user has thoughts:
+
+> *One pattern I noticed across recent sessions: [reflection]. Worth addressing?*
+
 ## Tips
 
 - **Start broad, then narrow** — Try `mcp__plugin_halyard_ask-expert__list_knowledge` first to see what's there, then use `mcp__plugin_halyard_ask-expert__search_knowledge` for specifics
