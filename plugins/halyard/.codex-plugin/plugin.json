@@ -1,0 +1,15 @@
+{
+  "name": "halyard",
+  "version": "1.6.0",
+  "description": "Connect Codex to human experts via Slack. Ask questions, get answers, and build organizational knowledge — all without leaving your editor.",
+  "author": {
+    "name": "Halyard Labs",
+    "email": "support@halyard.studio",
+    "url": "https://usehalyard.ai"
+  },
+  "homepage": "https://usehalyard.ai",
+  "license": "Proprietary",
+  "keywords": ["slack", "experts", "knowledge-base", "collaboration", "human-in-the-loop"],
+  "skills": "./skills/",
+  "mcpServers": "./.mcp.json"
+}

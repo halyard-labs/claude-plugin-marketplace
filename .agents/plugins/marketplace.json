@@ -1,0 +1,20 @@
+{
+  "name": "halyard-labs",
+  "interface": {
+    "displayName": "Halyard Labs"
+  },
+  "plugins": [
+    {
+      "name": "halyard",
+      "source": {
+        "source": "local",
+        "path": "./plugins/halyard"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Collaboration"
+    }
+  ]
+}
