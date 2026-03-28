@@ -64,7 +64,36 @@ Commit this file to your repo — teammates will get the plugin enabled on their
 
 ## Codex CLI support
 
-The halyard skills follow the [Agent Skills standard](https://agentskills.io) and work with Codex CLI. See [`plugins/halyard/codex/README.md`](plugins/halyard/codex/README.md) for setup instructions.
+The halyard plugin is also available as a Codex plugin. The skills and MCP server are shared between Claude Code and Codex.
+
+### From a local clone
+
+```bash
+# Add the Codex marketplace
+codex plugin marketplace add ./path/to/claude-plugin-marketplace
+
+# Install the plugin
+codex plugin install halyard@halyard-labs
+```
+
+### From GitHub
+
+```bash
+# Add the Codex marketplace
+codex plugin marketplace add halyard-labs/claude-plugin-marketplace
+
+# Install the plugin
+codex plugin install halyard@halyard-labs
+```
+
+### Manual MCP setup (alternative)
+
+If you prefer manual configuration instead of the plugin system:
+
+```bash
+codex mcp add ask-expert --url https://mcp.usehalyard.ai
+codex mcp login ask-expert
+```
 
 ## Prerequisites
 
@@ -113,14 +142,20 @@ To have this plugin auto-suggested when teammates open a project, add this to yo
 
 ```
 claude-plugin-marketplace/
+├── .agents/
+│   └── plugins/
+│       └── marketplace.json      # Codex marketplace catalog
 ├── .claude-plugin/
-│   └── marketplace.json          # Marketplace catalog
+│   └── marketplace.json          # Claude Code marketplace catalog
 ├── plugins/
 │   └── halyard/
 │       ├── .claude-plugin/
-│       │   └── plugin.json       # Plugin manifest
+│       │   └── plugin.json       # Claude Code plugin manifest
+│       ├── .codex-plugin/
+│       │   └── plugin.json       # Codex plugin manifest
+│       ├── assets/               # Brand assets (logos)
 │       ├── hooks/
-│       │   └── hooks.json        # Session hooks (Stop hook)
+│       │   └── hooks.json        # Session hooks (Claude Code only)
 │       ├── skills/
 │       │   ├── ask-for-help/
 │       │   │   └── SKILL.md      # Ask experts for help
@@ -128,7 +163,7 @@ claude-plugin-marketplace/
 │       │   │   └── SKILL.md      # Log work to knowledge base
 │       │   └── review-work/
 │       │       └── SKILL.md      # Review past work and decisions
-│       └── .mcp.json             # MCP server config
+│       └── .mcp.json             # MCP server config (shared)
 ├── LICENSE
 └── README.md
 ```
