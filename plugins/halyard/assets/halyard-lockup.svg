@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 280 48" fill="none">
+  <!-- Halyard Lockup — Mark + Wordmark (dark mode default) -->
+  <rect width="48" height="48" rx="6" fill="#1C1A16"/>
+  <path d="M 18.000,24.750 Q 18.000,22.500 16.821,24.416 L 7.179,40.085 Q 6.000,42.000 8.250,42.000 L 15.750,42.000 Q 18.000,42.000 18.000,39.750 Z" fill="#E8DFD0" opacity="0.8"/>
+  <path d="M 42.000,8.250 Q 42.000,6.000 40.808,7.908 L 20.693,40.092 Q 19.500,42.000 21.750,42.000 L 39.750,42.000 Q 42.000,42.000 42.000,39.750 Z" fill="#E8DFD0"/>
+  <text x="64" y="34" font-family="'Playfair Display', Georgia, serif" font-size="30" font-weight="400" fill="#E8DFD0" letter-spacing="-0.5">Halyard</text>
+</svg>
