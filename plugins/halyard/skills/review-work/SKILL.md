@@ -1,11 +1,13 @@
 ---
 name: review-work
 description: >-
-  Review what you or your team have been working on by querying the knowledge
-  base. Search work summaries, decisions, and Q&A from past sessions to
-  understand recent activity and find context. Use when the user asks what
-  was done, what happened, what changed, wants a standup summary, needs
-  context on previous work, or asks about past decisions.
+  Query the team knowledge base for recent activity, past decisions, and work
+  context. Use when the user asks what was done, what happened, what changed,
+  wants a standup summary, daily update, weekly review, needs to catch up, get
+  up to speed, understand previous work, or asks about past decisions. Triggers
+  on 'show me recent work', 'what did the team do', 'review activity', 'what's
+  been going on', 'standup', 'what was accomplished'. Searches work summaries,
+  expert Q&A, and decision records.
 ---
 
 # Review Work
