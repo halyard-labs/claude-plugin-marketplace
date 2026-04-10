@@ -1,12 +1,23 @@
 {
-  "description": "Evaluates whether session work should be logged before stopping",
+  "description": "Evaluates whether session work or durable knowledge should be logged before stopping",
   "hooks": {
+    "UserPromptSubmit": [
+      {
+        "hooks": [
+          {
+            "type": "agent",
+            "prompt": "Review the pending user prompt. If it does not contain durable, reusable knowledge, respond {\"continue\": true}.\n\nDurable knowledge includes project decisions, requirements, explanations, processes, historical context, or answers that are likely to help in a future session. Skip greetings, transient status updates, coordination chatter, secrets, or one-off logistics.\n\nIf the prompt does contain durable knowledge, respond with {\"continue\": true, \"hookSpecificOutput\": {\"additionalContext\": \"The latest user prompt appears to contain reusable knowledge. If you use it as authoritative context, an answer, a requirement, or a decision during this task, capture it before finishing with mcp__plugin_halyard_ask-expert__summarize_work using the most appropriate entry_type (DECISION, PROCESS, or CONTEXT), unless the same knowledge is already captured in this session.\"}}.",
+            "timeout": 60
+          }
+        ]
+      }
+    ],
     "Stop": [
       {
         "hooks": [
           {
             "type": "agent",
-            "prompt": "If stop_hook_active is true, respond {\"ok\": true}.\n\nOtherwise, read the transcript at transcript_path. If summarize_work was already called, respond {\"ok\": true}.\n\nIf not, decide if the session had meaningful work (code changes, decisions, debugging, research). Skip trivial sessions (brief Q&A, file reads, ask-expert queries, casual chat).\n\nTrivial: {\"ok\": true}\nMeaningful and not logged: {\"ok\": false, \"reason\": \"Call mcp__plugin_halyard_ask-expert__summarize_work with a title and summary of what was accomplished.\"}",
+            "prompt": "If stop_hook_active is true, respond {\"ok\": true}.\n\nOtherwise, read the transcript at transcript_path. If the session already captured its meaningful outputs with summarize_work, respond {\"ok\": true}.\n\nIf not, decide whether the session produced either:\n1. meaningful work (code changes, decisions, debugging, research), or\n2. durable reusable knowledge from the user (project answers, requirements, explanations, processes, or historical context that would help in a future session).\n\nSkip trivial sessions such as brief Q&A, simple file reads, greetings, transient coordination, ask-expert queries without meaningful outcomes, or one-off logistics. Do not ask to log secrets.\n\nTrivial or already logged: {\"ok\": true}\nMeaningful work not logged: {\"ok\": false, \"reason\": \"Call mcp__plugin_halyard_ask-expert__summarize_work with a title and summary of what was accomplished.\"}\nDurable user knowledge not logged: {\"ok\": false, \"reason\": \"Call mcp__plugin_halyard_ask-expert__summarize_work to capture the reusable knowledge from this session. Use entry_type DECISION, PROCESS, or CONTEXT as appropriate.\"}",
             "timeout": 60
           }
         ]
