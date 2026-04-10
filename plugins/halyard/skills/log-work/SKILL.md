@@ -1,6 +1,12 @@
 ---
 name: log-work
-description: Log non-trivial work using the summarize_work tool once all work has been completed.
+description: >-
+  Log completed work to the team knowledge base. Use when finishing a session,
+  completing a task, wrapping up, making a decision, or when prompted to record,
+  document, save, or summarize what was done. Triggers on 'log this', 'write this
+  up', 'save to knowledge base', 'document what we did', 'record this decision',
+  'summarize this session'. Captures work summaries, architectural decisions,
+  process documentation, and learnings for team visibility.
 ---
 
 # Log Work

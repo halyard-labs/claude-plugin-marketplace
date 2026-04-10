@@ -1,7 +1,7 @@
 {
   "name": "halyard",
   "description": "Connect Claude Code to human experts via Slack. Ask questions, get answers, and build organizational knowledge — all without leaving your editor.",
-  "version": "1.6.0",
+  "version": "1.7.0",
   "author": {
     "name": "Halyard Labs",
     "email": "support@halyard.studio"

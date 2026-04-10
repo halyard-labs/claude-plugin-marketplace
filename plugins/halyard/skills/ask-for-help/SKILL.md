@@ -1,8 +1,12 @@
 ---
 name: ask-for-help
 description: >-
-  Send questions to human experts via Slack when you encounter ambiguity,
-  need decisions, or require information not in the codebase. ALWAYS
+  Route questions to human experts via Slack and capture answers as organizational
+  knowledge. Use when stuck, blocked, need human input, facing ambiguity, making
+  design decisions with multiple valid approaches, need domain expertise not in the
+  codebase, want to check with someone, or need verification before significant
+  effort. Triggers on 'ask someone', 'get help', 'need an expert', 'check with
+  the team', 'I'm stuck', 'get a second opinion', 'who should I ask'. Always
   summarize helpful answers to build organizational knowledge.
 ---
 
