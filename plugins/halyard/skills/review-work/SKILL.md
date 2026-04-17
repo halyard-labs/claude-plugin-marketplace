@@ -16,17 +16,17 @@ Use the halyard MCP tools to query what has been done — by you, your team, or 
 
 ## Quick Start
 
-The most common workflow is a simple search or list:
+**Search when you have a topic. List when you don't.**
 
 ```
-// What has been done recently?
-mcp__plugin_halyard_ask-expert__list_knowledge(since: "this week")
-
-// What did I work on today?
-mcp__plugin_halyard_ask-expert__list_knowledge(author: "me", since: "today")
-
-// Search for something specific
+// Looking for something specific? Search first.
 mcp__plugin_halyard_ask-expert__search_knowledge(query: "authentication refactor")
+
+// General catch-up without a topic? List with filters.
+mcp__plugin_halyard_ask-expert__list_knowledge(author: "me", since: "this week")
+
+// Need to see how an entry connects to others? Explore its graph.
+mcp__plugin_halyard_ask-expert__explore_knowledge(entry_id: "entry-id")
 ```
 
 ## Available Tools
@@ -239,7 +239,7 @@ When presenting a review to the user, call out any notable reflections — espec
 
 ## Tips
 
-- **Start broad, then narrow** — Try `mcp__plugin_halyard_ask-expert__list_knowledge` first to see what's there, then use `mcp__plugin_halyard_ask-expert__search_knowledge` for specifics
+- **Search when you have a topic, list when you don't** — If the ask is specific ("what do we know about auth?"), use `mcp__plugin_halyard_ask-expert__search_knowledge`. If it's a general catch-up ("what happened this week?"), use `mcp__plugin_halyard_ask-expert__list_knowledge` with time/author filters.
 - **Use time filters** — `since` is your best friend for scoping results to relevant timeframes
 - **Use `"me"` for your own work** — The `author: "me"` filter resolves to your user automatically
 - **Search before asking experts** — Someone may have already asked the same question

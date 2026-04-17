@@ -14,12 +14,25 @@ description: >-
 
 Use the halyard MCP tools to get human input when you're blocked, need clarification, or face decisions that require human judgment. **ALWAYS summarize helpful answers** to build a knowledge base.
 
+## Before Asking: Check the Knowledge Base
+
+Before routing to a human, search for existing answers. Experts get frustrated when asked questions that were already answered in a previous session, and work summaries from past sessions are searchable too.
+
+```
+mcp__plugin_halyard_ask-expert__search_knowledge(
+  query: "describe your question topic"
+)
+```
+
+If the search returns a relevant answer, use it directly and skip the expert workflow. If not, proceed to the workflow below.
+
 ## Complete Workflow
 
 Every interaction should follow this pattern:
 
 ```
-1. mcp__plugin_halyard_ask-expert__list_experts()          → Find the right expert
+0. mcp__plugin_halyard_ask-expert__search_knowledge(...)   → Check if this was already answered
+1. mcp__plugin_halyard_ask-expert__list_team()             → Find the right expert
 2. mcp__plugin_halyard_ask-expert__ask_expert(...)         → Send your question (returns immediately)
 3. mcp__plugin_halyard_ask-expert__check_response(...)     → REQUIRED: Wait for the response
 4. mcp__plugin_halyard_ask-expert__summarize_conversation  → CRITICAL: Capture what you learned
@@ -46,19 +59,45 @@ Do not ask for help when:
 
 ## Available Tools
 
-### 1. List Available Experts
+### 1. Search Knowledge Base (check this first)
+
+Semantic search across past expert Q&A and work summaries from previous sessions. **Always try this before asking an expert** — the answer may already exist.
+
+```
+mcp__plugin_halyard_ask-expert__search_knowledge(
+  query: "how do we handle authentication?"
+)
+```
+
+**Parameters:**
+
+| Parameter | Description                                                                            |
+| --------- | -------------------------------------------------------------------------------------- |
+| `query`   | Natural language search query (required)                                               |
+| `type`    | Filter by type: `"WORK_OUTPUT"`, `"DECISION"`, `"PROCESS"`, `"CONTEXT"`                |
+| `author`  | Filter by author — use `"me"` for your own entries                                     |
+| `since`   | Time filter: `"today"`, `"yesterday"`, `"this week"`, `"7d"`, `"30d"`, or an ISO date |
+| `limit`   | Max results to return                                                                  |
+
+Use this to:
+
+- **Find answers to questions that were already asked** — avoid repeating questions experts have already answered
+- **Look up work done in previous sessions** — summaries logged via `mcp__plugin_halyard_ask-expert__summarize_work` are searchable here
+- **Discover past decisions and context** — understand why something was built a certain way
+
+### 2. List the Team
 
 Before asking, check who's available:
 
 ```
-mcp__plugin_halyard_ask-expert__list_experts()
-mcp__plugin_halyard_ask-expert__list_experts(role: "designer")
-mcp__plugin_halyard_ask-expert__list_experts(skill: "security")
-mcp__plugin_halyard_ask-expert__list_experts(available_only: true)
-mcp__plugin_halyard_ask-expert__list_experts(query: "who knows about deployment?")
+mcp__plugin_halyard_ask-expert__list_team()
+mcp__plugin_halyard_ask-expert__list_team(role: "designer")
+mcp__plugin_halyard_ask-expert__list_team(skill: "security")
+mcp__plugin_halyard_ask-expert__list_team(available_only: true)
+mcp__plugin_halyard_ask-expert__list_team(query: "who knows about deployment?")
 ```
 
-### 2. Ask an Expert
+### 3. Ask an Expert
 
 Send a question to an expert by role or skill:
 
@@ -93,7 +132,7 @@ mcp__plugin_halyard_ask-expert__ask_expert(
 )
 ```
 
-### 3. Check for Response (Required)
+### 4. Check for Response (Required)
 
 `mcp__plugin_halyard_ask-expert__ask_expert` returns immediately after notifying the expert. You MUST call `mcp__plugin_halyard_ask-expert__check_response` to wait for their reply:
 
@@ -106,7 +145,7 @@ mcp__plugin_halyard_ask-expert__check_response(
 
 If no response yet, call again to continue waiting.
 
-### 3b. Get Full Conversation History
+### 4b. Get Full Conversation History
 
 Retrieve the complete message history for a conversation:
 
@@ -116,7 +155,7 @@ mcp__plugin_halyard_ask-expert__get_conversation(
 )
 ```
 
-### 3c. Reply to Expert
+### 4c. Reply to Expert
 
 Send a follow-up message in an existing conversation to ask clarifying questions or provide additional context:
 
@@ -127,7 +166,7 @@ mcp__plugin_halyard_ask-expert__reply_to_expert(
 )
 ```
 
-### 4. Summarize What You Learned (CRITICAL)
+### 5. Summarize What You Learned (CRITICAL)
 
 **Always call this after receiving a helpful response.** This builds organizational knowledge so experts don't get asked the same questions repeatedly.
 
@@ -153,32 +192,6 @@ mcp__plugin_halyard_ask-expert__summarize_conversation(
 
 - **question**: Write it so someone with a similar question would recognize it as relevant
 - **answer**: Include key reasoning and context that makes the answer useful
-
-### 5. Search Knowledge Base
-
-Search the knowledge base for answers from previous expert conversations **and** work summaries from past sessions. This is useful for finding information about what was discussed, decided, or built in earlier conversations — so always check here before asking an expert.
-
-```
-mcp__plugin_halyard_ask-expert__search_knowledge(
-  query: "how do we handle authentication?"
-)
-```
-
-**Parameters:**
-
-| Parameter | Description                                                                            |
-| --------- | -------------------------------------------------------------------------------------- |
-| `query`   | Natural language search query (required)                                               |
-| `type`    | Filter by type: `"WORK_OUTPUT"`, `"DECISION"`, `"PROCESS"`, `"CONTEXT"`                |
-| `author`  | Filter by author — use `"me"` for your own entries                                     |
-| `since`   | Time filter: `"today"`, `"yesterday"`, `"this week"`, `"7d"`, `"30d"`, or an ISO date |
-| `limit`   | Max results to return                                                                  |
-
-Use this to:
-
-- **Find answers to questions that were already asked** — avoid repeating questions experts have already answered
-- **Look up work done in previous sessions** — summaries logged via `mcp__plugin_halyard_ask-expert__summarize_work` are searchable here
-- **Discover past decisions and context** — understand why something was built a certain way
 
 ### 6. View User Profile
 
@@ -242,7 +255,7 @@ both patterns. Which should I use for consistency?"
 
 ```
 // 1. Find an expert
-mcp__plugin_halyard_ask-expert__list_experts(skill: "ui-design")
+mcp__plugin_halyard_ask-expert__list_team(skill: "ui-design")
 
 // 2. Ask your question (returns immediately)
 mcp__plugin_halyard_ask-expert__ask_expert(
