@@ -1,6 +1,6 @@
 {
   "name": "halyard",
-  "version": "1.7.1",
+  "version": "1.8.0",
   "description": "Connect Codex to human experts via Slack. Ask questions, get answers, and build organizational knowledge — all without leaving your editor.",
   "author": {
     "name": "Halyard Labs",

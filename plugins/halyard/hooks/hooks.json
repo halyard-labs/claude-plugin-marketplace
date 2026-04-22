@@ -6,8 +6,20 @@
         "hooks": [
           {
             "type": "agent",
-            "prompt": "Review the pending user prompt. If it does not contain durable, reusable knowledge, respond {\"continue\": true}.\n\nDurable knowledge includes project decisions, requirements, explanations, processes, historical context, or answers that are likely to help in a future session. Skip greetings, transient status updates, coordination chatter, secrets, or one-off logistics.\n\nIf the prompt does contain durable knowledge, respond with {\"continue\": true, \"hookSpecificOutput\": {\"additionalContext\": \"The latest user prompt appears to contain reusable knowledge. If you use it as authoritative context, an answer, a requirement, or a decision during this task, capture it before finishing with mcp__plugin_halyard_ask-expert__summarize_work using the most appropriate entry_type (DECISION, PROCESS, or CONTEXT), unless the same knowledge is already captured in this session.\"}}.",
+            "prompt": "Review the pending user prompt. If it does not contain durable, reusable knowledge, respond {\"continue\": true}.\n\nDurable knowledge includes project decisions, requirements, explanations, processes, historical context, or answers that are likely to help in a future session. Skip greetings, transient status updates, coordination chatter, secrets, or one-off logistics.\n\nIf the prompt does contain durable knowledge, respond with {\"continue\": true, \"hookSpecificOutput\": {\"additionalContext\": \"The latest user prompt appears to contain reusable knowledge. If you use it as authoritative context, an answer, a requirement, or a decision during this task, capture it before finishing with mcp__plugin_halyard_ask-expert__summarize_work using the most appropriate entry_type (DECISION, PROCESS, or CONTEXT), unless the same knowledge is already captured in this session. If prior work on this topic may already exist, also consider calling mcp__plugin_halyard_ask-expert__search_knowledge before planning or delegating.\"}}.",
             "timeout": 60
+          }
+        ]
+      }
+    ],
+    "PreToolUse": [
+      {
+        "matcher": "Task|WebSearch|WebFetch",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "$CLAUDE_PLUGIN_ROOT/hooks/search-first-nudge.sh",
+            "timeout": 5
           }
         ]
       }
