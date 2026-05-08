@@ -1,12 +1,12 @@
 {
   "name": "halyard",
-  "description": "Connect Claude Code to human experts via Slack. Ask questions, get answers, and build organizational knowledge — all without leaving your editor.",
-  "version": "1.8.0",
+  "description": "Shared team memory for Claude Code. Log decisions, recall past work, gather context, and ask teammates on Slack when you need a human.",
+  "version": "1.8.1",
   "author": {
     "name": "Halyard Labs",
     "email": "support@halyard.studio"
   },
   "homepage": "https://usehalyard.ai",
   "license": "Proprietary",
-  "keywords": ["slack", "experts", "knowledge-base", "collaboration", "human-in-the-loop"]
+  "keywords": ["slack", "experts", "knowledge-base", "collaboration", "human-in-the-loop", "memory", "context", "knowledge", "organizational-knowledge", "search", "history"]
 }

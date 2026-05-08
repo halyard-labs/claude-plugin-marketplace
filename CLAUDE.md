@@ -6,13 +6,14 @@ Plugin marketplace for the halyard Claude Code plugin.
 
 **Every commit MUST bump the plugin version.** Use the `plugin-version-bump` skill on every commit. The plugin cache keys on version — stale versions mean users get outdated plugins.
 
-**Keep all version fields in sync.** When bumping a plugin's version, update all 4 locations:
+**Keep all version fields in sync.** When bumping a plugin's version, update all 3 locations:
 - `plugins/halyard/.claude-plugin/plugin.json` (Claude Code manifest)
 - `plugins/halyard/.codex-plugin/plugin.json` (Codex manifest)
-- `.claude-plugin/marketplace.json` (Claude Code marketplace)
-- `.agents/plugins/marketplace.json` (Codex marketplace)
+- `.claude-plugin/marketplace.json` — the plugin entry's `version` field (not `metadata.version`)
 
-Mismatched versions break auto-update — clients won't detect new versions if marketplace files are stale.
+Mismatched versions break auto-update — Claude Code won't detect new versions if the marketplace plugin entry is stale. The Codex marketplace (`.agents/plugins/marketplace.json`) intentionally has no plugin version field; don't add one.
+
+**Do not add `metadata.version` back to `.claude-plugin/marketplace.json`.** It was removed deliberately — the catalog-level version was never bumped reliably and adding it back creates a sync surface we don't maintain.
 
 ## Structure
 

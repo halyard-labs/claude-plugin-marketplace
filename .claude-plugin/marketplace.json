@@ -5,18 +5,17 @@
     "email": "support@halyard.studio"
   },
   "metadata": {
-    "description": "Plugins for connecting Claude Code to human experts via Slack. Ask questions, build knowledge, and keep your team in the loop.",
-    "version": "1.0.2"
+    "description": "Shared team memory for AI coding agents. Log decisions, recall past work, and route questions to humans on Slack."
   },
   "plugins": [
     {
       "name": "halyard",
       "source": "./plugins/halyard",
-      "description": "Connect Claude Code to human experts via Slack. Adds the ask-for-help skill and the halyard MCP server so you can query teammates, get decisions, and build a searchable knowledge base — all without leaving your editor.",
-      "version": "1.8.0",
+      "description": "Shared team memory for Claude Code. The halyard MCP server and skills (log-work, review-work, gather-context, ask-for-help) capture decisions, surface prior context, and route hard questions to teammates on Slack.",
+      "version": "1.8.1",
       "category": "collaboration",
-      "tags": ["slack", "experts", "knowledge-base", "human-in-the-loop", "collaboration"],
-      "keywords": ["slack", "experts", "knowledge", "ask", "help", "collaboration"]
+      "tags": ["slack", "experts", "knowledge-base", "human-in-the-loop", "collaboration", "memory", "context", "knowledge", "organizational-knowledge", "search", "history"],
+      "keywords": ["slack", "experts", "knowledge-base", "human-in-the-loop", "collaboration", "memory", "context", "knowledge", "organizational-knowledge", "search", "history"]
     }
   ]
 }
