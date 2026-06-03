@@ -71,9 +71,15 @@ The halyard plugin is also available as a Codex plugin. The skills and MCP serve
 ```bash
 # Add the Codex marketplace
 codex plugin marketplace add ./path/to/claude-plugin-marketplace
+```
 
-# Install the plugin
-codex plugin install halyard@halyard-labs
+Then launch Codex and open the plugin picker to install `halyard`:
+
+```bash
+codex
+# In the session, run:
+/plugins
+# Select the halyard-labs marketplace, choose halyard, and install.
 ```
 
 ### From GitHub
@@ -81,10 +87,9 @@ codex plugin install halyard@halyard-labs
 ```bash
 # Add the Codex marketplace
 codex plugin marketplace add halyard-labs/claude-plugin-marketplace
-
-# Install the plugin
-codex plugin install halyard@halyard-labs
 ```
+
+Then launch Codex and install `halyard` from the `/plugins` picker (as above).
 
 ### Manual MCP setup (alternative)
 
