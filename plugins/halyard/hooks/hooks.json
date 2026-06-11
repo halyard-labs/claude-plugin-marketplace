@@ -1,6 +1,17 @@
 {
-  "description": "Evaluates whether session work or durable knowledge should be logged before stopping",
+  "description": "Orients sessions toward the team knowledge base and gently nudges capture of session outcomes",
   "hooks": {
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "$CLAUDE_PLUGIN_ROOT/hooks/session-knowledge-context.sh",
+            "timeout": 5
+          }
+        ]
+      }
+    ],
     "UserPromptSubmit": [
       {
         "hooks": [
@@ -14,7 +25,7 @@
     ],
     "PreToolUse": [
       {
-        "matcher": "Task|WebSearch|WebFetch",
+        "matcher": "Task|WebSearch|WebFetch|Edit|Write|MultiEdit|NotebookEdit",
         "hooks": [
           {
             "type": "command",
@@ -28,9 +39,9 @@
       {
         "hooks": [
           {
-            "type": "agent",
-            "prompt": "If stop_hook_active is true, respond {\"ok\": true}.\n\nOtherwise, read the transcript at transcript_path. If the session already captured its meaningful outputs with summarize_work, respond {\"ok\": true}.\n\nIf not, decide whether the session produced either:\n1. meaningful work (code changes, decisions, debugging, research), or\n2. durable reusable knowledge from the user (project answers, requirements, explanations, processes, or historical context that would help in a future session).\n\nSkip trivial sessions such as brief Q&A, simple file reads, greetings, transient coordination, ask-expert queries without meaningful outcomes, or one-off logistics. Do not ask to log secrets.\n\nTrivial or already logged: {\"ok\": true}\nMeaningful work not logged: {\"ok\": false, \"reason\": \"Call mcp__plugin_halyard_ask-expert__summarize_work with a title and summary of what was accomplished.\"}\nDurable user knowledge not logged: {\"ok\": false, \"reason\": \"Call mcp__plugin_halyard_ask-expert__summarize_work to capture the reusable knowledge from this session. Use entry_type DECISION, PROCESS, or CONTEXT as appropriate.\"}",
-            "timeout": 60
+            "type": "command",
+            "command": "$CLAUDE_PLUGIN_ROOT/hooks/stop-summarize-nudge.sh",
+            "timeout": 10
           }
         ]
       }
