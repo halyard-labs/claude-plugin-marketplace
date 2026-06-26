@@ -1,6 +1,6 @@
 {
   "mcpServers": {
-    "ask-expert": {
+    "organisaton-kb": {
       "type": "http",
       "url": "https://mcp.usehalyard.ai"
     }
