@@ -12,11 +12,15 @@ Installs the following into Claude Code:
 
 2. **`ask-for-help` skill** — Teaches Claude *when* and *how* to ask for human input. Claude will automatically consult experts when it hits ambiguous requirements, design decisions, or anything that needs human judgment. It also learns to summarize answers so the same question doesn't get asked twice.
 
-3. **`log-work` skill** — Prompts Claude to log non-trivial work using the knowledge base so accomplishments are captured for future reference.
+3. **`gather-context` skill** — Orients Claude before it starts work by searching the knowledge base, codebase, and web for prior decisions and background on the area being touched.
 
-4. **`review-work` skill** — Lets Claude query the knowledge base to review what you or your team have been working on — useful for standups, catch-ups, and finding past context.
+4. **`log-work` skill** — Prompts Claude to log non-trivial work using the knowledge base so accomplishments are captured for future reference. Covers work summaries, direct authoring of decisions/processes/specs, and attaching rich report artifacts.
 
-5. **Stop hook** — Automatically evaluates whether meaningful work was done at the end of a session and prompts Claude to log it if it hasn't been captured yet.
+5. **`review-work` skill** — Lets Claude query the knowledge base to review what you or your team have been working on — useful for standups, catch-ups, and finding past context. Also surfaces PR delivery analytics (cycle time, throughput, cadence).
+
+6. **`triage-knowledge` skill** — Reviews the knowledge base inbox: the queue of AI-generated candidate entries awaiting approval. Claude can accept, refine, or dismiss candidates before they enter the live knowledge base.
+
+7. **Stop hook** — Automatically evaluates whether meaningful work was done at the end of a session and prompts Claude to log it if it hasn't been captured yet.
 
 ## Quick start
 
@@ -114,8 +118,10 @@ You can also invoke skills manually:
 
 ```
 /halyard:ask-for-help     # Ask a human expert for help
+/halyard:gather-context   # Research a topic before starting work
 /halyard:log-work         # Log work to the knowledge base
-/halyard:review-work      # Review past work and decisions
+/halyard:review-work      # Review past work, decisions, and delivery metrics
+/halyard:triage-knowledge # Review the knowledge base inbox queue
 ```
 
 ## Team setup
@@ -159,10 +165,14 @@ claude-plugin-marketplace/
 │       ├── skills/
 │       │   ├── ask-for-help/
 │       │   │   └── SKILL.md      # Ask experts for help
+│       │   ├── gather-context/
+│       │   │   └── SKILL.md      # Research context before starting work
 │       │   ├── log-work/
 │       │   │   └── SKILL.md      # Log work to knowledge base
-│       │   └── review-work/
-│       │       └── SKILL.md      # Review past work and decisions
+│       │   ├── review-work/
+│       │   │   └── SKILL.md      # Review past work, decisions, delivery metrics
+│       │   └── triage-knowledge/
+│       │       └── SKILL.md      # Review the knowledge base inbox queue
 │       └── .mcp.json             # MCP server config (shared)
 ├── LICENSE
 └── README.md

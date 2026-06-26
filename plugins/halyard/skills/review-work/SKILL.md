@@ -175,6 +175,49 @@ mcp__plugin_halyard_org-kb__summarize_work(
 | `supersedes_entry_id`      | ID of an older entry this replaces (marks it outdated)                                 |
 | `session_id`               | Link this entry to a specific agent session                                            |
 
+### 7. Delivery Analytics
+
+Beyond the knowledge base, the org's PR delivery data is queryable — useful for standups, weekly reviews, and "how are we doing this month?".
+
+**Pre-aggregated dashboard** (admin-only) — totals (opened / merged / closed-unmerged), cycle time p50/p90, auto-approval %, per-author and per-repo breakdowns, and an 8-week trend:
+
+```
+mcp__plugin_halyard_org-kb__get_delivery_metrics()                 // current month
+mcp__plugin_halyard_org-kb__get_delivery_metrics(month: "2026-06") // specific month (YYYY-MM)
+```
+
+**Raw events** — for open-ended questions the dashboard doesn't answer ("which PRs sat unreviewed for >5 days?", "what did Alex ship last week?", "compare backend vs frontend cadence"):
+
+```
+mcp__plugin_halyard_org-kb__list_events(author: "me", since: "this week")
+mcp__plugin_halyard_org-kb__list_events(eventType: ["pull_request_merged"], repo: "halyard-labs/signal", since: "30d")
+```
+
+**`list_events` parameters:**
+
+| Parameter          | Description                                                              |
+| ------------------ | ------------------------------------------------------------------------ |
+| `author`           | Filter by actor — `"me"` or a user ID                                    |
+| `eventType`        | e.g. `["pull_request_merged"]`, `["pull_request_review_approved"]`       |
+| `repo`             | Single repo, e.g. `"halyard-labs/signal"`                                |
+| `since` / `until`  | Time bounds: `"today"`, `"this week"`, `"7d"`, `"30d"`, `"90d"`, or ISO  |
+| `limit` / `offset` | Pagination (default limit 20)                                            |
+
+Prefer `get_delivery_metrics` for dashboard-shaped numbers — its server-side aggregation is more reliable than reconstructing cycle time client-side. Use `list_events` for ad-hoc slicing.
+
+### 8. Retire Stale Entries
+
+When a review surfaces an entry that's outdated, wrong, or duplicated, retire it:
+
+```
+mcp__plugin_halyard_org-kb__delete_knowledge(knowledge_entry_id: "ke_...")             // archives — reversible
+mcp__plugin_halyard_org-kb__delete_knowledge(knowledge_entry_id: "ke_...", hard: true) // permanent — spam/secrets only
+```
+
+Archiving hides the entry from search and the wiki but keeps it recoverable — prefer it over hard deletes. When you're *replacing* knowledge rather than removing it, prefer `supersedes_entry_id` on the new entry (see the **log-work** skill) so the chain is preserved.
+
+> **Reviewing the inbox queue:** agent-authored entries wait in a review queue before going live. To accept, dismiss, or edit those candidates, use the **triage-knowledge** skill (`list_triage`, `accept_triage`, `dismiss_triage`, …).
+
 ## Knowledge Types
 
 Entries in the knowledge base fall into these categories:

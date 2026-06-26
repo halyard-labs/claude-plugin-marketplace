@@ -48,6 +48,40 @@ mcp__plugin_halyard_org-kb__summarize_work(
 - **`PROCESS`** — How-to documentation, workflow descriptions, setup procedures
 - **`CONTEXT`** — Background research, reference material, exploratory findings
 
+## Authoring knowledge directly
+
+`summarize_work` is the right tool for recording work you just performed. When you instead need to author a **standalone document** — a decision record, a runbook, a spec, or a piece of reference context not tied to this session's work — use the general-purpose write verb:
+
+```
+mcp__plugin_halyard_org-kb__upsert_knowledge(
+  title: "Auth token rotation runbook",
+  content: "## Steps\n1. Rotate the signing key in Vault\n2. ...",
+  entry_type: "PROCESS",
+  tags: ["auth", "runbook"]
+)
+```
+
+- Pass the **full** `title` and `content` every time — updates replace, they don't append.
+- Omit `knowledge_entry_id` to create a new entry; pass an existing ID (from `search_knowledge` / `list_knowledge`) to rewrite one in place.
+- `entry_type` here supports the four work types **plus `SPEC`** (a plan / specification / project description) and **`CONTACT`** / **`COMPANY`** for people and orgs.
+- Link people and other entries inline with `halyard://` URIs in markdown links — they're auto-resolved into mentions and citations: `[Sarah Chen](halyard://contact/ct_abc123)`, `[prior decision](halyard://knowledge/ke_xyz)`. Use `search_people` to find the right id first.
+- Use `resource` for a navigable source URL, `supersedes_entry_id` when this entry replaces an older one.
+- New agent-authored entries land in the **INBOX review queue** and go live once a human accepts them (see the **triage-knowledge** skill). To retire an entry, use `delete_knowledge` (archives by default, reversible).
+
+## Attaching rich artifacts
+
+When your work produced a self-contained report or dataset that's more useful rendered than as prose, attach it to the entry after creating it:
+
+```
+mcp__plugin_halyard_org-kb__attach_artifact(
+  knowledge_entry_id: "ke_...",
+  format: "HTML",      // or "CSV"
+  content: "<html>...self-contained markup, inline styles only...</html>"
+)
+```
+
+The entry's markdown stays the searchable description; the artifact is the rich payload shown alongside it. One artifact per entry — re-attaching replaces it. HTML renders in a script-free sandbox, so use inline styles and no `<script>` (max 5 MB).
+
 ## Reflections
 
 When logging work, include 2-4 reflection bullets in your summary covering any of:
