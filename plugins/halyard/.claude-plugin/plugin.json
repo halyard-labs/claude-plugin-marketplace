@@ -1,7 +1,7 @@
 {
   "name": "halyard",
   "description": "Shared team memory for Claude Code. Log decisions, recall past work, gather context, and ask teammates on Slack when you need a human.",
-  "version": "1.9.3",
+  "version": "1.9.4",
   "author": {
     "name": "Halyard Labs",
     "email": "support@halyard.studio"

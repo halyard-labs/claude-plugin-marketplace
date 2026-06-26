@@ -8,7 +8,7 @@ A plugin marketplace that connects Claude Code to human experts via Slack.
 
 Installs the following into Claude Code:
 
-1. **`organisation-kb` MCP server** — Connects to the Halyard API at `mcp.usehalyard.ai`, giving Claude access to tools for messaging experts on Slack, polling for responses, and managing a knowledge base.
+1. **`org-kb` MCP server** — Connects to the Halyard API at `mcp.usehalyard.ai`, giving Claude access to tools for messaging experts on Slack, polling for responses, and managing a knowledge base.
 
 2. **`ask-for-help` skill** — Teaches Claude *when* and *how* to ask for human input. Claude will automatically consult experts when it hits ambiguous requirements, design decisions, or anything that needs human judgment. It also learns to summarize answers so the same question doesn't get asked twice.
 
@@ -91,8 +91,8 @@ codex plugin install halyard@halyard-labs
 If you prefer manual configuration instead of the plugin system:
 
 ```bash
-codex mcp add organisation-kb --url https://mcp.usehalyard.ai
-codex mcp login organisation-kb
+codex mcp add org-kb --url https://mcp.usehalyard.ai
+codex mcp login org-kb
 ```
 
 ## Prerequisites

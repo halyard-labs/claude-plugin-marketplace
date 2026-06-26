@@ -29,7 +29,7 @@ case "$TOOL_NAME" in
 esac
 
 # Already searched or explored this session — pass through silently
-if grep -qE '"name":"[^"]*organisation-kb__(search_knowledge|explore_knowledge)"' "$TRANSCRIPT_PATH"; then
+if grep -qE '"name":"[^"]*org-kb__(search_knowledge|explore_knowledge)"' "$TRANSCRIPT_PATH"; then
   exit 0
 fi
 
@@ -42,7 +42,7 @@ cat <<'EOF'
 {
   "hookSpecificOutput": {
     "hookEventName": "PreToolUse",
-    "additionalContext": "No knowledge-base search has happened in this session yet. Before external research, delegating to a subagent, or making changes, consider calling mcp__plugin_halyard_organisation-kb__search_knowledge with a topical query — the team may have prior work, decisions, or expert Q&A on this subject that would save time or surface constraints."
+    "additionalContext": "No knowledge-base search has happened in this session yet. Before external research, delegating to a subagent, or making changes, consider calling mcp__plugin_halyard_org-kb__search_knowledge with a topical query — the team may have prior work, decisions, or expert Q&A on this subject that would save time or surface constraints."
   }
 }
 EOF

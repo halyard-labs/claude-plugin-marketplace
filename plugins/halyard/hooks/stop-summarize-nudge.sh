@@ -20,7 +20,7 @@ if [ -z "$TRANSCRIPT_PATH" ] || [ ! -f "$TRANSCRIPT_PATH" ]; then
 fi
 
 # Outcomes already captured this session — pass through silently.
-if grep -qE '"name":"[^"]*organisation-kb__summarize_work"' "$TRANSCRIPT_PATH"; then
+if grep -qE '"name":"[^"]*org-kb__summarize_work"' "$TRANSCRIPT_PATH"; then
   exit 0
 fi
 
@@ -33,6 +33,6 @@ fi
 cat <<'EOF'
 {
   "decision": "block",
-  "reason": "Optional, before finishing: if this session produced meaningful work or durable knowledge (code changes, decisions, debugging findings, research, or reusable answers from the user), capture it with mcp__plugin_halyard_organisation-kb__summarize_work using the most appropriate entry_type (DECISION, PROCESS, or CONTEXT). If the session was trivial or there is nothing worth capturing, simply finish — no call is required."
+  "reason": "Optional, before finishing: if this session produced meaningful work or durable knowledge (code changes, decisions, debugging findings, research, or reusable answers from the user), capture it with mcp__plugin_halyard_org-kb__summarize_work using the most appropriate entry_type (DECISION, PROCESS, or CONTEXT). If the session was trivial or there is nothing worth capturing, simply finish — no call is required."
 }
 EOF

@@ -36,7 +36,7 @@ Start with knowledge base search — it's the fastest way to surface prior decis
 
 1. **Knowledge base first** — Search for the topic area:
    ```
-   mcp__plugin_halyard_organisation-kb__search_knowledge(query: "the feature area or system")
+   mcp__plugin_halyard_org-kb__search_knowledge(query: "the feature area or system")
    ```
    If results look relevant, follow up with `explore_knowledge(entry_id: "...")` to pull in connected decisions and prior work.
 
