@@ -34,6 +34,8 @@ description: >-
 
 Start with knowledge base search — it's the fastest way to surface prior decisions and past work. Work outward from there:
 
+0. **Orient (optional)** — If you're unsure who the caller is or what workspace you're in, `mcp__plugin_halyard_org-kb__whoami` returns the authenticated user, their org, role, and connected integrations. Useful at the very start of a fresh session before deciding where to look.
+
 1. **Knowledge base first** — Search for the topic area:
    ```
    mcp__plugin_halyard_org-kb__search_knowledge(query: "the feature area or system")

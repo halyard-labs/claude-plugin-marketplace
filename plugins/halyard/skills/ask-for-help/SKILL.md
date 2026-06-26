@@ -97,6 +97,17 @@ mcp__plugin_halyard_org-kb__list_team(available_only: true)
 mcp__plugin_halyard_org-kb__list_team(query: "who knows about deployment?")
 ```
 
+### 2b. Find a Specific Person or Contact
+
+`list_team` is for browsing available experts by role/skill. When you're looking for a **named** person — internal teammate or external contact — search the org directory directly:
+
+```
+mcp__plugin_halyard_org-kb__search_people(query: "Sarah Chen")        // fuzzy, handles typos
+mcp__plugin_halyard_org-kb__find_person_by_email(email: "sarah@acme.com")  // exact, side-effect-free
+```
+
+Each hit carries `kind: "user" | "contact"` (internal vs. external) and, for internal users, a `userId` you can pass to `ask_expert` / `get_user_profile`. These are also the way to resolve the right id before writing a `halyard://contact/...` or `halyard://user/...` mention when summarizing.
+
 ### 3. Ask an Expert
 
 Send a question to an expert by role or skill:
