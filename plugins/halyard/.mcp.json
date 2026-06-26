@@ -1,6 +1,6 @@
 {
   "mcpServers": {
-    "organisaton-kb": {
+    "organisation-kb": {
       "type": "http",
       "url": "https://mcp.usehalyard.ai"
     }

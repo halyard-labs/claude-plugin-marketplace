@@ -1,6 +1,6 @@
 {
   "name": "halyard",
-  "version": "1.9.2",
+  "version": "1.9.3",
   "description": "Shared team memory for Codex. Log decisions, recall past work, gather context, and ask teammates on Slack when you need a human.",
   "author": {
     "name": "Halyard Labs",

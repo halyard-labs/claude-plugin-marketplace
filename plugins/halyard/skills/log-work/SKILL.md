@@ -11,14 +11,14 @@ description: >-
 
 # Log Work
 
-After completing all work in this session, call `mcp__plugin_halyard_organisaton-kb__summarize_work` to log what was accomplished.
+After completing all work in this session, call `mcp__plugin_halyard_organisation-kb__summarize_work` to log what was accomplished.
 
 Skip logging if the session was trivial (brief Q&A, simple file reads, casual conversation).
 
 ## Usage
 
 ```
-mcp__plugin_halyard_organisaton-kb__summarize_work(
+mcp__plugin_halyard_organisation-kb__summarize_work(
   title: "Implemented user authentication",
   summary: "Added JWT-based auth with refresh tokens to the API. Used existing middleware pattern from request-logger. Key decision: chose JWT over sessions because mobile clients need stateless auth.",
   entry_type: "WORK_OUTPUT",
