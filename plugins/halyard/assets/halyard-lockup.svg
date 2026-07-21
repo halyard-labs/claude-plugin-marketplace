@@ -1,7 +1,13 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 280 48" fill="none">
-  <!-- Halyard Lockup — Mark + Wordmark (dark mode default) -->
-  <rect width="48" height="48" rx="6" fill="#1C1A16"/>
-  <path d="M 18.000,24.750 Q 18.000,22.500 16.821,24.416 L 7.179,40.085 Q 6.000,42.000 8.250,42.000 L 15.750,42.000 Q 18.000,42.000 18.000,39.750 Z" fill="#E8DFD0" opacity="0.8"/>
-  <path d="M 42.000,8.250 Q 42.000,6.000 40.808,7.908 L 20.693,40.092 Q 19.500,42.000 21.750,42.000 L 39.750,42.000 Q 42.000,42.000 42.000,39.750 Z" fill="#E8DFD0"/>
-  <text x="64" y="34" font-family="'Playfair Display', Georgia, serif" font-size="30" font-weight="400" fill="#E8DFD0" letter-spacing="-0.5">Halyard</text>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 180 40" width="180" height="40">
+  <defs>
+    <linearGradient id="gs" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#F5EDE0"/><stop offset="100%" stop-color="#D4C8B5"/></linearGradient>
+    <linearGradient id="gl" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#F5EDE0"/><stop offset="100%" stop-color="#C8BBAA"/></linearGradient>
+    <filter id="ds"><feDropShadow dx="0.5" dy="0.8" stdDeviation="0.8" flood-color="#0A0804" flood-opacity="0.40"/></filter>
+  </defs>
+  <g transform="translate(4,4)">
+    <rect width="32" height="32" rx="4" fill="#1C1A16"/>
+    <path d="M 12.000,16.500 Q 12.000,15.000 11.214,16.277 L 4.786,26.723 Q 4.000,28.000 5.500,28.000 L 10.500,28.000 Q 12.000,28.000 12.000,26.500 Z" fill="url(#gs)" filter="url(#ds)"/>
+    <path d="M 28.000,5.500 Q 28.000,4.000 27.205,5.272 L 13.795,26.728 Q 13.000,28.000 14.500,28.000 L 26.500,28.000 Q 28.000,28.000 28.000,26.500 Z" fill="url(#gl)" filter="url(#ds)"/>
+  </g>
+  <text x="48" y="20" fill="#E8DFD0" font-family="'Playfair Display', Georgia, serif" font-weight="400" font-size="22" letter-spacing="0.01em" dominant-baseline="central">Halyard</text>
 </svg>

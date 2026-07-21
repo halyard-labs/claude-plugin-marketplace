@@ -166,11 +166,11 @@ mcp__plugin_halyard_org-kb__summarize_work(
 | -------------------------- | -------------------------------------------------------------------------------------- |
 | `title`                    | Short title for the work entry (required)                                              |
 | `summary`                  | Detailed summary of what was done and why (required)                                   |
-| `entry_type`               | Type: `"WORK_OUTPUT"` (default), `"DECISION"`, `"PROCESS"`, or `"CONTEXT"`             |
+| `entry_type`               | Type: `"WORK_OUTPUT"` (default), `"DECISION"`, `"PROCESS"`, `"CONTEXT"`, or `"SPEC"`   |
 | `tags`                     | Tags for categorization                                                                |
 | `knowledge_entry_id`       | ID of an existing entry to update instead of creating new                              |
 | `source_provider`          | Source system: `"github"`, `"slack"`, `"linear"`, `"claude"`, `"codex"`, `"notion"`    |
-| `source_url`               | Navigable link to the source material (PR, ticket, thread)                             |
+| `resource`                 | Navigable link to the source material (PR, ticket, thread)                             |
 | `source_knowledge_entry_id`| ID of another entry this derives from (citation chain)                                 |
 | `supersedes_entry_id`      | ID of an older entry this replaces (marks it outdated)                                 |
 | `session_id`               | Link this entry to a specific agent session                                            |

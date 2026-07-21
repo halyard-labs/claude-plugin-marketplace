@@ -1,26 +1,26 @@
-# Halyard — Claude Code Plugin Marketplace
+# Halyard — Plugin Marketplace
 
-A plugin marketplace that connects Claude Code to human experts via Slack.
+A plugin marketplace that connects AI coding agents (Claude Code, Codex, and any MCP-compatible client) to shared team memory and human experts via Slack.
 
 ## What's included
 
 ### `halyard` plugin
 
-Installs the following into Claude Code:
+Installs the following into your agent:
 
-1. **`org-kb` MCP server** — Connects to the Halyard API at `mcp.usehalyard.ai`, giving Claude access to tools for messaging experts on Slack, polling for responses, and managing a knowledge base.
+1. **`org-kb` MCP server** — Connects to the Halyard API at `mcp.usehalyard.ai`, giving your agent access to tools for messaging experts on Slack, polling for responses, and managing a knowledge base.
 
-2. **`ask-for-help` skill** — Teaches Claude *when* and *how* to ask for human input. Claude will automatically consult experts when it hits ambiguous requirements, design decisions, or anything that needs human judgment. It also learns to summarize answers so the same question doesn't get asked twice.
+2. **`ask-for-help` skill** — Teaches the agent *when* and *how* to ask for human input. It will automatically consult experts when it hits ambiguous requirements, design decisions, or anything that needs human judgment. It also learns to summarize answers so the same question doesn't get asked twice.
 
-3. **`gather-context` skill** — Orients Claude before it starts work by searching the knowledge base, codebase, and web for prior decisions and background on the area being touched.
+3. **`gather-context` skill** — Orients the agent before it starts work by searching the knowledge base, codebase, and web for prior decisions and background on the area being touched.
 
-4. **`log-work` skill** — Prompts Claude to log non-trivial work using the knowledge base so accomplishments are captured for future reference. Covers work summaries, direct authoring of decisions/processes/specs, and attaching rich report artifacts.
+4. **`log-work` skill** — Prompts the agent to log non-trivial work using the knowledge base so accomplishments are captured for future reference. Covers work summaries, direct authoring of decisions/processes/specs, and attaching rich report artifacts.
 
-5. **`review-work` skill** — Lets Claude query the knowledge base to review what you or your team have been working on — useful for standups, catch-ups, and finding past context. Also surfaces PR delivery analytics (cycle time, throughput, cadence).
+5. **`review-work` skill** — Lets the agent query the knowledge base to review what you or your team have been working on — useful for standups, catch-ups, and finding past context. Also surfaces PR delivery analytics (cycle time, throughput, cadence).
 
-6. **`triage-knowledge` skill** — Reviews the knowledge base inbox: the queue of AI-generated candidate entries awaiting approval. Claude can accept, refine, or dismiss candidates before they enter the live knowledge base.
+6. **`triage-knowledge` skill** — Reviews the knowledge base inbox: the queue of AI-generated candidate entries awaiting approval. The agent can accept, refine, or dismiss candidates before they enter the live knowledge base.
 
-7. **Stop hook** — Automatically evaluates whether meaningful work was done at the end of a session and prompts Claude to log it if it hasn't been captured yet.
+7. **Stop hook** (Claude Code only) — Automatically evaluates whether meaningful work was done at the end of a session and prompts the agent to log it if it hasn't been captured yet.
 
 ## Quick start
 
@@ -106,7 +106,7 @@ codex mcp login org-kb
 
 ## After installation
 
-Once installed, Claude will automatically:
+Once installed, your agent will automatically:
 
 - Use the halyard MCP tools when it needs human input
 - Follow the ask → wait → summarize workflow
