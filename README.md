@@ -1,6 +1,6 @@
 # Halyard — Plugin Marketplace
 
-A plugin marketplace that connects AI coding agents (Claude Code, Codex, and any MCP-compatible client) to shared team memory and human experts via Slack.
+A plugin marketplace that connects AI agents (Claude Code, Codex, and any MCP-compatible client) to shared team memory and human experts via Slack, Teams, or Discord.
 
 ## What's included
 
