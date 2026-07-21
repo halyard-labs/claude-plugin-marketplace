@@ -197,7 +197,7 @@ mcp__plugin_halyard_org-kb__summarize_conversation(
 | `question`        | The question or context that was asked (required)                                   |
 | `answer`          | The answer, decision, or guidance from the expert (required)                        |
 | `source_provider` | Source system: `"github"`, `"slack"`, `"linear"`, `"claude"`, `"codex"`, `"notion"` |
-| `source_url`      | Link to the source context (e.g., the PR that prompted this question)               |
+| `resource`        | Navigable link to the source context (e.g., the PR that prompted this question)     |
 
 **Write effective summaries:**
 

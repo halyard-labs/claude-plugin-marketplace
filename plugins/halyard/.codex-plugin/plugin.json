@@ -1,7 +1,7 @@
 {
   "name": "halyard",
-  "version": "1.10.0",
-  "description": "Shared team memory for Codex. Log decisions, recall past work, gather context, and ask teammates on Slack when you need a human.",
+  "version": "1.10.2",
+  "description": "Shared team memory for AI agents. Log decisions, recall past work, gather context, and ask teammates on Slack, Teams, or Discord when you need a human.",
   "author": {
     "name": "Halyard Labs",
     "email": "support@halyard.studio",
