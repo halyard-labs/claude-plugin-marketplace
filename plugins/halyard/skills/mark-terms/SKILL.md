@@ -12,17 +12,22 @@ description: >-
 
 # Mark Terms
 
-A **definitional term** is org/product/industry jargon whose meaning isn't obvious from the words — a coined concept ("the loop"), a product surface ("triage inbox"), an acronym, or a term used with a precise in-house meaning. Marking a term links it to its canonical `DEFINITION` entry so readers (human and agent) can resolve it and the knowledge graph gains a real edge instead of a bare string.
+A **definitional term** is one that carries **specific significance to the company** — a name or word this org gives a meaning it wouldn't have to an outsider. That's the whole bar. Two kinds qualify:
+
+- **Coined / unique to the company** — a concept, product surface, project, or acronym this org invented ("the loop", "triage inbox", an internal codename).
+- **A common word used with a precise in-house meaning** — an everyday term the company loads with a specific definition that differs from, or narrows, the generic one.
+
+Marking links the term to its canonical `DEFINITION` entry so readers (human and agent) resolve it the same way, and the knowledge graph gains a real edge instead of a bare string.
 
 ## When to mark
 
 Mark a term when **all** of these hold:
 
+- It's **company-specific** — coined here, or a common word this org uses with a particular meaning. This is the gate; if the term means the same thing everywhere, it does not belong here.
 - It's **load-bearing** — the entry's meaning depends on the reader knowing it.
-- It's **non-obvious** — a new hire or fresh agent couldn't infer it from context.
 - It **recurs** — the org uses it across conversations, not a one-off phrase.
 
-Skip common English, self-evident words, and terms already defined earlier in the same entry (mark first use only).
+Skip common English, self-evident words, and **standard industry terms that already have a well-known public definition** (e.g. "OAuth", "webhook", "pull request") — those aren't unique to the company, so an org definition just adds noise. Also skip terms already defined earlier in the same entry (mark first use only).
 
 ## How to mark
 
@@ -50,4 +55,4 @@ Skip common English, self-evident words, and terms already defined earlier in th
 ## Notes
 
 - One canonical entry per term. If you find duplicates, link the best and flag the rest for `triage-knowledge` (`supersedes_entry_id` when one clearly replaces another).
-- Don't force it. A definition that only restates the term, or jargon nobody else uses, is noise — leave it unmarked.
+- Don't force it. A definition that only restates the term, a generic term with a standard public meaning, or a one-off phrase nobody else reuses is noise — leave it unmarked. When in doubt, ask: *would this word mean something different inside this company than outside it?* If no, skip.
