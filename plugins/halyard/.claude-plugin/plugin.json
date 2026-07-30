@@ -1,7 +1,7 @@
 {
   "name": "halyard",
   "description": "Shared team memory for AI agents. Log decisions, recall past work, gather context, and ask teammates on Slack, Teams, or Discord when you need a human.",
-  "version": "1.11.0",
+  "version": "1.11.1",
   "author": {
     "name": "Halyard Labs",
     "email": "support@halyard.studio"

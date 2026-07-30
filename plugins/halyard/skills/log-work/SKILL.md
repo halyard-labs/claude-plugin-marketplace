@@ -48,6 +48,7 @@ mcp__plugin_halyard_org-kb__summarize_work(
 - **`PROCESS`** — How-to documentation, workflow descriptions, setup procedures
 - **`CONTEXT`** — Background research, reference material, exploratory findings
 - **`SPEC`** — Plans, specifications, project descriptions
+- **`DEFINITION`** — The canonical definition of a product/industry/org term (one concept per entry). See the `mark-terms` skill for when to define and how to link occurrences.
 
 ## Authoring knowledge directly
 
