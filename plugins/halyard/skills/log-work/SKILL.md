@@ -33,6 +33,7 @@ mcp__plugin_halyard_org-kb__summarize_work(
 | `title`                    | Short title for the work entry (required)                                              |
 | `summary`                  | Detailed summary of what was done and why (required)                                   |
 | `entry_type`               | Type: `"WORK_OUTPUT"` (default), `"DECISION"`, `"PROCESS"`, `"CONTEXT"`, or `"SPEC"`   |
+| `visibility`               | `"WORKSPACE"` (default, all org members) or `"PRIVATE"` for highly sensitive content    |
 | `tags`                     | Tags for categorization                                                                |
 | `knowledge_entry_id`       | ID of an existing entry to update instead of creating new                              |
 | `source_provider`          | Source system: `"github"`, `"slack"`, `"linear"`, `"claude"`, `"codex"`, `"notion"`    |
@@ -40,6 +41,20 @@ mcp__plugin_halyard_org-kb__summarize_work(
 | `source_knowledge_entry_id`| ID of another entry this derives from (citation chain)                                 |
 | `supersedes_entry_id`      | ID of an older entry this replaces (marks it outdated)                                 |
 | `session_id`               | Link this entry to a specific agent session                                            |
+
+## Sensitive work
+
+If the summary contains highly sensitive information — credentials context, personnel matters, security findings, unannounced plans — pass `visibility: "PRIVATE"` so the entry is born private instead of workspace-visible:
+
+```
+mcp__plugin_halyard_org-kb__summarize_work(
+  title: "Rotated compromised staging credentials",
+  summary: "...",
+  visibility: "PRIVATE"
+)
+```
+
+A PRIVATE entry is findable in search only by its author. Widen access later with `share_knowledge` (grants a specific person read access) or `set_knowledge_visibility` (changes the tier). When in doubt about sensitivity, prefer PRIVATE — widening later is easy, un-leaking is not.
 
 ## Choosing an entry type
 
