@@ -1,6 +1,6 @@
 # Halyard — Plugin Marketplace
 
-A plugin marketplace that connects AI agents (Claude Code, Codex, and any MCP-compatible client) to shared team memory and human experts via Slack, Teams, or Discord.
+A plugin marketplace that connects AI agents (Claude Code, Codex, Cursor, and any MCP-compatible client) to shared team memory and human experts via Slack, Teams, or Discord.
 
 ## What's included
 
@@ -20,7 +20,11 @@ Installs the following into your agent:
 
 6. **`triage-knowledge` skill** — Reviews the knowledge base inbox: the queue of AI-generated candidate entries awaiting approval. The agent can accept, refine, or dismiss candidates before they enter the live knowledge base.
 
-7. **Stop hook** (Claude Code only) — Automatically evaluates whether meaningful work was done at the end of a session and prompts the agent to log it if it hasn't been captured yet.
+7. **`mark-terms` skill** — Teaches the agent to link org-specific jargon in knowledge entries to canonical definition entries so the knowledge graph stays connected.
+
+8. **Stop hook** (Claude Code only) — Automatically evaluates whether meaningful work was done at the end of a session and prompts the agent to log it if it hasn't been captured yet.
+
+9. **`knowledge-first` rule** (Cursor only) — An always-on rule that orients every Cursor session toward the knowledge base: search before substantive work, ask a human on a miss, capture outcomes after. Mirrors what the Claude Code hooks do, using Cursor's rules system.
 
 ## Quick start
 
@@ -99,10 +103,42 @@ codex mcp add org-kb --url https://mcp.usehalyard.ai
 codex mcp login org-kb
 ```
 
+## Cursor support
+
+The halyard plugin also ships in Cursor's plugin format (`.cursor-plugin/plugin.json` + `mcp.json`), following [cursor/plugin-template](https://github.com/cursor/plugin-template). The skills and MCP server are shared with Claude Code and Codex; Claude Code's session hooks are replaced by an always-on `knowledge-first` rule.
+
+### From the Cursor Marketplace
+
+Once listed, install from [cursor.com/marketplace](https://cursor.com/marketplace) — search for **Halyard**. Submission copy and process live in [`docs/cursor-marketplace-submission.md`](./docs/cursor-marketplace-submission.md).
+
+### Local install (before/without the marketplace)
+
+Symlink the plugin into Cursor's local plugin directory:
+
+```bash
+ln -s "$(pwd)/plugins/halyard" ~/.cursor/plugins/local/halyard
+```
+
+### Manual MCP setup (alternative)
+
+Add the server to your project's `.cursor/mcp.json`:
+
+```json
+{
+  "mcpServers": {
+    "halyard": {
+      "url": "https://mcp.usehalyard.ai"
+    }
+  }
+}
+```
+
+On the first Halyard tool call, Cursor opens a browser to authorize against your Halyard account.
+
 ## Prerequisites
 
 - An account at [usehalyard.ai](https://usehalyard.ai) with your Slack workspace connected
-- Claude Code v1.0.33 or later (for Claude Code), or [Codex CLI](https://github.com/openai/codex) (for Codex)
+- Claude Code v1.0.33 or later (for Claude Code), [Codex CLI](https://github.com/openai/codex) (for Codex), or [Cursor](https://cursor.com) 2.5+ (for Cursor plugins)
 
 ## After installation
 
@@ -153,15 +189,23 @@ claude-plugin-marketplace/
 │       └── marketplace.json      # Codex marketplace catalog
 ├── .claude-plugin/
 │   └── marketplace.json          # Claude Code marketplace catalog
+├── .cursor-plugin/
+│   └── marketplace.json          # Cursor marketplace catalog
+├── docs/
+│   └── cursor-marketplace-submission.md  # Cursor submission copy + checklist
 ├── plugins/
 │   └── halyard/
 │       ├── .claude-plugin/
 │       │   └── plugin.json       # Claude Code plugin manifest
 │       ├── .codex-plugin/
 │       │   └── plugin.json       # Codex plugin manifest
+│       ├── .cursor-plugin/
+│       │   └── plugin.json       # Cursor plugin manifest
 │       ├── assets/               # Brand assets (logos)
 │       ├── hooks/
 │       │   └── hooks.json        # Session hooks (Claude Code only)
+│       ├── rules/
+│       │   └── knowledge-first.mdc  # Always-on rule (Cursor only)
 │       ├── skills/
 │       │   ├── ask-for-help/
 │       │   │   └── SKILL.md      # Ask experts for help
@@ -169,11 +213,15 @@ claude-plugin-marketplace/
 │       │   │   └── SKILL.md      # Research context before starting work
 │       │   ├── log-work/
 │       │   │   └── SKILL.md      # Log work to knowledge base
+│       │   ├── mark-terms/
+│       │   │   └── SKILL.md      # Link org jargon to canonical definitions
 │       │   ├── review-work/
 │       │   │   └── SKILL.md      # Review past work, decisions, delivery metrics
 │       │   └── triage-knowledge/
 │       │       └── SKILL.md      # Review the knowledge base inbox queue
-│       └── .mcp.json             # MCP server config (shared)
+│       ├── README.md             # Plugin README (Cursor marketplace listing body)
+│       ├── .mcp.json             # MCP server config (Claude Code + Codex)
+│       └── mcp.json              # MCP server config (Cursor — no leading dot)
 ├── LICENSE
 └── README.md
 ```

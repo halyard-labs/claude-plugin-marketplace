@@ -19,12 +19,12 @@ Claude Code caches plugins by version string. If you push changes but keep the s
 ## Process
 
 1. Identify which `plugins/*/` directories have staged changes (use `git diff --cached --name-only`)
-2. For each affected plugin, read both `.claude-plugin/plugin.json` and `.codex-plugin/plugin.json`
-3. Bump the patch version (e.g. `1.0.0` → `1.0.1`, `1.2.3` → `1.2.4`) in both plugin manifests
+2. For each affected plugin, read `.claude-plugin/plugin.json`, `.codex-plugin/plugin.json`, and `.cursor-plugin/plugin.json`
+3. Bump the patch version (e.g. `1.0.0` → `1.0.1`, `1.2.3` → `1.2.4`) in all three plugin manifests
 4. Update the matching plugin entry's `version` field in the root `.claude-plugin/marketplace.json` to the same new version.
-5. Bump the catalog-level `metadata.version` in `.claude-plugin/marketplace.json` (patch by default; minor/major if the per-plugin bump is minor/major). Always bump it on every update — never skip.
-6. Skip `.agents/plugins/marketplace.json` (Codex marketplace) — it intentionally has no plugin version field today. Only update it if a `version` field is already present in the plugin entry.
-7. Stage all updated files (both plugin.json files and `.claude-plugin/marketplace.json`)
+5. Bump the catalog-level `metadata.version` in BOTH `.claude-plugin/marketplace.json` and `.cursor-plugin/marketplace.json` (patch by default; minor/major if the per-plugin bump is minor/major). Always bump it on every update — never skip.
+6. Skip `.agents/plugins/marketplace.json` (Codex marketplace) and the Cursor marketplace plugin entries — they intentionally have no per-plugin version field today. Only update one if a `version` field is already present in the plugin entry.
+7. Stage all updated files (all three plugin.json files, `.claude-plugin/marketplace.json`, and `.cursor-plugin/marketplace.json`)
 8. Proceed with the commit
 
 ## Rules

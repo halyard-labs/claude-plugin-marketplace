@@ -1,15 +1,18 @@
 {
   "name": "halyard",
+  "displayName": "Halyard",
   "version": "1.12.0",
   "description": "Shared team memory for AI agents. Log decisions, recall past work, gather context, and ask teammates on Slack, Teams, or Discord when you need a human.",
   "author": {
     "name": "Halyard Labs",
-    "email": "support@halyard.studio",
-    "url": "https://usehalyard.ai"
+    "email": "support@halyard.studio"
   },
   "homepage": "https://usehalyard.ai",
+  "repository": "https://github.com/halyard-labs/claude-plugin-marketplace",
   "license": "Proprietary",
   "keywords": ["slack", "experts", "knowledge-base", "collaboration", "human-in-the-loop", "memory", "context", "knowledge", "organizational-knowledge", "search", "history"],
+  "logo": "assets/halyard-mark.svg",
   "skills": "./skills/",
-  "mcpServers": "./.mcp.json"
+  "rules": "./rules/",
+  "mcpServers": "./mcp.json"
 }
