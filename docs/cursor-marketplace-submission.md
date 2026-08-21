@@ -65,19 +65,15 @@ Cursor's documented requirements ([docs](https://cursor.com/docs/reference/plugi
 - [ ] Manual review by Cursor (updates are re-reviewed before each release
       goes live — factor this into release timing)
 
-## ⚠️ Open risk: license
+## License: resolved — MIT
 
-Cursor's docs state **"all plugins must be open source."** This repo is
-deliberately proprietary (All Rights Reserved, source viewable — see PR #10).
-Options if the review rejects the license:
-
-1. Argue the case: source is public and viewable; the plugin is a thin client
-   for a hosted service (the same posture as many API-backed plugins).
-2. Relicense just this repo (e.g. MIT) — the plugin contains no secret sauce:
-   skills, a rule, and a pointer at the hosted MCP server. The moat is the
-   service, not the manifest.
-
-Decision owner: Halyard Labs. Do not relicense without an explicit decision.
+Cursor's docs state **"all plugins must be open source."** This repo was
+proprietary from PR #10 through v1.12.0; it was relicensed to MIT in the
+Cursor-launch PR (decision: Al Hinds, 2026-08-21) to satisfy the marketplace
+requirement. The plugin contains no secret sauce — skills, a rule, and a
+pointer at the hosted MCP server; the moat is the service, not the manifest.
+All three plugin manifests carry `"license": "MIT"` and the root `LICENSE` is
+the standard MIT text.
 
 ## Local testing before submission
 
