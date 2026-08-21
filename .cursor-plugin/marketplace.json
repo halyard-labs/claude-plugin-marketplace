@@ -1,0 +1,18 @@
+{
+  "name": "halyard-labs",
+  "owner": {
+    "name": "Halyard Labs",
+    "email": "support@halyard.studio"
+  },
+  "metadata": {
+    "description": "Shared team memory for AI agents. Log decisions, recall past work, and route questions to humans on Slack, Teams, or Discord.",
+    "version": "1.5.1"
+  },
+  "plugins": [
+    {
+      "name": "halyard",
+      "source": "./plugins/halyard",
+      "description": "Shared team memory for AI agents. The halyard MCP server, skills (log-work, review-work, gather-context, ask-for-help, triage-knowledge, mark-terms), and a knowledge-first rule capture decisions, surface prior context, and route hard questions to teammates on Slack, Teams, or Discord."
+    }
+  ]
+}

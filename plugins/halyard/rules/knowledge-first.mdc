@@ -1,0 +1,23 @@
+---
+description: Orient every session toward the team knowledge base — search before substantive work, capture outcomes after
+alwaysApply: true
+---
+
+knowledge-first:
+
+This team keeps a shared knowledge base of prior work, decisions, and expert
+Q&A (the halyard `org-kb` MCP server).
+
+- Before substantive work — research, architectural choices, debugging, or
+  anything touching an unfamiliar system — call `search_knowledge` with a
+  topical query. Prior decisions may constrain or shortcut the approach.
+  Follow promising hits with `explore_knowledge`.
+- Before external research or delegating work, check whether the team already
+  answered the question: a `search_knowledge` call is cheaper than rediscovery.
+- When blocked on something only a human knows, use `ask_expert` to route the
+  question to the right teammate on Slack, Teams, or Discord — and capture
+  helpful answers with `summarize_conversation` so the question is never asked
+  twice.
+- At the end of meaningful sessions, capture outcomes with `summarize_work`
+  (entry_type DECISION, PROCESS, or CONTEXT as appropriate). Skip trivial
+  sessions — brief Q&A or casual conversation doesn't need logging.
