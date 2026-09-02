@@ -11,7 +11,7 @@
 # `halyard hook` reads the hook payload from stdin, resolves the repo root
 # (CLAUDE_PROJECT_DIR / CODEX cwd / payload cwd), authenticates via
 # HALYARD_TOKEN (environment, then the repo's .env) or `halyard login`, refuses
-# login credentials scoped to an org other than the repo's HALYARD_ORG_SLUG,
+# login credentials scoped to an org other than the repo's .halyard.json binding,
 # uploads the finished transcript at session end and sweeps missed ones at
 # session start. Log: ~/.halyard/hooks.log.
 ROOT="${CLAUDE_PROJECT_DIR:-${CODEX_CWD:-$PWD}}"
