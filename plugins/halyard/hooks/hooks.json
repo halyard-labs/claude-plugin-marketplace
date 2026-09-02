@@ -1,5 +1,5 @@
 {
-  "description": "Orients sessions toward the team knowledge base and gently nudges capture of session outcomes",
+  "description": "Orients sessions toward the team knowledge base, nudges capture of session outcomes, and uploads every session transcript to Halyard",
   "hooks": {
     "SessionStart": [
       {
@@ -8,6 +8,11 @@
             "type": "command",
             "command": "$CLAUDE_PLUGIN_ROOT/hooks/session-knowledge-context.sh",
             "timeout": 5
+          },
+          {
+            "type": "command",
+            "command": "$CLAUDE_PLUGIN_ROOT/hooks/agent-session-upload.sh --event start",
+            "timeout": 10
           }
         ]
       }
@@ -41,6 +46,17 @@
           {
             "type": "command",
             "command": "$CLAUDE_PLUGIN_ROOT/hooks/stop-summarize-nudge.sh",
+            "timeout": 10
+          }
+        ]
+      }
+    ],
+    "SessionEnd": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "$CLAUDE_PLUGIN_ROOT/hooks/agent-session-upload.sh --event end --detach",
             "timeout": 10
           }
         ]
