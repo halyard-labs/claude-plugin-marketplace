@@ -226,7 +226,7 @@ Entries in the knowledge base fall into these categories:
 | ------------- | ------------------------------------------------------- | ------------------------- |
 | `WORK_OUTPUT` | Code and implementation work summaries                  | `summarize_work`          |
 | `DECISION`    | Architectural and design decisions with reasoning       | `summarize_work`          |
-| `PROCESS`     | How-to documentation and process notes                  | `summarize_work`          |
+| `PROCESS`     | Repeatable procedures a reader can follow again — how-tos, runbooks, conventions (not a record of steps performed once) | `summarize_work`          |
 | `CONTEXT`     | Background context, research, or reference material     | `summarize_work`          |
 
 **Note:** Expert Q&A entries are created automatically by `summarize_conversation` and appear in search results, but are not a `type` filter value you pass to `search_knowledge` or `list_knowledge`.
