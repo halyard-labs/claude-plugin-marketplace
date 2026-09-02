@@ -6,14 +6,14 @@
   },
   "metadata": {
     "description": "Shared team memory for AI agents. Log decisions, recall past work, and route questions to humans on Slack, Teams, or Discord.",
-    "version": "1.5.1"
+    "version": "1.6.0"
   },
   "plugins": [
     {
       "name": "halyard",
       "source": "./plugins/halyard",
       "description": "Shared team memory for AI agents. The halyard MCP server and skills (log-work, review-work, gather-context, ask-for-help, triage-knowledge, mark-terms) capture decisions, surface prior context, and route hard questions to teammates on Slack, Teams, or Discord.",
-      "version": "1.12.1",
+      "version": "1.13.0",
       "category": "collaboration",
       "tags": ["slack", "experts", "knowledge-base", "human-in-the-loop", "collaboration", "memory", "context", "knowledge", "organizational-knowledge", "search", "history"],
       "keywords": ["slack", "experts", "knowledge-base", "human-in-the-loop", "collaboration", "memory", "context", "knowledge", "organizational-knowledge", "search", "history"]
