@@ -207,6 +207,12 @@ if [ -z "${HALYARD_TOKEN:-}" ] && [ ! -s "$HALYARD_DIR/credentials.json" ]; then
   log "skip: not authenticated (run \`halyard login\`, or set HALYARD_TOKEN in the environment or $PROJECT_ROOT/.env)"
   exit 0
 fi
+# The repo's .env can also declare its org (scripts/halyard-token-setup.sh
+# writes it next to the token), so the plugin copy of this script — which has
+# no --org on its command line — still gets the guard.
+if [ -z "$ORG_SLUG" ] && [ -f "$PROJECT_ROOT/.env" ]; then
+  ORG_SLUG=$(grep -E '^[[:space:]]*(export[[:space:]]+)?HALYARD_ORG_SLUG=' "$PROJECT_ROOT/.env" 2>/dev/null | tail -1 | sed -E 's/^[[:space:]]*(export[[:space:]]+)?HALYARD_ORG_SLUG=//; s/^"(.*)"$/\1/; s/^'"'"'(.*)'"'"'$/\1/' | tr -d '\r')
+fi
 
 API_ARGS=()
 if [ -n "${HALYARD_API_URL:-}" ]; then
