@@ -19,5 +19,7 @@ Q&A (the halyard `org-kb` MCP server).
   helpful answers with `summarize_conversation` so the question is never asked
   twice.
 - At the end of meaningful sessions, capture outcomes with `summarize_work`
-  (entry_type DECISION, PROCESS, or CONTEXT as appropriate). Skip trivial
-  sessions — brief Q&A or casual conversation doesn't need logging.
+  (entry_type DECISION, PROCESS, or CONTEXT as appropriate), or
+  `upsert_knowledge` for a direct entry or a correction to an existing one.
+  Skip trivial sessions — brief Q&A or casual conversation doesn't need
+  logging.

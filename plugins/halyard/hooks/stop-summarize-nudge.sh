@@ -1,8 +1,10 @@
 #!/bin/bash
 # Stop hook: one-time, optional nudge to capture session outcomes with
 # summarize_work. Resumes the agent once with a suggestion it is free to
-# ignore; never fires twice (stop_hook_active guard) and stays silent on
-# any error or for sessions with no sign of substantive work.
+# ignore; fires at most once per session (stop_hook_active guard plus a
+# transcript check for the nudge text, so declining it doesn't re-trigger
+# at later stops) and stays silent on any error or for sessions with no
+# sign of substantive work.
 
 command -v jq >/dev/null 2>&1 || exit 0
 
@@ -16,6 +18,11 @@ fi
 
 TRANSCRIPT_PATH=$(printf '%s' "$INPUT" | jq -r '.transcript_path // empty' 2>/dev/null)
 if [ -z "$TRANSCRIPT_PATH" ] || [ ! -f "$TRANSCRIPT_PATH" ]; then
+  exit 0
+fi
+
+# Already nudged at an earlier stop this session — don't repeat.
+if grep -q 'Optional, before finishing:' "$TRANSCRIPT_PATH"; then
   exit 0
 fi
 
