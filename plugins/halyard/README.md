@@ -34,7 +34,7 @@ With the Halyard plugin installed, the agent will:
   - `mark-terms` — link org jargon to canonical definitions
 - **`knowledge-first` rule** (Cursor) — orients every session toward the
   knowledge base: search before substantive work, capture outcomes after.
-- **Session hooks** (Claude Code) — nudge knowledge capture at session end.
+- **Session hooks** (Claude Code, Codex) — nudge knowledge capture at session end, and upload the session transcript to Halyard via the `halyard` CLI when it is installed and authenticated.
 
 ## Requirements
 

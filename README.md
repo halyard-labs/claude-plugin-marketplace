@@ -26,6 +26,8 @@ Installs the following into your agent:
 
 9. **`knowledge-first` rule** (Cursor only) — An always-on rule that orients every Cursor session toward the knowledge base: search before substantive work, ask a human on a miss, capture outcomes after. Mirrors what the Claude Code hooks do, using Cursor's rules system.
 
+10. **Session upload hook** (Claude Code and Codex) — At session end, uploads the session transcript to Halyard through the `halyard` CLI (`halyard push`), and at session start sweeps any transcript for the repo that never uploaded. Runs only when the `halyard` binary is on the path or pinned in the repo (`node_modules/.bin/halyard`) and credentials exist (`halyard login`, or `HALYARD_TOKEN` in the environment or the repo's `.env`). Logs to `~/.halyard/hooks.log`; never blocks the agent.
+
 ## Quick start
 
 ### From a local clone
@@ -203,7 +205,8 @@ claude-plugin-marketplace/
 │       │   └── plugin.json       # Cursor plugin manifest
 │       ├── assets/               # Brand assets (logos)
 │       ├── hooks/
-│       │   └── hooks.json        # Session hooks (Claude Code only)
+│       │   ├── hooks.json        # Session hooks (Claude Code + Codex)
+│       │   └── agent-session-upload.sh  # Uploads transcripts via the halyard CLI
 │       ├── rules/
 │       │   └── knowledge-first.mdc  # Always-on rule (Cursor only)
 │       ├── skills/
