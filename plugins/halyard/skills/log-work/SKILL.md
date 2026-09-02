@@ -60,7 +60,7 @@ A PRIVATE entry is findable in search only by its author. Widen access later wit
 
 - **`WORK_OUTPUT`** — Code changes, feature implementations, bug fixes, refactors
 - **`DECISION`** — Architectural choices, design trade-offs, technology selections (include reasoning)
-- **`PROCESS`** — How-to documentation, workflow descriptions, setup procedures
+- **`PROCESS`** — A repeatable procedure written to be followed again: how-to docs, runbooks, setup procedures, team conventions. Not an account of the steps you performed this session — that is `WORK_OUTPUT`, however step-by-step it reads
 - **`CONTEXT`** — Background research, reference material, exploratory findings
 - **`SPEC`** — Plans, specifications, project descriptions
 - **`DEFINITION`** — The canonical definition of a product/industry/org term (one concept per entry). See the `mark-terms` skill for when to define and how to link occurrences.
