@@ -13,7 +13,7 @@ description: >-
 
 # Set Up the Halyard CLI
 
-> **Tool names.** Tools are written here by their bare name (for example `search_knowledge`). The name your client exposes carries a prefix that depends on how the Halyard server was mounted: `mcp__plugin_halyard_org-kb__search_knowledge` from this plugin in Claude Code, `mcp__halyard__search_knowledge` or `mcp__ask-expert__search_knowledge` when it was added as a standalone server or claude.ai connector, and a prefix derived from the `org-kb` server key in other clients. Match on the part after the last `__`. If the exact name is not in your tool list, search the available (or deferred) tools for the bare name before concluding the tool is unavailable — a prefix mismatch is not "unavailable".
+> **Tool names.** The default names below are the halyard plugin's `org-kb` server as Claude Code exposes it: `mcp__plugin_halyard_org-kb__<tool>`. Older connections expose the same server under other prefixes — `mcp__halyard__<tool>` (standalone server added by the docs or `halyard setup`) and `mcp__ask-expert__<tool>` (claude.ai connector, Claude Code on the web) — and Codex and Cursor derive their own prefix from the `org-kb` key. These are aliases for one server, so match on the part after the last `__`: if the default name is not in your tool list, use whichever alias is present (search the deferred tool list for the bare name if needed) rather than concluding the tool is unavailable.
 
 The plugin's MCP server works without the CLI. The CLI adds two things: it
 scaffolds Halyard into a repo for every teammate, and it uploads coding-session
@@ -105,7 +105,7 @@ Then confirm the MCP side in the same session:
 Use Halyard to tell me who I am.
 ```
 
-Expect a `whoami` call returning the user and
+Expect a `mcp__plugin_halyard_org-kb__whoami` call returning the user and
 organization. If the MCP call prompts for OAuth, that is expected on first use
 and is separate from the CLI login.
 

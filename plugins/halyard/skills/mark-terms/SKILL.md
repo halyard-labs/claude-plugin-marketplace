@@ -12,7 +12,7 @@ description: >-
 
 # Mark Terms
 
-> **Tool names.** Tools are written here by their bare name (for example `search_knowledge`). The name your client exposes carries a prefix that depends on how the Halyard server was mounted: `mcp__plugin_halyard_org-kb__search_knowledge` from this plugin in Claude Code, `mcp__halyard__search_knowledge` or `mcp__ask-expert__search_knowledge` when it was added as a standalone server or claude.ai connector, and a prefix derived from the `org-kb` server key in other clients. Match on the part after the last `__`. If the exact name is not in your tool list, search the available (or deferred) tools for the bare name before concluding the tool is unavailable — a prefix mismatch is not "unavailable".
+> **Tool names.** The default names below are the halyard plugin's `org-kb` server as Claude Code exposes it: `mcp__plugin_halyard_org-kb__<tool>`. Older connections expose the same server under other prefixes — `mcp__halyard__<tool>` (standalone server added by the docs or `halyard setup`) and `mcp__ask-expert__<tool>` (claude.ai connector, Claude Code on the web) — and Codex and Cursor derive their own prefix from the `org-kb` key. These are aliases for one server, so match on the part after the last `__`: if the default name is not in your tool list, use whichever alias is present (search the deferred tool list for the bare name if needed) rather than concluding the tool is unavailable.
 
 A **definitional term** is one that carries **specific significance to the company** — a name or word this org gives a meaning it wouldn't have to an outsider. That's the whole bar. Two kinds qualify:
 
@@ -35,7 +35,7 @@ Skip common English, self-evident words, and **standard industry terms that alre
 
 1. **Search for an existing definition** before writing anything new:
    ```
-   search_knowledge(query: "the term", type: "DEFINITION")
+   mcp__plugin_halyard_org-kb__search_knowledge(query: "the term", type: "DEFINITION")
    ```
 
 2. **It exists → link first use** to its entry ID inside the entry body:
@@ -46,7 +46,7 @@ Skip common English, self-evident words, and **standard industry terms that alre
 
 3. **It doesn't exist but the term is worth defining → create it**, then link to the new ID:
    ```
-   upsert_knowledge(
+   mcp__plugin_halyard_org-kb__upsert_knowledge(
      title: "The loop",
      content: "The search → ask → capture cycle every knowledge interaction follows...",
      entry_type: "DEFINITION"

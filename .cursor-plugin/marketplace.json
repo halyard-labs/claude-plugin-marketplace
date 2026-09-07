@@ -6,7 +6,7 @@
   },
   "metadata": {
     "description": "Shared team memory for AI agents. Log decisions, recall past work, and route questions to humans on Slack, Teams, or Discord.",
-    "version": "1.7.1"
+    "version": "1.7.2"
   },
   "plugins": [
     {

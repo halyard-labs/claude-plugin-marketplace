@@ -41,6 +41,6 @@ fi
 cat <<'EOF'
 {
   "decision": "block",
-  "reason": "Optional, before finishing: if this session produced meaningful work or durable knowledge (code changes, decisions, debugging findings, research, or reusable answers from the user), capture it with the Halyard summarize_work tool (mcp__plugin_halyard_org-kb__summarize_work in this plugin; match on the summarize_work suffix if the server is mounted under another name) using the most appropriate entry_type (DECISION, PROCESS, or CONTEXT). If the session was trivial or there is nothing worth capturing, simply finish — no call is required."
+  "reason": "Optional, before finishing: if this session produced meaningful work or durable knowledge (code changes, decisions, debugging findings, research, or reusable answers from the user), capture it with mcp__plugin_halyard_org-kb__summarize_work (or the same tool under an older alias such as mcp__halyard__summarize_work) using the most appropriate entry_type (DECISION, PROCESS, or CONTEXT). If the session was trivial or there is nothing worth capturing, simply finish — no call is required."
 }
 EOF

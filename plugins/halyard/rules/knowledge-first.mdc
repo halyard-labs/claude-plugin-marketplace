@@ -7,8 +7,9 @@ knowledge-first:
 
 This team keeps a shared knowledge base of prior work, decisions, and expert
 Q&A (the halyard `org-kb` MCP server). Tools are named below by their bare
-name; your client may prefix them with the server's mount name. Match on the
-suffix — a different prefix does not mean the tool is missing.
+name; your client prefixes them with the server's mount name (`org-kb` by
+default, `halyard` or `ask-expert` on older connections). Match on the
+suffix — a different prefix is an alias, not a missing tool.
 
 - Before substantive work — research, architectural choices, debugging, or
   anything touching an unfamiliar system — call `search_knowledge` with a

@@ -39,20 +39,21 @@ With the Halyard plugin installed, the agent will:
 
 ## Tool names across clients
 
-Skills, hooks and rules refer to Halyard tools by their bare name (`search_knowledge`,
-`summarize_work`, …). The name a client actually exposes is prefixed with the server's
-mount name, and that mount name is not the same everywhere:
+The default tool name is the one Claude Code gives this plugin's `org-kb` server:
+`mcp__plugin_halyard_org-kb__<tool>` (for example `mcp__plugin_halyard_org-kb__search_knowledge`).
+Skills, hooks and `CLAUDE.md` guidance use that form. Older connections reach the same
+server under other prefixes, and they keep working as aliases:
 
 | Surface | Tool name |
 | --- | --- |
-| Claude Code, this plugin (`.mcp.json` key `org-kb`) | `mcp__plugin_halyard_org-kb__search_knowledge` |
-| Claude Code, standalone server added as `halyard` (docs / `halyard setup`) | `mcp__halyard__search_knowledge` |
-| claude.ai connector / Claude Code on the web | `mcp__halyard__…` or `mcp__ask-expert__…`, depending on the connector name |
-| Codex / Cursor | derived from the `org-kb` server key by the client |
+| **Default** — Claude Code, this plugin (`.mcp.json` key `org-kb`) | `mcp__plugin_halyard_org-kb__search_knowledge` |
+| Alias — standalone server added as `halyard` (docs, `halyard setup`) | `mcp__halyard__search_knowledge` |
+| Alias — claude.ai connector / Claude Code on the web | `mcp__halyard__…` or `mcp__ask-expert__…`, depending on the connector name |
+| Alias — Codex / Cursor | derived from the `org-kb` server key by the client |
 
-Match on the part after the last `__`. Do not hardcode a full prefixed name in skill text:
-on any surface where the prefix differs it cannot be looked up, and a model told to call it
-may conclude the tool is unavailable instead of using the one that is there.
+Every skill carries a short note saying the same thing, and the session hooks recognise a
+search or capture made under any of these prefixes. When the default name is absent, match on
+the part after the last `__` and use the alias that is present.
 
 ## Requirements
 

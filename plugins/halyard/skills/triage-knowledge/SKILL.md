@@ -12,7 +12,7 @@ description: >-
 
 # Triage Knowledge
 
-> **Tool names.** Tools are written here by their bare name (for example `search_knowledge`). The name your client exposes carries a prefix that depends on how the Halyard server was mounted: `mcp__plugin_halyard_org-kb__search_knowledge` from this plugin in Claude Code, `mcp__halyard__search_knowledge` or `mcp__ask-expert__search_knowledge` when it was added as a standalone server or claude.ai connector, and a prefix derived from the `org-kb` server key in other clients. Match on the part after the last `__`. If the exact name is not in your tool list, search the available (or deferred) tools for the bare name before concluding the tool is unavailable — a prefix mismatch is not "unavailable".
+> **Tool names.** The default names below are the halyard plugin's `org-kb` server as Claude Code exposes it: `mcp__plugin_halyard_org-kb__<tool>`. Older connections expose the same server under other prefixes — `mcp__halyard__<tool>` (standalone server added by the docs or `halyard setup`) and `mcp__ask-expert__<tool>` (claude.ai connector, Claude Code on the web) — and Codex and Cursor derive their own prefix from the `org-kb` key. These are aliases for one server, so match on the part after the last `__`: if the default name is not in your tool list, use whichever alias is present (search the deferred tool list for the bare name if needed) rather than concluding the tool is unavailable.
 
 Agent-authored entries (from `summarize_work`, `summarize_conversation`, and `upsert_knowledge`) don't go straight into the live knowledge base — they land in an **INBOX review queue** as candidates. This skill is the human-in-the-loop review step: accept the good ones, dismiss the noise, and tighten drafts before they're filed.
 
@@ -21,11 +21,11 @@ Admins see the whole org queue; non-admins see only their own candidates.
 ## Workflow
 
 ```
-1. list_triage(...)          → See what's waiting
-2. get_triage_item(...)      → Read a candidate in full before deciding
+1. mcp__plugin_halyard_org-kb__list_triage(...)          → See what's waiting
+2. mcp__plugin_halyard_org-kb__get_triage_item(...)      → Read a candidate in full before deciding
 3. (optional) suggest_triage_edits → apply_triage_suggestion → Refine the draft
-4. accept_triage(...)        → File it into the live KB
-   OR dismiss_triage(...)    → Archive without filing
+4. mcp__plugin_halyard_org-kb__accept_triage(...)        → File it into the live KB
+   OR mcp__plugin_halyard_org-kb__dismiss_triage(...)    → Archive without filing
 ```
 
 Always `get_triage_item` before accepting/dismissing — `list_triage` returns metadata (and snippets only if you ask), not the full draft.
@@ -33,9 +33,9 @@ Always `get_triage_item` before accepting/dismissing — `list_triage` returns m
 ## 1. List the queue
 
 ```
-list_triage()                              // your pending candidates
-list_triage(filter: "all")                 // admins: whole org queue
-list_triage(filter: "overdue", include_content: true)
+mcp__plugin_halyard_org-kb__list_triage()                              // your pending candidates
+mcp__plugin_halyard_org-kb__list_triage(filter: "all")                 // admins: whole org queue
+mcp__plugin_halyard_org-kb__list_triage(filter: "overdue", include_content: true)
 ```
 
 | Parameter         | Description                                                       |
@@ -47,7 +47,7 @@ list_triage(filter: "overdue", include_content: true)
 ## 2. Inspect a candidate
 
 ```
-get_triage_item(triage_id: "...")
+mcp__plugin_halyard_org-kb__get_triage_item(triage_id: "...")
 ```
 
 Returns the full draft title/content plus the review-message history. Read this before any accept/dismiss/edit.
@@ -57,12 +57,12 @@ Returns the full draft title/content plus the review-message history. Read this 
 Stage an edit to a candidate's draft, review it, then apply it:
 
 ```
-suggest_triage_edits(
+mcp__plugin_halyard_org-kb__suggest_triage_edits(
   triage_id: "...",
   instruction: "Tighten to 3 bullets and add the repo name to the title"
 )
 // review the staged title/content in the returned assistant message, then:
-apply_triage_suggestion(
+mcp__plugin_halyard_org-kb__apply_triage_suggestion(
   triage_id: "...",
   message_id: "...."   // the assistant message ID holding the staged draft
 )
@@ -74,7 +74,7 @@ apply_triage_suggestion(
 
 ```
 // File into the live knowledge base (queues embeddings, stamps review metadata)
-accept_triage(
+mcp__plugin_halyard_org-kb__accept_triage(
   triage_id: "...",
   reason: "Useful runbook, accurate",
   title: "Optional final title override",
@@ -84,13 +84,13 @@ accept_triage(
 )
 
 // Archive without filing (keeps review metadata)
-dismiss_triage(
+mcp__plugin_halyard_org-kb__dismiss_triage(
   triage_id: "...",
   reason: "Duplicate of ke_123 / too trivial to keep"
 )
 ```
 
-To remove a candidate entirely rather than archive it, use `delete_triage_item(triage_id: "...")`.
+To remove a candidate entirely rather than archive it, use `mcp__plugin_halyard_org-kb__delete_triage_item(triage_id: "...")`.
 
 ## Tips
 

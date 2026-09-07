@@ -44,7 +44,7 @@ cat <<'EOF'
 {
   "hookSpecificOutput": {
     "hookEventName": "PreToolUse",
-    "additionalContext": "No knowledge-base search has happened in this session yet. Before external research, delegating to a subagent, or making changes, consider calling the Halyard search_knowledge tool with a topical query (exposed as mcp__plugin_halyard_org-kb__search_knowledge by this plugin; if the server is mounted under another name, use the tool with that suffix, e.g. mcp__halyard__search_knowledge) — the team may have prior work, decisions, or expert Q&A on this subject that would save time or surface constraints."
+    "additionalContext": "No knowledge-base search has happened in this session yet. Before external research, delegating to a subagent, or making changes, consider calling mcp__plugin_halyard_org-kb__search_knowledge with a topical query (older connections expose the same tool as mcp__halyard__search_knowledge or mcp__ask-expert__search_knowledge; use whichever is present) — the team may have prior work, decisions, or expert Q&A on this subject that would save time or surface constraints."
   }
 }
 EOF
