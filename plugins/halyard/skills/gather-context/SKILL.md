@@ -15,6 +15,8 @@ description: >-
 
 # Gather Context
 
+> **Tool names.** The default names below are the halyard plugin's `org-kb` server as Claude Code exposes it: `mcp__plugin_halyard_org-kb__<tool>`. Older connections expose the same server under other prefixes — `mcp__halyard__<tool>` (standalone server added by the docs or `halyard setup`) and `mcp__ask-expert__<tool>` (claude.ai connector, Claude Code on the web) — and Codex and Cursor derive their own prefix from the `org-kb` key. These are aliases for one server, so match on the part after the last `__`: if the default name is not in your tool list, use whichever alias is present (search the deferred tool list for the bare name if needed) rather than concluding the tool is unavailable.
+
 ## When to use
 
 **Use this skill when any of these apply:**
@@ -46,4 +48,4 @@ Start with knowledge base search — it's the fastest way to surface prior decis
 
 3. **Web** — Search externally only when the topic genuinely extends beyond the repo (third-party APIs, standards, recent releases).
 
-If knowledge base tools are unavailable, rely on codebase exploration and web search. Either way, synthesize findings into a brief summary (2–4 bullets) before proceeding with the task — this doubles as a sanity check that you gathered enough.
+If no Halyard tool exists under the default name or any alias (server not configured, or not authenticated — check `/mcp`), rely on codebase exploration and web search. A prefix that differs from the default is an alias, not an unavailable tool. Either way, synthesize findings into a brief summary (2–4 bullets) before proceeding with the task — this doubles as a sanity check that you gathered enough.

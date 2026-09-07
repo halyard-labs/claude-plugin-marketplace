@@ -12,6 +12,8 @@ description: >-
 
 # Mark Terms
 
+> **Tool names.** The default names below are the halyard plugin's `org-kb` server as Claude Code exposes it: `mcp__plugin_halyard_org-kb__<tool>`. Older connections expose the same server under other prefixes — `mcp__halyard__<tool>` (standalone server added by the docs or `halyard setup`) and `mcp__ask-expert__<tool>` (claude.ai connector, Claude Code on the web) — and Codex and Cursor derive their own prefix from the `org-kb` key. These are aliases for one server, so match on the part after the last `__`: if the default name is not in your tool list, use whichever alias is present (search the deferred tool list for the bare name if needed) rather than concluding the tool is unavailable.
+
 A **definitional term** is one that carries **specific significance to the company** — a name or word this org gives a meaning it wouldn't have to an outsider. That's the whole bar. Two kinds qualify:
 
 - **Coined / unique to the company** — a concept, product surface, project, or acronym this org invented ("the loop", "triage inbox", an internal codename).

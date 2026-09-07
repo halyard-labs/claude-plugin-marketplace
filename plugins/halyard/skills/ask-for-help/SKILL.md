@@ -12,6 +12,8 @@ description: >-
 
 # Ask for Help
 
+> **Tool names.** The default names below are the halyard plugin's `org-kb` server as Claude Code exposes it: `mcp__plugin_halyard_org-kb__<tool>`. Older connections expose the same server under other prefixes — `mcp__halyard__<tool>` (standalone server added by the docs or `halyard setup`) and `mcp__ask-expert__<tool>` (claude.ai connector, Claude Code on the web) — and Codex and Cursor derive their own prefix from the `org-kb` key. These are aliases for one server, so match on the part after the last `__`: if the default name is not in your tool list, use whichever alias is present (search the deferred tool list for the bare name if needed) rather than concluding the tool is unavailable.
+
 Use the halyard MCP tools to get human input when you're blocked, need clarification, or face decisions that require human judgment. **ALWAYS summarize helpful answers** to build a knowledge base.
 
 ## Before Asking: Check the Knowledge Base

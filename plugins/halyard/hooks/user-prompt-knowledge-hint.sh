@@ -8,7 +8,7 @@ cat <<'EOF'
 {
   "hookSpecificOutput": {
     "hookEventName": "UserPromptSubmit",
-    "additionalContext": "Hint (ignore if not relevant): if this prompt contains durable, reusable knowledge — a decision, requirement, process, or context that would help a future session — it can be captured with mcp__plugin_halyard_org-kb__summarize_work (or mcp__plugin_halyard_org-kb__upsert_knowledge for a direct entry or a correction to an existing one; mcp__plugin_halyard_org-kb__summarize_conversation after a teammate answers a question). mcp__plugin_halyard_org-kb__search_knowledge may surface prior work on the topic."
+    "additionalContext": "Hint (ignore if not relevant): if this prompt contains durable, reusable knowledge — a decision, requirement, process, or context that would help a future session — it can be captured with mcp__plugin_halyard_org-kb__summarize_work (or mcp__plugin_halyard_org-kb__upsert_knowledge for a direct entry or a correction to an existing one; mcp__plugin_halyard_org-kb__summarize_conversation after a teammate answers a question). mcp__plugin_halyard_org-kb__search_knowledge may surface prior work on the topic. Older connections expose the same tools under the mcp__halyard__ or mcp__ask-expert__ prefix; use whichever is present."
   }
 }
 EOF

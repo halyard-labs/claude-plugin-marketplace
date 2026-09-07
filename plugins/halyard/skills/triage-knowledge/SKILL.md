@@ -12,6 +12,8 @@ description: >-
 
 # Triage Knowledge
 
+> **Tool names.** The default names below are the halyard plugin's `org-kb` server as Claude Code exposes it: `mcp__plugin_halyard_org-kb__<tool>`. Older connections expose the same server under other prefixes — `mcp__halyard__<tool>` (standalone server added by the docs or `halyard setup`) and `mcp__ask-expert__<tool>` (claude.ai connector, Claude Code on the web) — and Codex and Cursor derive their own prefix from the `org-kb` key. These are aliases for one server, so match on the part after the last `__`: if the default name is not in your tool list, use whichever alias is present (search the deferred tool list for the bare name if needed) rather than concluding the tool is unavailable.
+
 Agent-authored entries (from `summarize_work`, `summarize_conversation`, and `upsert_knowledge`) don't go straight into the live knowledge base — they land in an **INBOX review queue** as candidates. This skill is the human-in-the-loop review step: accept the good ones, dismiss the noise, and tighten drafts before they're filed.
 
 Admins see the whole org queue; non-admins see only their own candidates.
