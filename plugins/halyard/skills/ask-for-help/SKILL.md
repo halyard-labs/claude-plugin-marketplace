@@ -12,6 +12,8 @@ description: >-
 
 # Ask for Help
 
+> **Tool names.** Tools are written here by their bare name (for example `search_knowledge`). The name your client exposes carries a prefix that depends on how the Halyard server was mounted: `mcp__plugin_halyard_org-kb__search_knowledge` from this plugin in Claude Code, `mcp__halyard__search_knowledge` or `mcp__ask-expert__search_knowledge` when it was added as a standalone server or claude.ai connector, and a prefix derived from the `org-kb` server key in other clients. Match on the part after the last `__`. If the exact name is not in your tool list, search the available (or deferred) tools for the bare name before concluding the tool is unavailable — a prefix mismatch is not "unavailable".
+
 Use the halyard MCP tools to get human input when you're blocked, need clarification, or face decisions that require human judgment. **ALWAYS summarize helpful answers** to build a knowledge base.
 
 ## Before Asking: Check the Knowledge Base
@@ -19,7 +21,7 @@ Use the halyard MCP tools to get human input when you're blocked, need clarifica
 Before routing to a human, search for existing answers. Experts get frustrated when asked questions that were already answered in a previous session, and work summaries from past sessions are searchable too.
 
 ```
-mcp__plugin_halyard_org-kb__search_knowledge(
+search_knowledge(
   query: "describe your question topic"
 )
 ```
@@ -31,15 +33,15 @@ If the search returns a relevant answer, use it directly and skip the expert wor
 Every interaction should follow this pattern:
 
 ```
-0. mcp__plugin_halyard_org-kb__search_knowledge(...)   → Check if this was already answered
-1. mcp__plugin_halyard_org-kb__list_team()             → Find the right expert
-2. mcp__plugin_halyard_org-kb__ask_expert(...)         → Send your question (returns immediately)
-3. mcp__plugin_halyard_org-kb__check_response(...)     → REQUIRED: Wait for the response
-4. mcp__plugin_halyard_org-kb__summarize_conversation  → CRITICAL: Capture what you learned
-   OR mcp__plugin_halyard_org-kb__close_conversation   → (with summary parameter)
+0. search_knowledge(...)   → Check if this was already answered
+1. list_team()             → Find the right expert
+2. ask_expert(...)         → Send your question (returns immediately)
+3. check_response(...)     → REQUIRED: Wait for the response
+4. summarize_conversation  → CRITICAL: Capture what you learned
+   OR close_conversation   → (with summary parameter)
 ```
 
-**Steps 3 and 4 are critical**—`mcp__plugin_halyard_org-kb__ask_expert` returns immediately after notifying the expert, so you MUST call `mcp__plugin_halyard_org-kb__check_response` to get their reply. Without summarization, the knowledge is lost and experts get asked the same questions repeatedly.
+**Steps 3 and 4 are critical**—`ask_expert` returns immediately after notifying the expert, so you MUST call `check_response` to get their reply. Without summarization, the knowledge is lost and experts get asked the same questions repeatedly.
 
 ## When to Ask for Help
 
@@ -64,7 +66,7 @@ Do not ask for help when:
 Semantic search across past expert Q&A and work summaries from previous sessions. **Always try this before asking an expert** — the answer may already exist.
 
 ```
-mcp__plugin_halyard_org-kb__search_knowledge(
+search_knowledge(
   query: "how do we handle authentication?"
 )
 ```
@@ -82,7 +84,7 @@ mcp__plugin_halyard_org-kb__search_knowledge(
 Use this to:
 
 - **Find answers to questions that were already asked** — avoid repeating questions experts have already answered
-- **Look up work done in previous sessions** — summaries logged via `mcp__plugin_halyard_org-kb__summarize_work` are searchable here
+- **Look up work done in previous sessions** — summaries logged via `summarize_work` are searchable here
 - **Discover past decisions and context** — understand why something was built a certain way
 
 ### 2. List the Team
@@ -90,11 +92,11 @@ Use this to:
 Before asking, check who's available:
 
 ```
-mcp__plugin_halyard_org-kb__list_team()
-mcp__plugin_halyard_org-kb__list_team(role: "designer")
-mcp__plugin_halyard_org-kb__list_team(skill: "security")
-mcp__plugin_halyard_org-kb__list_team(available_only: true)
-mcp__plugin_halyard_org-kb__list_team(query: "who knows about deployment?")
+list_team()
+list_team(role: "designer")
+list_team(skill: "security")
+list_team(available_only: true)
+list_team(query: "who knows about deployment?")
 ```
 
 ### 2b. Find a Specific Person or Contact
@@ -102,8 +104,8 @@ mcp__plugin_halyard_org-kb__list_team(query: "who knows about deployment?")
 `list_team` is for browsing available experts by role/skill. When you're looking for a **named** person — internal teammate or external contact — search the org directory directly:
 
 ```
-mcp__plugin_halyard_org-kb__search_people(query: "Sarah Chen")        // fuzzy, handles typos
-mcp__plugin_halyard_org-kb__find_person_by_email(email: "sarah@acme.com")  // exact, side-effect-free
+search_people(query: "Sarah Chen")        // fuzzy, handles typos
+find_person_by_email(email: "sarah@acme.com")  // exact, side-effect-free
 ```
 
 Each hit carries `kind: "user" | "contact"` (internal vs. external) and, for internal users, a `userId` you can pass to `ask_expert` / `get_user_profile`. These are also the way to resolve the right id before writing a `halyard://contact/...` or `halyard://user/...` mention when summarizing.
@@ -113,7 +115,7 @@ Each hit carries `kind: "user" | "contact"` (internal vs. external) and, for int
 Send a question to an expert by role or skill:
 
 ```
-mcp__plugin_halyard_org-kb__ask_expert(
+ask_expert(
   prompt: "Your question here",
   role: "designer"  // or use skill: "ui-design"
 )
@@ -132,7 +134,7 @@ mcp__plugin_halyard_org-kb__ask_expert(
 **With options** (when you want a specific choice):
 
 ```
-mcp__plugin_halyard_org-kb__ask_expert(
+ask_expert(
   prompt: "Should we use server-side or client-side validation for this form?",
   role: "architect",
   options: [
@@ -145,10 +147,10 @@ mcp__plugin_halyard_org-kb__ask_expert(
 
 ### 4. Check for Response (Required)
 
-`mcp__plugin_halyard_org-kb__ask_expert` returns immediately after notifying the expert. You MUST call `mcp__plugin_halyard_org-kb__check_response` to wait for their reply:
+`ask_expert` returns immediately after notifying the expert. You MUST call `check_response` to wait for their reply:
 
 ```
-mcp__plugin_halyard_org-kb__check_response(
+check_response(
   conversation_id: "conversation-id-from-org-kb",
   wait: true  // Wait up to 55 seconds for response
 )
@@ -161,7 +163,7 @@ If no response yet, call again to continue waiting.
 Retrieve the complete message history for a conversation:
 
 ```
-mcp__plugin_halyard_org-kb__get_conversation(
+get_conversation(
   conversation_id: "conversation-id"
 )
 ```
@@ -171,7 +173,7 @@ mcp__plugin_halyard_org-kb__get_conversation(
 Send a follow-up message in an existing conversation to ask clarifying questions or provide additional context:
 
 ```
-mcp__plugin_halyard_org-kb__reply_to_expert(
+reply_to_expert(
   conversation_id: "conversation-id",
   message: "Thanks — one follow-up: should we also handle token revocation?"
 )
@@ -182,7 +184,7 @@ mcp__plugin_halyard_org-kb__reply_to_expert(
 **Always call this after receiving a helpful response.** This builds organizational knowledge so experts don't get asked the same questions repeatedly.
 
 ```
-mcp__plugin_halyard_org-kb__summarize_conversation(
+summarize_conversation(
   conversation_id: "conversation-id",
   question: "Should we use JWT or session auth for the mobile app? Our existing mobile SDK expects Bearer tokens.",
   answer: "Use JWT with refresh tokens because mobile clients need stateless auth and we already have JWT infrastructure in the API."
@@ -209,9 +211,9 @@ mcp__plugin_halyard_org-kb__summarize_conversation(
 View a user's expertise areas and activity, or your own:
 
 ```
-mcp__plugin_halyard_org-kb__get_user_profile()
-mcp__plugin_halyard_org-kb__get_user_profile(user_id: "user-id")
-mcp__plugin_halyard_org-kb__get_user_profile(since: "this week")
+get_user_profile()
+get_user_profile(user_id: "user-id")
+get_user_profile(since: "this week")
 ```
 
 Without `since`, shows accumulated expertise. With `since`, shows time-scoped activity.
@@ -221,12 +223,12 @@ Without `since`, shows accumulated expertise. With `since`, shows time-scoped ac
 Close a conversation without capturing knowledge (not recommended):
 
 ```
-mcp__plugin_halyard_org-kb__close_conversation(
+close_conversation(
   conversation_id: "conversation-id"
 )
 ```
 
-**Note:** Prefer using `mcp__plugin_halyard_org-kb__summarize_conversation` instead, which both captures knowledge and closes the conversation.
+**Note:** Prefer using `summarize_conversation` instead, which both captures knowledge and closes the conversation.
 
 ## Writing Good Questions
 
@@ -266,10 +268,10 @@ both patterns. Which should I use for consistency?"
 
 ```
 // 1. Find an expert
-mcp__plugin_halyard_org-kb__list_team(skill: "ui-design")
+list_team(skill: "ui-design")
 
 // 2. Ask your question (returns immediately)
-mcp__plugin_halyard_org-kb__ask_expert(
+ask_expert(
   prompt: "The design shows cards with hover states. Should I use
            CSS transitions or Framer Motion? We use both in the codebase.",
   skill: "ui-design"
@@ -277,7 +279,7 @@ mcp__plugin_halyard_org-kb__ask_expert(
 // Returns immediately: { status: "pending", conversation_id: "conv_abc123" }
 
 // 3. Wait for response (REQUIRED - ask_expert doesn't wait)
-mcp__plugin_halyard_org-kb__check_response(
+check_response(
   conversation_id: "conv_abc123",
   wait: true
 )
@@ -285,7 +287,7 @@ mcp__plugin_halyard_org-kb__check_response(
 //    Framer Motion is for complex animations like page transitions."
 
 // 4. ALWAYS summarize the knowledge gained
-mcp__plugin_halyard_org-kb__summarize_conversation(
+summarize_conversation(
   conversation_id: "conv_abc123",
   question: "CSS transitions vs Framer Motion for card hover states?",
   answer: "Use CSS transitions for simple hover effects. Framer Motion should be reserved for complex animations like page transitions and multi-step sequences. Guideline: Simple state changes = CSS, complex/sequenced animations = Framer Motion."
@@ -294,7 +296,7 @@ mcp__plugin_halyard_org-kb__summarize_conversation(
 
 ## Tips
 
-- **Search first** — Use `mcp__plugin_halyard_org-kb__search_knowledge` before asking an expert; answers from past conversations and work summaries from previous sessions are all searchable
+- **Search first** — Use `search_knowledge` before asking an expert; answers from past conversations and work summaries from previous sessions are all searchable
 - **Be patient** — Experts are notified via Slack and may not respond immediately
 - **Continue other work** — While waiting, work on unblocked tasks
 - **One question at a time** — Keep questions focused; ask follow-ups separately

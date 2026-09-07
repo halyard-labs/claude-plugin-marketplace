@@ -12,6 +12,8 @@ description: >-
 
 # Review Work
 
+> **Tool names.** Tools are written here by their bare name (for example `search_knowledge`). The name your client exposes carries a prefix that depends on how the Halyard server was mounted: `mcp__plugin_halyard_org-kb__search_knowledge` from this plugin in Claude Code, `mcp__halyard__search_knowledge` or `mcp__ask-expert__search_knowledge` when it was added as a standalone server or claude.ai connector, and a prefix derived from the `org-kb` server key in other clients. Match on the part after the last `__`. If the exact name is not in your tool list, search the available (or deferred) tools for the bare name before concluding the tool is unavailable — a prefix mismatch is not "unavailable".
+
 Use the halyard MCP tools to query what has been done — by you, your team, or across the organization. This is useful for standups, catching up after time away, understanding context before starting new work, or reviewing what happened in a previous session.
 
 ## Quick Start
@@ -20,13 +22,13 @@ Use the halyard MCP tools to query what has been done — by you, your team, or 
 
 ```
 // Looking for something specific? Search first.
-mcp__plugin_halyard_org-kb__search_knowledge(query: "authentication refactor")
+search_knowledge(query: "authentication refactor")
 
 // General catch-up without a topic? List with filters.
-mcp__plugin_halyard_org-kb__list_knowledge(author: "me", since: "this week")
+list_knowledge(author: "me", since: "this week")
 
 // Need to see how an entry connects to others? Explore its graph.
-mcp__plugin_halyard_org-kb__explore_knowledge(entry_id: "entry-id")
+explore_knowledge(entry_id: "entry-id")
 ```
 
 ## Available Tools
@@ -36,7 +38,7 @@ mcp__plugin_halyard_org-kb__explore_knowledge(entry_id: "entry-id")
 Semantic search across all knowledge entries — work summaries, expert Q&A, decisions, and process docs. Use this when you're looking for something specific or want to find relevant context.
 
 ```
-mcp__plugin_halyard_org-kb__search_knowledge(query: "your search query")
+search_knowledge(query: "your search query")
 ```
 
 **Parameters:**
@@ -53,13 +55,13 @@ mcp__plugin_halyard_org-kb__search_knowledge(query: "your search query")
 
 ```
 // What decisions were made about the database?
-mcp__plugin_halyard_org-kb__search_knowledge(query: "database", type: "DECISION")
+search_knowledge(query: "database", type: "DECISION")
 
 // What did I work on this week?
-mcp__plugin_halyard_org-kb__search_knowledge(query: "work completed", author: "me", since: "this week")
+search_knowledge(query: "work completed", author: "me", since: "this week")
 
 // Find past answers about deployment
-mcp__plugin_halyard_org-kb__search_knowledge(query: "deployment process")
+search_knowledge(query: "deployment process")
 ```
 
 ### 2. List Knowledge
@@ -67,7 +69,7 @@ mcp__plugin_halyard_org-kb__search_knowledge(query: "deployment process")
 Chronological listing of knowledge entries. Use this when you want to see recent activity without a specific search query — great for standups and catch-ups.
 
 ```
-mcp__plugin_halyard_org-kb__list_knowledge()
+list_knowledge()
 ```
 
 **Parameters:**
@@ -84,16 +86,16 @@ mcp__plugin_halyard_org-kb__list_knowledge()
 
 ```
 // Everything from today
-mcp__plugin_halyard_org-kb__list_knowledge(since: "today")
+list_knowledge(since: "today")
 
 // My work output this week
-mcp__plugin_halyard_org-kb__list_knowledge(author: "me", type: "WORK_OUTPUT", since: "this week")
+list_knowledge(author: "me", type: "WORK_OUTPUT", since: "this week")
 
 // Recent decisions
-mcp__plugin_halyard_org-kb__list_knowledge(type: "DECISION", limit: 5)
+list_knowledge(type: "DECISION", limit: 5)
 
 // What happened yesterday?
-mcp__plugin_halyard_org-kb__list_knowledge(since: "yesterday")
+list_knowledge(since: "yesterday")
 ```
 
 ### 3. Explore Knowledge Graph
@@ -101,7 +103,7 @@ mcp__plugin_halyard_org-kb__list_knowledge(since: "yesterday")
 Explore relationships between knowledge entries — see what supersedes what, evidence chains, and connected entries:
 
 ```
-mcp__plugin_halyard_org-kb__explore_knowledge(
+explore_knowledge(
   entry_id: "entry-id"
 )
 ```
@@ -123,9 +125,9 @@ Use this after `search_knowledge` to understand how an entry connects to related
 See a user's expertise areas and recent activity:
 
 ```
-mcp__plugin_halyard_org-kb__get_user_profile()
-mcp__plugin_halyard_org-kb__get_user_profile(since: "this week")
-mcp__plugin_halyard_org-kb__get_user_profile(user_id: "user-id")
+get_user_profile()
+get_user_profile(since: "this week")
+get_user_profile(user_id: "user-id")
 ```
 
 Without `since`, shows accumulated expertise and stats. With `since`, shows time-scoped activity including conversations, knowledge entries, and sessions.
@@ -135,7 +137,7 @@ Without `since`, shows accumulated expertise and stats. With `since`, shows time
 Update your living profile document with expertise, preferences, or notes:
 
 ```
-mcp__plugin_halyard_org-kb__update_user_profile(
+update_user_profile(
   content: "## Expertise\n- TypeScript/React\n- System design\n\n## Preferences\n- Prefer functional patterns over OOP",
   sections: ["Expertise", "Preferences"]
 )
@@ -150,10 +152,10 @@ mcp__plugin_halyard_org-kb__update_user_profile(
 
 ### 6. Log Work (When Needed)
 
-If during your review you realize work from the current session should be recorded, use `mcp__plugin_halyard_org-kb__summarize_work`:
+If during your review you realize work from the current session should be recorded, use `summarize_work`:
 
 ```
-mcp__plugin_halyard_org-kb__summarize_work(
+summarize_work(
   title: "Brief description of what was done",
   summary: "Detailed explanation of the work, context, and decisions made",
   tags: ["relevant", "tags"]
@@ -182,15 +184,15 @@ Beyond the knowledge base, the org's PR delivery data is queryable — useful fo
 **Pre-aggregated dashboard** (admin-only) — totals (opened / merged / closed-unmerged), cycle time p50/p90, auto-approval %, per-author and per-repo breakdowns, and an 8-week trend:
 
 ```
-mcp__plugin_halyard_org-kb__get_delivery_metrics()                 // current month
-mcp__plugin_halyard_org-kb__get_delivery_metrics(month: "2026-06") // specific month (YYYY-MM)
+get_delivery_metrics()                 // current month
+get_delivery_metrics(month: "2026-06") // specific month (YYYY-MM)
 ```
 
 **Raw events** — for open-ended questions the dashboard doesn't answer ("which PRs sat unreviewed for >5 days?", "what did Alex ship last week?", "compare backend vs frontend cadence"):
 
 ```
-mcp__plugin_halyard_org-kb__list_events(author: "me", since: "this week")
-mcp__plugin_halyard_org-kb__list_events(eventType: ["pull_request_merged"], repo: "halyard-labs/signal", since: "30d")
+list_events(author: "me", since: "this week")
+list_events(eventType: ["pull_request_merged"], repo: "halyard-labs/signal", since: "30d")
 ```
 
 **`list_events` parameters:**
@@ -210,8 +212,8 @@ Prefer `get_delivery_metrics` for dashboard-shaped numbers — its server-side a
 When a review surfaces an entry that's outdated, wrong, or duplicated, retire it:
 
 ```
-mcp__plugin_halyard_org-kb__delete_knowledge(knowledge_entry_id: "ke_...")             // archives — reversible
-mcp__plugin_halyard_org-kb__delete_knowledge(knowledge_entry_id: "ke_...", hard: true) // permanent — spam/secrets only
+delete_knowledge(knowledge_entry_id: "ke_...")             // archives — reversible
+delete_knowledge(knowledge_entry_id: "ke_...", hard: true) // permanent — spam/secrets only
 ```
 
 Archiving hides the entry from search and the wiki but keeps it recoverable — prefer it over hard deletes. When you're *replacing* knowledge rather than removing it, prefer `supersedes_entry_id` on the new entry (see the **log-work** skill) so the chain is preserved.
@@ -235,27 +237,27 @@ Entries in the knowledge base fall into these categories:
 
 ### Morning standup / catch-up
 ```
-mcp__plugin_halyard_org-kb__list_knowledge(author: "me", since: "yesterday")
+list_knowledge(author: "me", since: "yesterday")
 ```
 
 ### Starting a new task — find relevant context
 ```
-mcp__plugin_halyard_org-kb__search_knowledge(query: "describe the feature or area you're about to work on")
+search_knowledge(query: "describe the feature or area you're about to work on")
 ```
 
 ### Weekly review
 ```
-mcp__plugin_halyard_org-kb__list_knowledge(since: "this week")
+list_knowledge(since: "this week")
 ```
 
 ### Find out what a teammate worked on
 ```
-mcp__plugin_halyard_org-kb__search_knowledge(query: "what was done", since: "this week")
+search_knowledge(query: "what was done", since: "this week")
 ```
 
 ### Check if a question was already answered
 ```
-mcp__plugin_halyard_org-kb__search_knowledge(query: "your question")
+search_knowledge(query: "your question")
 ```
 
 ## Reviewing Reflections
@@ -270,10 +272,10 @@ Use reflections to:
 
 ```
 // Find sessions with reflections about a specific area
-mcp__plugin_halyard_org-kb__search_knowledge(query: "reflections on deployment", type: "WORK_OUTPUT")
+search_knowledge(query: "reflections on deployment", type: "WORK_OUTPUT")
 
 // Review recent reflections across the team
-mcp__plugin_halyard_org-kb__list_knowledge(type: "WORK_OUTPUT", since: "this week", include_content: true)
+list_knowledge(type: "WORK_OUTPUT", since: "this week", include_content: true)
 ```
 
 When presenting a review to the user, call out any notable reflections — especially recurring themes or unactioned suggestions. Share one that feels relevant and ask if the user has thoughts:
@@ -282,7 +284,7 @@ When presenting a review to the user, call out any notable reflections — espec
 
 ## Tips
 
-- **Search when you have a topic, list when you don't** — If the ask is specific ("what do we know about auth?"), use `mcp__plugin_halyard_org-kb__search_knowledge`. If it's a general catch-up ("what happened this week?"), use `mcp__plugin_halyard_org-kb__list_knowledge` with time/author filters.
+- **Search when you have a topic, list when you don't** — If the ask is specific ("what do we know about auth?"), use `search_knowledge`. If it's a general catch-up ("what happened this week?"), use `list_knowledge` with time/author filters.
 - **Use time filters** — `since` is your best friend for scoping results to relevant timeframes
 - **Use `"me"` for your own work** — The `author: "me"` filter resolves to your user automatically
 - **Search before asking experts** — Someone may have already asked the same question

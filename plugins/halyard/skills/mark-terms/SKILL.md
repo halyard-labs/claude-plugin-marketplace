@@ -12,6 +12,8 @@ description: >-
 
 # Mark Terms
 
+> **Tool names.** Tools are written here by their bare name (for example `search_knowledge`). The name your client exposes carries a prefix that depends on how the Halyard server was mounted: `mcp__plugin_halyard_org-kb__search_knowledge` from this plugin in Claude Code, `mcp__halyard__search_knowledge` or `mcp__ask-expert__search_knowledge` when it was added as a standalone server or claude.ai connector, and a prefix derived from the `org-kb` server key in other clients. Match on the part after the last `__`. If the exact name is not in your tool list, search the available (or deferred) tools for the bare name before concluding the tool is unavailable — a prefix mismatch is not "unavailable".
+
 A **definitional term** is one that carries **specific significance to the company** — a name or word this org gives a meaning it wouldn't have to an outsider. That's the whole bar. Two kinds qualify:
 
 - **Coined / unique to the company** — a concept, product surface, project, or acronym this org invented ("the loop", "triage inbox", an internal codename).
@@ -33,7 +35,7 @@ Skip common English, self-evident words, and **standard industry terms that alre
 
 1. **Search for an existing definition** before writing anything new:
    ```
-   mcp__plugin_halyard_org-kb__search_knowledge(query: "the term", type: "DEFINITION")
+   search_knowledge(query: "the term", type: "DEFINITION")
    ```
 
 2. **It exists → link first use** to its entry ID inside the entry body:
@@ -44,7 +46,7 @@ Skip common English, self-evident words, and **standard industry terms that alre
 
 3. **It doesn't exist but the term is worth defining → create it**, then link to the new ID:
    ```
-   mcp__plugin_halyard_org-kb__upsert_knowledge(
+   upsert_knowledge(
      title: "The loop",
      content: "The search → ask → capture cycle every knowledge interaction follows...",
      entry_type: "DEFINITION"

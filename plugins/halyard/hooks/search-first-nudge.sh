@@ -2,7 +2,9 @@
 # PreToolUse hook: nudge toward search_knowledge before external research or
 # delegation, and — in auto-accept modes, where no user prompt will arrive to
 # course-correct — before the first file edit. Fires at most once per session
-# and only if no retrieval call has happened yet.
+# and only if no retrieval call has happened yet. The transcript check matches
+# search_knowledge/explore_knowledge under any MCP prefix, since the same
+# server may be mounted as org-kb (this plugin), halyard, or ask-expert.
 
 command -v jq >/dev/null 2>&1 || exit 0
 
@@ -29,7 +31,7 @@ case "$TOOL_NAME" in
 esac
 
 # Already searched or explored this session — pass through silently
-if grep -qE '"name":"[^"]*org-kb__(search_knowledge|explore_knowledge)"' "$TRANSCRIPT_PATH"; then
+if grep -qE '"name":"mcp__[^"]*__(search_knowledge|explore_knowledge)"' "$TRANSCRIPT_PATH"; then
   exit 0
 fi
 
@@ -42,7 +44,7 @@ cat <<'EOF'
 {
   "hookSpecificOutput": {
     "hookEventName": "PreToolUse",
-    "additionalContext": "No knowledge-base search has happened in this session yet. Before external research, delegating to a subagent, or making changes, consider calling mcp__plugin_halyard_org-kb__search_knowledge with a topical query — the team may have prior work, decisions, or expert Q&A on this subject that would save time or surface constraints."
+    "additionalContext": "No knowledge-base search has happened in this session yet. Before external research, delegating to a subagent, or making changes, consider calling the Halyard search_knowledge tool with a topical query (exposed as mcp__plugin_halyard_org-kb__search_knowledge by this plugin; if the server is mounted under another name, use the tool with that suffix, e.g. mcp__halyard__search_knowledge) — the team may have prior work, decisions, or expert Q&A on this subject that would save time or surface constraints."
   }
 }
 EOF

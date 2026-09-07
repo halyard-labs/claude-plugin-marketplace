@@ -11,14 +11,16 @@ description: >-
 
 # Log Work
 
-After completing all work in this session, call `mcp__plugin_halyard_org-kb__summarize_work` to log what was accomplished.
+> **Tool names.** Tools are written here by their bare name (for example `search_knowledge`). The name your client exposes carries a prefix that depends on how the Halyard server was mounted: `mcp__plugin_halyard_org-kb__search_knowledge` from this plugin in Claude Code, `mcp__halyard__search_knowledge` or `mcp__ask-expert__search_knowledge` when it was added as a standalone server or claude.ai connector, and a prefix derived from the `org-kb` server key in other clients. Match on the part after the last `__`. If the exact name is not in your tool list, search the available (or deferred) tools for the bare name before concluding the tool is unavailable — a prefix mismatch is not "unavailable".
+
+After completing all work in this session, call `summarize_work` to log what was accomplished.
 
 Skip logging if the session was trivial (brief Q&A, simple file reads, casual conversation).
 
 ## Usage
 
 ```
-mcp__plugin_halyard_org-kb__summarize_work(
+summarize_work(
   title: "Implemented user authentication",
   summary: "Added JWT-based auth with refresh tokens to the API. Used existing middleware pattern from request-logger. Key decision: chose JWT over sessions because mobile clients need stateless auth.",
   entry_type: "WORK_OUTPUT",
@@ -47,7 +49,7 @@ mcp__plugin_halyard_org-kb__summarize_work(
 If the summary contains highly sensitive information — credentials context, personnel matters, security findings, unannounced plans — pass `visibility: "PRIVATE"` so the entry is born private instead of workspace-visible:
 
 ```
-mcp__plugin_halyard_org-kb__summarize_work(
+summarize_work(
   title: "Rotated compromised staging credentials",
   summary: "...",
   visibility: "PRIVATE"
@@ -70,7 +72,7 @@ A PRIVATE entry is findable in search only by its author. Widen access later wit
 `summarize_work` is the right tool for recording work you just performed. When you instead need to author a **standalone document** — a decision record, a runbook, a spec, or a piece of reference context not tied to this session's work — use the general-purpose write verb:
 
 ```
-mcp__plugin_halyard_org-kb__upsert_knowledge(
+upsert_knowledge(
   title: "Auth token rotation runbook",
   content: "## Steps\n1. Rotate the signing key in Vault\n2. ...",
   entry_type: "PROCESS",
@@ -90,7 +92,7 @@ mcp__plugin_halyard_org-kb__upsert_knowledge(
 When your work produced a self-contained report or dataset that's more useful rendered than as prose, attach it to the entry after creating it:
 
 ```
-mcp__plugin_halyard_org-kb__attach_artifact(
+attach_artifact(
   knowledge_entry_id: "ke_...",
   format: "HTML",      // or "CSV"
   content: "<html>...self-contained markup, inline styles only...</html>"
