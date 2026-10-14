@@ -1,12 +1,25 @@
 {
   "name": "halyard",
   "description": "Shared team memory for AI agents. Log decisions, recall past work, gather context, and ask teammates on Slack, Teams, or Discord when you need a human.",
-  "version": "1.15.2",
+  "version": "1.16.0",
   "author": {
     "name": "Halyard Labs",
     "email": "support@halyard.studio"
   },
   "homepage": "https://usehalyard.ai",
+  "repository": "https://github.com/halyard-labs/claude-plugin-marketplace",
   "license": "MIT",
-  "keywords": ["slack", "experts", "knowledge-base", "collaboration", "human-in-the-loop", "memory", "context", "knowledge", "organizational-knowledge", "search", "history"]
+  "keywords": ["slack", "experts", "knowledge-base", "collaboration", "human-in-the-loop", "memory", "context", "knowledge", "organizational-knowledge", "search", "history"],
+  "icon": "./assets/halyard-mark.svg",
+  "documentationUrl": "https://usehalyard.ai/docs/connect-agent/claude-code/",
+  "privacyPolicyUrl": "https://usehalyard.ai/privacy",
+  "termsOfServiceUrl": "https://usehalyard.ai/terms",
+  "userConfig": {
+    "halyard_token": {
+      "type": "string",
+      "title": "Halyard API key",
+      "description": "Optional. An sk_halyard_ API key (from `halyard api-keys create` or the Halyard web app) used by the session-upload hook when you have not run `halyard login`. Leave empty to use your stored login.",
+      "sensitive": true
+    }
+  }
 }

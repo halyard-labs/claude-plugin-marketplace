@@ -65,9 +65,12 @@ machine, or use a token.
 
 `HALYARD_TOKEN` takes precedence over the stored credentials. An API key
 (`sk_halyard_...`) never expires and is the right choice for CI. The
-session-upload hook also reads `HALYARD_TOKEN` from the repo's `.env`, so a
-token there is enough for uploads without a global login. Never commit the
-token or paste it into chat; point the user at where to put it.
+session-upload hook also reads `HALYARD_TOKEN` from the plugin's **Halyard API
+key** option (Claude Code only — a sensitive `userConfig` value prompted for
+when the plugin is enabled, stored in the OS credential store, not shown in
+`/config`) and from the repo's `.env`, so a token in either place is
+enough for uploads without a global login. Never commit the token or paste it
+into chat; point the user at where to put it.
 
 ## 4. Scaffold the repo (optional)
 
