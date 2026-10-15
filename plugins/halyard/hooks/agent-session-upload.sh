@@ -10,10 +10,23 @@
 #
 # `halyard hook` reads the hook payload from stdin, resolves the repo root
 # (CLAUDE_PROJECT_DIR / CODEX cwd / payload cwd), authenticates via
-# HALYARD_TOKEN (environment, then the repo's .env) or `halyard login`, refuses
-# login credentials scoped to an org other than the repo's .halyard.json binding,
-# uploads the finished transcript at session end and sweeps missed ones at
-# session start. Log: ~/.halyard/hooks.log.
+# HALYARD_TOKEN (environment, then the plugin's `halyard_token` option, then
+# the repo's .env) or `halyard login`, refuses login credentials scoped to an
+# org other than the repo's .halyard.json binding, uploads the finished
+# transcript at session end and sweeps missed ones at session start.
+# Log: ~/.halyard/hooks.log.
+#
+# The `halyard_token` option is declared as sensitive `userConfig` in
+# .claude-plugin/plugin.json: Claude Code prompts for it when the plugin is
+# enabled, keeps it in the OS credential store, and exports it to hook
+# processes as CLAUDE_PLUGIN_OPTION_HALYARD_TOKEN. An explicit HALYARD_TOKEN in
+# the environment (CI, sandboxes) still wins; the option is a fallback for
+# machines that never ran `halyard login`. Codex does not read userConfig, so
+# the variable is simply absent there.
+if [ -z "${HALYARD_TOKEN:-}" ] && [ -n "${CLAUDE_PLUGIN_OPTION_HALYARD_TOKEN:-}" ]; then
+  HALYARD_TOKEN="$CLAUDE_PLUGIN_OPTION_HALYARD_TOKEN"
+  export HALYARD_TOKEN
+fi
 ROOT="${CLAUDE_PROJECT_DIR:-${CODEX_CWD:-$PWD}}"
 BIN="$ROOT/node_modules/.bin/halyard"
 [ -x "$BIN" ] || BIN="$(command -v halyard 2>/dev/null || true)"

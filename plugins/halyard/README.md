@@ -62,6 +62,12 @@ or Discord workspace connected.
 
 ## Getting started
 
+Install from Claude Code (2.1.275 or later):
+
+```text
+/plugin install halyard --marketplace halyard-labs/claude-plugin-marketplace
+```
+
 Once installed, ask the agent:
 
 ```text
@@ -81,6 +87,13 @@ Set up the Halyard CLI.
 
 It installs `@halyard/cli`, walks you through `halyard login` (or a
 `HALYARD_TOKEN` for headless use), and verifies with `halyard sync --dry-run`.
+
+In Claude Code you can instead paste an API key into the plugin's **Halyard
+API key** option when prompted on enable (or later from the plugin's
+configuration dialog in `/plugin`; sensitive options are not listed in
+`/config`). It is stored in the OS credential store, never in
+`settings.json`, and the session-upload hook uses it only when
+`HALYARD_TOKEN` is not already set in the environment.
 
 ## Links
 
