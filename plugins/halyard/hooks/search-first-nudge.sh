@@ -19,7 +19,7 @@ if [ -z "$TRANSCRIPT_PATH" ] || [ ! -f "$TRANSCRIPT_PATH" ]; then
 fi
 
 case "$TOOL_NAME" in
-  Task|WebSearch|WebFetch) ;;
+  Agent|Task|WebSearch|WebFetch) ;;
   Edit|Write|MultiEdit|NotebookEdit)
     # Edits only trigger the nudge when running unattended
     case "$PERMISSION_MODE" in
