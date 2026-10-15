@@ -22,7 +22,7 @@ Installs the following into your agent:
 
 7. **`mark-terms` skill** — Teaches the agent to link org-specific jargon in knowledge entries to canonical definition entries so the knowledge graph stays connected.
 
-8. **Stop hook** (Claude Code only) — Automatically evaluates whether meaningful work was done at the end of a session and prompts the agent to log it if it hasn't been captured yet.
+8. **Stop hook** (Claude Code only) — Once per session, when the transcript shows signs of substantive activity (edits, subagents, or web research) and nothing has been logged yet, asks the agent to decide whether the session produced durable knowledge and to call `summarize_work` if so, or end the turn silently if not. It is a proxy gate, not a content classifier.
 
 9. **`knowledge-first` rule** (Cursor only) — An always-on rule that orients every Cursor session toward the knowledge base: search before substantive work, ask a human on a miss, capture outcomes after. Mirrors what the Claude Code hooks do, using Cursor's rules system.
 

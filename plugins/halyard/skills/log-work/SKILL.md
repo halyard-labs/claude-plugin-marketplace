@@ -13,9 +13,13 @@ description: >-
 
 > **Tool names.** The default names below are the halyard plugin's `org-kb` server as Claude Code exposes it: `mcp__plugin_halyard_org-kb__<tool>`. Older connections expose the same server under other prefixes — `mcp__halyard__<tool>` (standalone server added by the docs or `halyard setup`) and `mcp__ask-expert__<tool>` (claude.ai connector, Claude Code on the web) — and Codex and Cursor derive their own prefix from the `org-kb` key. These are aliases for one server, so match on the part after the last `__`: if the default name is not in your tool list, use whichever alias is present (search the deferred tool list for the bare name if needed) rather than concluding the tool is unavailable.
 
-After completing all work in this session, call `mcp__plugin_halyard_org-kb__summarize_work` to log what was accomplished.
+Decide for yourself whether the session produced durable knowledge: code changes with non-obvious reasoning, a decision and its rationale, debugging findings, research conclusions, or a reusable answer from the user. If it did, call `mcp__plugin_halyard_org-kb__summarize_work` before your final response. If it did not (brief Q&A, simple file reads, casual conversation), skip logging and end the turn — do not ask the user whether to log.
 
-Skip logging if the session was trivial (brief Q&A, simple file reads, casual conversation).
+When you do log, end your final message with one line the Stop hook recognises, so it does not nudge again for a session that is already captured:
+
+```
+Logged to Halyard: <entry title>
+```
 
 ## Usage
 
@@ -110,11 +114,7 @@ When logging work, include 2-4 reflection bullets in your summary covering any o
 - **Learnings** — new discoveries about the codebase, tools, APIs, or setup
 - **Suggestions** — improvements to code, process, config, or tooling
 
-Be genuine, not performative. Skip a category if nothing meaningful to say. Be specific — "Grep was faster than Agent for finding the config" beats "tools worked well." If the session was straightforward, a single bullet is fine.
-
-After logging, share one of your reflections with the user as a conversation starter and ask for theirs:
-
-> *One thing I noticed: [your reflection]. Any thoughts from your side on this session?*
+Be genuine, not performative. Skip a category if nothing meaningful to say. Be specific — "Grep was faster than Agent for finding the config" beats "tools worked well." If the session was straightforward, a single bullet is fine. Reflections go in the entry, not in a question to the user.
 
 ## Tips
 
