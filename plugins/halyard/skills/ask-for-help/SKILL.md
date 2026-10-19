@@ -76,7 +76,7 @@ mcp__plugin_halyard_org-kb__search_knowledge(
 | Parameter | Description                                                                            |
 | --------- | -------------------------------------------------------------------------------------- |
 | `query`   | Natural language search query (required)                                               |
-| `type`    | Filter by type: `"WORK_OUTPUT"`, `"DECISION"`, `"PROCESS"`, `"CONTEXT"`                |
+| `type`    | Filter by type: `"WORK_OUTPUT"`, `"DECISION"`, `"PROCESS"`, `"CONTEXT"`, `"SPEC"`      |
 | `author`  | Filter by author — use `"me"` for your own entries                                     |
 | `since`   | Time filter: `"today"`, `"yesterday"`, `"this week"`, `"7d"`, `"30d"`, or an ISO date |
 | `limit`   | Max results to return                                                                  |

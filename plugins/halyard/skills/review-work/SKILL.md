@@ -46,7 +46,7 @@ mcp__plugin_halyard_org-kb__search_knowledge(query: "your search query")
 | Parameter | Description                                                                            |
 | --------- | -------------------------------------------------------------------------------------- |
 | `query`   | What to search for — uses semantic similarity (required)                               |
-| `type`    | Filter by type: `"WORK_OUTPUT"`, `"DECISION"`, `"PROCESS"`, `"CONTEXT"`                |
+| `type`    | Filter by type: `"WORK_OUTPUT"`, `"DECISION"`, `"PROCESS"`, `"CONTEXT"`, `"SPEC"`      |
 | `author`  | Filter by author — use `"me"` for your own entries                                     |
 | `since`   | Time filter: `"today"`, `"yesterday"`, `"this week"`, `"7d"`, `"30d"`, or an ISO date |
 | `limit`   | Max results to return                                                                  |
@@ -76,7 +76,7 @@ mcp__plugin_halyard_org-kb__list_knowledge()
 
 | Parameter | Description                                                                            |
 | --------- | -------------------------------------------------------------------------------------- |
-| `type`            | Filter by type: `"WORK_OUTPUT"`, `"DECISION"`, `"PROCESS"`, `"CONTEXT"`                |
+| `type`            | Filter by type: `"WORK_OUTPUT"`, `"DECISION"`, `"PROCESS"`, `"CONTEXT"`, `"SPEC"`      |
 | `author`          | Filter by author — use `"me"` for your own entries                                     |
 | `since`           | Time filter: `"today"`, `"yesterday"`, `"this week"`, `"7d"`, `"30d"`, or an ISO date |
 | `limit`           | Max results to return (default: 10)                                                    |
@@ -230,6 +230,7 @@ Entries in the knowledge base fall into these categories:
 | `DECISION`    | Architectural and design decisions with reasoning       | `summarize_work`          |
 | `PROCESS`     | Repeatable procedures a reader can follow again — how-tos, runbooks, conventions (not a record of steps performed once) | `summarize_work`          |
 | `CONTEXT`     | Background context, research, or reference material     | `summarize_work`          |
+| `SPEC`        | Plans and specifications, captured before execution     | `upsert_knowledge`        |
 
 **Note:** Expert Q&A entries are created automatically by `summarize_conversation` and appear in search results, but are not a `type` filter value you pass to `search_knowledge` or `list_knowledge`.
 

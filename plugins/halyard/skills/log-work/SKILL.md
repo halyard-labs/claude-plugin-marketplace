@@ -1,12 +1,16 @@
 ---
 name: log-work
 description: >-
-  Log completed work to the team knowledge base. Use when finishing a session,
-  completing a task, wrapping up, making a decision, or when prompted to record,
-  document, save, or summarize what was done. Triggers on 'log this', 'write this
-  up', 'save to knowledge base', 'document what we did', 'record this decision',
-  'summarize this session'. Captures work summaries, architectural decisions,
-  process documentation, and learnings for team visibility.
+  Log work to the team knowledge base — completed work at the end, and other
+  work as it happens: a spec or plan before execution starts, a decision when
+  it is made, a runbook or research write-up as a standalone doc. Use when
+  finishing a session, completing a task, wrapping up, a plan has just been
+  agreed and implementation is about to begin, making a decision, or when
+  prompted to record, document, save, or summarize. Triggers on 'log this',
+  'write this up', 'save to knowledge base', 'document what we did', 'record
+  this decision', 'capture the spec', 'save the plan', 'summarize this
+  session'. Captures specs, work summaries, architectural decisions, process
+  documentation, and learnings for team visibility.
 ---
 
 # Log Work
@@ -20,6 +24,40 @@ When you do log, end your final message with one line the Stop hook recognises, 
 ```
 Logged to Halyard: <entry title>
 ```
+
+## What to log, and when
+
+Completed work is the usual case, but not the only one. Log other work at the moment it exists, so the entry records what was known and believed then rather than a reconstruction after the fact:
+
+| Moment                                          | What to log                                                        | Tool                | `entry_type`  |
+| ----------------------------------------------- | ------------------------------------------------------------------ | ------------------- | ------------- |
+| A plan is agreed, before implementation starts  | The spec: goal, chosen approach, alternatives rejected and why     | `upsert_knowledge`  | `SPEC`        |
+| A choice between valid approaches is made       | The decision and its reasoning                                     | `summarize_work`    | `DECISION`    |
+| Research or investigation concludes             | Findings, sources, what they rule in or out                        | `summarize_work`    | `CONTEXT`     |
+| A procedure worth repeating is worked out       | The steps, written for the next person to follow                   | `upsert_knowledge`  | `PROCESS`     |
+| Work is finished                                | What changed and why, plus reflections                             | `summarize_work`    | `WORK_OUTPUT` |
+
+Earlier entries don't replace the final one: a spec logged before execution still needs a `WORK_OUTPUT` entry when the work is done.
+
+## Capturing a spec before execution
+
+When a plan has been agreed for non-trivial work — anything where a real alternative was weighed and set aside — capture it as a standalone `SPEC` doc **before** you start implementing or hand it to a subagent. Skip it for mechanical edits and one-line fixes where there was nothing to choose between.
+
+```
+mcp__plugin_halyard_org-kb__upsert_knowledge(
+  title: "Spec: stateless auth for mobile clients",
+  content: "## Goal\n...\n## Approach\n...\n## Alternatives considered\n- Server sessions — rejected: mobile clients can't hold cookies reliably\n## Constraints and assumptions\n...\n## Prior knowledge relied on\n- [Auth middleware decision](halyard://knowledge/ke_xyz)\n## Open questions\n...",
+  entry_type: "SPEC",
+  resource: "<ticket or PR URL, if one exists>",
+  tags: ["auth", "spec"]
+)
+```
+
+- **Write down the reasoning, not just the plan.** The alternatives rejected and the constraints that drove the choice are what a later reader can't recover from the code.
+- **Cite what you relied on.** Link the KB entries, tickets, or teammate answers that shaped the approach with `halyard://` links, so the spec joins the graph.
+- **Keep it point-in-time.** Don't rewrite the spec afterwards to match what shipped. If the plan changes materially mid-work, write a new `SPEC` with `supersedes_entry_id` pointing at the old one; minor drift belongs in the final `WORK_OUTPUT` entry.
+- **Link the outcome back.** Keep the returned entry id and pass it as `source_knowledge_entry_id` on the closing `summarize_work`, so the spec and what actually happened sit side by side.
+- Like other agent-authored entries, the spec lands in the INBOX review queue and becomes searchable once a human accepts it (see the **triage-knowledge** skill).
 
 ## Usage
 
@@ -119,6 +157,7 @@ Be genuine, not performative. Skip a category if nothing meaningful to say. Be s
 ## Tips
 
 - Log **before** your final response — the connection may close before a deferred call completes
+- Log specs and decisions when they happen, not at the end — see [What to log, and when](#what-to-log-and-when)
 - Use `resource` when the work relates to a specific PR, ticket, or thread
 - Use `supersedes_entry_id` when your work replaces or updates a previous knowledge entry
 - Don't repeat what's already captured in commit messages — focus on context and reasoning
