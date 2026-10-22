@@ -4,7 +4,9 @@
 # course-correct — before the first file edit. Fires at most once per session
 # and only if no retrieval call has happened yet. The transcript check matches
 # search_knowledge/explore_knowledge under any MCP prefix, since the same
-# server may be mounted as org-kb (this plugin), halyard, or ask-expert.
+# server may be mounted as org-kb (this plugin), halyard, or ask-expert, and
+# only `tool_use` entries count: transcripts also carry tool schemas
+# (prompt_snapshot attachments) with the same `"name":"..."` text.
 
 command -v jq >/dev/null 2>&1 || exit 0
 
@@ -31,7 +33,7 @@ case "$TOOL_NAME" in
 esac
 
 # Already searched or explored this session — pass through silently
-if grep -qE '"name":"mcp__[^"]*__(search_knowledge|explore_knowledge)"' "$TRANSCRIPT_PATH"; then
+if grep -qE '"type":"tool_use","id":"[^"]*","name":"mcp__[^"]*__(search_knowledge|explore_knowledge)"' "$TRANSCRIPT_PATH"; then
   exit 0
 fi
 
