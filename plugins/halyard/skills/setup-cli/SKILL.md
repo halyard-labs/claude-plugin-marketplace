@@ -27,8 +27,8 @@ this is done.
 # repo-local install (the hook checks here first), then PATH
 ls node_modules/.bin/halyard 2>/dev/null || command -v halyard
 halyard --version
+halyard whoami             # user, org slug, and repo binding; fails if login is needed
 cat .halyard.json          # repo binding, e.g. {"org": "acme"}
-halyard whoami             # user, org, and repo binding; fails if login is needed
 halyard sync --dry-run     # lists discovered transcripts; proves auth works
 ```
 
@@ -50,42 +50,9 @@ Alternatives, in order of preference:
 - Global: `npm i -g @halyard/cli` (puts `halyard` on PATH for every repo)
 - Zero-install, one-off: `bunx @halyard/cli <command>` or `pnpm dlx @halyard/cli <command>`
 
-## 3. Bind and scaffold the repo
+## 3. Authenticate
 
-Do this **before** logging in: `halyard login` inside a bound repo stores
-credentials for that repo's org, which is what the upload hooks check.
-
-`halyard setup --org <slug>` (alias `halyard init`) merges Halyard into
-existing config without clobbering other entries. Ask the user for the org
-slug if it isn't already in `.halyard.json`; don't guess it. Preview first:
-
-```bash
-halyard setup --org <slug> --dry-run
-halyard setup --org <slug>
-```
-
-What it writes:
-
-| Target                        | File                                                                                   | Change                                                                                        |
-| ----------------------------- | -------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------- |
-| Repo binding (with `--org`)   | `.halyard.json`                                                                        | `{"org": "<slug>"}`; `sync`, `push`, and the upload hooks refuse credentials for another org |
-| Upload launcher               | `.halyard/hook.sh`                                                                     | Runs `halyard hook` for every client below                                                    |
-| Claude Code (project)         | `.claude/settings.json`                                                                | Adds the `halyard-labs` marketplace, `enabledPlugins["halyard@halyard-labs"] = true`, and session hooks |
-| Cursor (project)              | `.cursor/mcp.json`, `.cursor/hooks.json`                                               | Adds `mcpServers.halyard.url = https://mcp.usehalyard.ai` and session hooks                   |
-| Codex                         | `~/.codex/config.toml` (if detected), `.codex/hooks.json`                              | Adds `[mcp_servers.halyard]` with the same URL, and session hooks                             |
-| Gemini, Copilot, OpenCode, Grok | `.gemini/settings.json`, `.github/hooks/`, `.opencode/plugins/`, `.grok/hooks/`      | Session hooks                                                                                 |
-
-`--no-hooks` skips the launcher and hook files; `--force` rebinds a repo
-already bound to a different org. Re-running is idempotent. Commit the
-generated files: that is what makes the plugin load, and sessions upload, for
-every teammate who opens the repo. The plugin's own upload hook and the
-repo's committed hooks can both run in Claude Code; `halyard hook` locks per
-transcript, so they don't double-upload.
-
-## 4. Authenticate
-
-Run this from inside the repo, after step 3. Pick by environment, not by
-preference:
+Pick by environment, not by preference:
 
 | Environment                                              | Use                                               |
 | -------------------------------------------------------- | ------------------------------------------------- |
@@ -95,10 +62,10 @@ preference:
 `halyard login` runs a browser OAuth flow (PKCE, loopback callback on
 127.0.0.1) and times out after two minutes if no browser completes it, so do
 **not** run it in a session with no browser on that machine; ask the user to
-run it, or use a token. Inside a bound repo it writes per-org credentials to
-`~/.halyard/credentials/<orgId>.json`; outside one it writes the default
-`~/.halyard/credentials.json`, which the hooks only use when its org matches
-the binding. Login credentials for a different org are refused.
+run it, or use a token. It writes `~/.halyard/credentials.json` (inside a repo
+that is already bound, `~/.halyard/credentials/<orgId>.json` for that org).
+The upload hooks use these when their org matches the repo's binding, and
+refuse credentials for a different org.
 
 For a token, the user mints an API key with `halyard api-keys create --name
 "<repo>-<machine>"` (printed once; keys are bound to one org). `HALYARD_TOKEN`
@@ -111,6 +78,45 @@ paste it into chat; point the user at where to put it.
 
 The machine also needs outbound HTTPS to `api.usehalyard.ai` (CLI) and
 `mcp.usehalyard.ai` (MCP).
+
+## 4. Bind and scaffold the repo
+
+Run this after logging in. Users usually don't know their org slug (the web
+app doesn't show it), so don't ask for it up front:
+
+```bash
+halyard setup --dry-run
+halyard setup
+```
+
+Newer CLI releases bind the repo to the logged-in org when `--org` is
+omitted, asking when the user belongs to several orgs. If the output does not
+say `Bound this repo to "<slug>"` (CLI 0.3.0 and earlier skip binding without
+`--org`, and any release skips it without a TTY for multi-org users), read the
+slug from `halyard whoami` (the `Organization:` line) or `halyard orgs list`,
+confirm it with the user if they belong to more than one org, and re-run:
+
+```bash
+halyard setup --org <slug>
+```
+
+What it writes:
+
+| Target                        | File                                                                                   | Change                                                                                        |
+| ----------------------------- | -------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------- |
+| Repo binding                  | `.halyard.json`                                                                        | `{"org": "<slug>"}`; `sync`, `push`, and the upload hooks refuse credentials for another org |
+| Upload launcher               | `.halyard/hook.sh`                                                                     | Runs `halyard hook` for every client below                                                    |
+| Claude Code (project)         | `.claude/settings.json`                                                                | Adds the `halyard-labs` marketplace, `enabledPlugins["halyard@halyard-labs"] = true`, and session hooks |
+| Cursor (project)              | `.cursor/mcp.json`, `.cursor/hooks.json`                                               | Adds `mcpServers.halyard.url = https://mcp.usehalyard.ai` and session hooks                   |
+| Codex                         | `~/.codex/config.toml` (if detected), `.codex/hooks.json`                              | Adds `[mcp_servers.halyard]` with the same URL, and session hooks                             |
+| Gemini, Copilot, OpenCode, Grok | `.gemini/settings.json`, `.github/hooks/`, `.opencode/plugins/`, `.grok/hooks/`      | Session hooks                                                                                 |
+
+`--no-hooks` skips the launcher and hook files; `--force` rebinds a repo
+already bound to a different org. Re-running is idempotent. Commit the
+generated files: that is what makes the plugin load, and sessions upload, for
+every teammate who opens the repo. The plugin's own upload hook and the
+repo's committed hooks can both run in Claude Code; `halyard hook` locks per
+transcript, so they don't double-upload.
 
 ## 5. Verify
 
